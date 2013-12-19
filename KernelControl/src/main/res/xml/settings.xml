@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="accent_color"
+        android:summary="@string/theme_settings_accent_color_summary"
+        android:title="@string/theme_settings_accent_color" />
+</PreferenceScreen>

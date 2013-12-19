@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/BlueLight" >
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.vork.KernelControl.MainActivity"
             android:label="@string/app_name" >
@@ -18,6 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Settings.AppSettings"
+            android:label="@string/action_settings"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme"/>
+
         <meta-data android:name="com.crashlytics.ApiKey" android:value="14b856af3c3c97073c12fdaec9d804057fbf7331"/>
     </application>
 

@@ -5,4 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="theme_settings">Themes</string>
+    <string name="theme_settings_accent_color">Accent color</string>
+    <string name="theme_settings_accent_color_summary">Switch the accent color to spice up the UI!</string>
+
 </resources>

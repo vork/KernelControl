@@ -2,6 +2,7 @@ package com.vork.KernelControl;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,9 @@ import android.view.ViewGroup;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
+import com.vork.KernelControl.Settings.AppSettings;
+import com.vork.KernelControl.Settings.AppSettingsFragment;
+import com.vork.KernelControl.Utils.Helper;
 
 public class MainActivity extends Activity {
 
@@ -25,7 +29,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Helper.setTheme(this);
         super.onCreate(savedInstanceState);
+
         Crashlytics.start(this);
 
         setContentView(R.layout.activity_main);
@@ -53,7 +59,11 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, AppSettings.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            overridePendingTransition(android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right);
+            Crashlytics.log("Settings");
         }
         return super.onOptionsItemSelected(item);
     }
