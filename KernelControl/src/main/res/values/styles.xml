@@ -1,8 +1,32 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light">
+    <style name="AppTheme" parent="Theme.HoloAccent.Light">
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="BlueLight" parent="AppTheme">
+        <item name="accentColor">@color/accentBlue</item>
+        <item name="accentColorTranslucent">@color/accentBlueTrans</item>
+    </style>
+
+    <style name="PurpleLight" parent="AppTheme">
+        <item name="accentColor">@color/accentPurple</item>
+        <item name="accentColorTranslucent">@color/accentPurpleTrans</item>
+    </style>
+
+    <style name="GreenLight" parent="AppTheme">
+        <item name="accentColor">@color/accentGreen</item>
+        <item name="accentColorTranslucent">@color/accentGreenTrans</item>
+    </style>
+
+    <style name="OrangeLight" parent="AppTheme">
+        <item name="accentColor">@color/accentOrange</item>
+        <item name="accentColorTranslucent">@color/accentOrangeTrans</item>
+    </style>
+
+    <style name="RedLight" parent="AppTheme">
+        <item name="accentColor">@color/accentRed</item>
+        <item name="accentColorTranslucent">@color/accentRedTrans</item>
+    </style>
 </resources>

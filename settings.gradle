@@ -1,1 +1,1 @@
-include ':KernelControl'
+include ':KernelControl', ':HoloAccent'

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accentBlue">#33B5E5</color>
+    <color name="accentBlueTrans">#6633B5E5</color>
+    <color name="accentBlueDark">#0099CC</color>
+
+    <color name="accentPurple">#AA66CC</color>
+    <color name="accentPurpleTrans">#66AA66CC</color>
+    <color name="accentPurpleDark">#9933CC</color>
+
+    <color name="accentGreen">#99CC00</color>
+    <color name="accentGreenTrans">#6699CC00</color>
+    <color name="accentGreenDark">#669900</color>
+
+    <color name="accentOrange">#FFBB33</color>
+    <color name="accentOrangeTrans">#66FFBB33</color>
+    <color name="accentOrangeDark">#FF8800</color>
+
+    <color name="accentRed">#FF4444</color>
+    <color name="accentRedTrans">#66FF4444</color>
+    <color name="accentRedDark">#CC0000</color>
+</resources>
