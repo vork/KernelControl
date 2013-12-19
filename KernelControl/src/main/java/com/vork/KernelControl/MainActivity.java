@@ -59,8 +59,7 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this, AppSettings.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            startActivity(new Intent(this, AppSettings.class));
             overridePendingTransition(android.R.anim.slide_in_left,
                     android.R.anim.slide_out_right);
             Crashlytics.log("Settings");

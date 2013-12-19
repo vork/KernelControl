@@ -19,4 +19,9 @@
     <color name="accentRed">#FF4444</color>
     <color name="accentRedTrans">#66FF4444</color>
     <color name="accentRedDark">#CC0000</color>
+
+    <color name="background_darkTheme">#2e2e30</color> <!-- 363636 | 424242 -->
+    <color name="card_background_darkTheme">#252628</color> <!-- 1c1c1c-->
+
+    <color name="white">#ffffff</color>
 </resources>

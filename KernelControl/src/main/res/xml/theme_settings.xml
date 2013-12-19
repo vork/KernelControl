@@ -5,4 +5,12 @@
         android:key="accent_color"
         android:summary="@string/theme_settings_accent_color_summary"
         android:title="@string/theme_settings_accent_color" />
+
+    <CheckBoxPreference
+        android:key="dark_ui_switch"
+        android:summaryOn="@string/theme_settings_switch_dark_ui_summary_on"
+        android:summaryOff="@string/theme_settings_switch_dark_ui_summary_off"
+        android:title="@string/theme_settings_switch_dark_ui"
+        android:defaultValue="false" />
+
 </PreferenceScreen>

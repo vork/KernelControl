@@ -1,9 +1,11 @@
 package com.vork.KernelControl.Settings;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
@@ -49,6 +51,15 @@ public class AppSettings extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.settings_headers, target);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean darkUI = preferences.getBoolean("dark_ui_switch", false);
+        if (darkUI) {
+            for(Header header : target) {
+                if (header.titleRes == R.string.theme_settings) {
+                    header.iconRes = Helper.getDrawable(this, "ic_action_theme_dark");
+                }
+            }
+        }
     }
 
 

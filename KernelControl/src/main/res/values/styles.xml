@@ -2,31 +2,108 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.HoloAccent.Light">
-        <!-- Customize your theme here. -->
+        <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.ActionButton.Overflow</item>
     </style>
 
+    <style name="AppThemeDark" parent="Theme.HoloAccent">
+
+    </style>
+
+    <!-- Holo color accented themes -->
     <style name="BlueLight" parent="AppTheme">
         <item name="accentColor">@color/accentBlue</item>
         <item name="accentColorTranslucent">@color/accentBlueTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarBlue</item>
+    </style>
+
+    <style name="BlueDark" parent="AppThemeDark">
+        <item name="accentColor">@color/accentBlue</item>
+        <item name="accentColorTranslucent">@color/accentBlueTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarBlue</item>
+        <item name="android:windowBackground">@color/background_darkTheme</item>
     </style>
 
     <style name="PurpleLight" parent="AppTheme">
         <item name="accentColor">@color/accentPurple</item>
         <item name="accentColorTranslucent">@color/accentPurpleTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarPurple</item>
+    </style>
+
+    <style name="PurleDark" parent="AppThemeDark">
+        <item name="accentColor">@color/accentPurple</item>
+        <item name="accentColorTranslucent">@color/accentPurpleTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarPurple</item>
+        <item name="android:windowBackground">@color/background_darkTheme</item>
     </style>
 
     <style name="GreenLight" parent="AppTheme">
         <item name="accentColor">@color/accentGreen</item>
         <item name="accentColorTranslucent">@color/accentGreenTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarGreen</item>
+    </style>
+
+    <style name="GreenDark" parent="AppThemeDark">
+        <item name="accentColor">@color/accentGreen</item>
+        <item name="accentColorTranslucent">@color/accentGreenTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarGreen</item>
+        <item name="android:windowBackground">@color/background_darkTheme</item>
     </style>
 
     <style name="OrangeLight" parent="AppTheme">
         <item name="accentColor">@color/accentOrange</item>
         <item name="accentColorTranslucent">@color/accentOrangeTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarOrange</item>
+    </style>
+
+    <style name="OrangeDark" parent="AppThemeDark">
+        <item name="accentColor">@color/accentOrange</item>
+        <item name="accentColorTranslucent">@color/accentOrangeTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarOrange</item>
+        <item name="android:windowBackground">@color/background_darkTheme</item>
     </style>
 
     <style name="RedLight" parent="AppTheme">
         <item name="accentColor">@color/accentRed</item>
         <item name="accentColorTranslucent">@color/accentRedTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarRed</item>
+    </style>
+
+    <style name="RedDark" parent="AppThemeDark">
+        <item name="accentColor">@color/accentRed</item>
+        <item name="accentColorTranslucent">@color/accentRedTrans</item>
+        <item name="android:actionBarStyle">@style/ActionBarRed</item>
+        <item name="android:windowBackground">@color/background_darkTheme</item>
+    </style>
+
+    <!-- Action Bar Customization-->
+    <style name="ActionBarApp" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:icon">@drawable/ic_actionbar_icon</item>
+        <item name="android:titleTextStyle">@style/ActionBarTextStyle</item>
+    </style>
+
+    <style name="ActionBarBlue" parent="ActionBarApp">
+        <item name="android:background">@color/accentBlue</item>
+    </style>
+
+    <style name="ActionBarPurple" parent="ActionBarApp">
+        <item name="android:background">@color/accentPurple</item>
+    </style>
+
+    <style name="ActionBarGreen" parent="ActionBarApp">
+        <item name="android:background">@color/accentGreen</item>
+    </style>
+
+    <style name="ActionBarOrange" parent="ActionBarApp">
+        <item name="android:background">@color/accentOrange</item>
+    </style>
+
+    <style name="ActionBarRed" parent="ActionBarApp">
+        <item name="android:background">@color/accentRed</item>
+    </style>
+    
+    <style name="ActionBarTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/action_bar_title_text_size</item>
     </style>
 </resources>

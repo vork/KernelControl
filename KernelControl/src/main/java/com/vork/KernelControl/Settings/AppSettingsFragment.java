@@ -3,6 +3,7 @@ package com.vork.KernelControl.Settings;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -21,7 +22,7 @@ public class AppSettingsFragment extends PreferenceFragment implements Preferenc
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.settings);
+        addPreferencesFromResource(R.xml.theme_settings);
 
         mActivity = getActivity();
 
@@ -56,6 +57,19 @@ public class AppSettingsFragment extends PreferenceFragment implements Preferenc
                 }
             });
         }
+
+        CheckBoxPreference darkUiSwitch = (CheckBoxPreference) findPreference("dark_ui_switch");
+
+        if (darkUiSwitch != null) {
+            darkUiSwitch.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Helper.restartKC(mActivity);
+                    return false;
+                }
+            });
+        }
+
 
     }
 }
