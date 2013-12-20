@@ -5,6 +5,6 @@
 
     <dimen name="card_background_default_radius">2dip</dimen>
 
-    <dimen name="action_bar_title_text_size">21dp</dimen>
+    <dimen name="action_bar_title_text_size">19dp</dimen>
 
     </resources>

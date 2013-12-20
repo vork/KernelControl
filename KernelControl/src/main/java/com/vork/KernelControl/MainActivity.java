@@ -2,6 +2,7 @@ package com.vork.KernelControl;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import com.vork.KernelControl.Settings.AppSettings;
 import com.vork.KernelControl.Settings.AppSettingsFragment;
 import com.vork.KernelControl.Utils.Helper;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class MainActivity extends Activity {
 
     //For HoloAccent
@@ -27,9 +31,16 @@ public class MainActivity extends Activity {
         return mAccentHelper.getResources(this, super.getResources());
     }
 
+    //For Calligraphy
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new CalligraphyContextWrapper(newBase));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Helper.setTheme(this);
+        CalligraphyConfig.initDefault("fonts/Roboto-Regular.ttf");
         super.onCreate(savedInstanceState);
 
         Crashlytics.start(this);

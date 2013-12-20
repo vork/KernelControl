@@ -102,7 +102,7 @@
     </style>
     
     <style name="ActionBarTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">fonts/RobotoCondensed</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/action_bar_title_text_size</item>
     </style>

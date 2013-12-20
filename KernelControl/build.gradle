@@ -15,6 +15,7 @@ apply plugin: 'crashlytics'
 repositories {
     mavenCentral()
     maven { url 'http://download.crashlytics.com/maven' }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 android {
@@ -59,6 +60,7 @@ android {
 
 dependencies {
     compile 'com.crashlytics.android:crashlytics:1.+'
+    compile "uk.co.chrisjenx.calligraphy:calligraphy:0.4.0-SNAPSHOT"
     compile project(":HoloAccent")
     compile project(":ColorPicker")
 }
