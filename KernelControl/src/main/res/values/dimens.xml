@@ -5,6 +5,11 @@
 
     <dimen name="card_background_default_radius">2dip</dimen>
 
-    <dimen name="action_bar_title_text_size">24dp</dimen>
+    <!-- Text sizes -->
+    <dimen name="action_bar_title_text_size">26dp</dimen>
+    <dimen name="menu_item_text_size">28dp</dimen>
+
+    <!-- Padding sizes -->
+    <dimen name="padding_medium">8dp</dimen>
 
     </resources>

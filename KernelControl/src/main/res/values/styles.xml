@@ -3,10 +3,30 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.HoloAccent.Light">
         <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.ActionButton.Overflow</item>
+        <item name="android:listViewStyle">@style/NavDrawerLight</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.HoloAccent">
+        <item name="android:listViewStyle">@style/NavDrawerDark</item>
+    </style>
 
+    <style name="NavDrawerLight" parent="android:Widget.Holo.Light.ListView">
+        <item name="android:background">@color/card_background_lightTheme</item>
+
+    </style>
+
+    <style name="NavDrawerDark" parent="android:Widget.Holo.Light.ListView">
+        <item name="android:background">@color/card_background_darkTheme</item>
+    </style>
+
+    <style name="MenuItemLight">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">@dimen/menu_item_text_size</item>
+        <item name="android:textColor">@color/text_lightTheme</item>
+    </style>
+
+    <style name="MenuItemDark" parent="MenuItemLight">
+        <item name="android:textColor">@color/text_darkTheme</item>
     </style>
 
     <!-- Holo color accented themes -->
@@ -82,7 +102,7 @@
     </style>
 
     <style name="ActionBarTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:fontFamily">fonts/RobotoCondensed</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/action_bar_title_text_size</item>
     </style>
