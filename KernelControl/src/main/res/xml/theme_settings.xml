@@ -8,6 +8,7 @@
 
     <CheckBoxPreference
         android:key="dark_ui_switch"
+        android:summary="@string/theme_settings_switch_dark_ui_summary"
         android:summaryOn="@string/theme_settings_switch_dark_ui_summary_on"
         android:summaryOff="@string/theme_settings_switch_dark_ui_summary_off"
         android:title="@string/theme_settings_switch_dark_ui"

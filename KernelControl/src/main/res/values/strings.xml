@@ -8,8 +8,9 @@
     <string name="theme_settings">Themes</string>
     <string name="theme_settings_summary">Tune the look of the app to your needs.</string>
     <string name="theme_settings_accent_color">Accent color</string>
-    <string name="theme_settings_accent_color_summary">Switch the accent color to spice up the UI.</string>
+    <string name="theme_settings_accent_color_summary">Switch the accent color to spice up the UI. This will restart the app.</string>
     <string name="theme_settings_switch_dark_ui">Dark UI</string>
+    <string name="theme_settings_switch_dark_ui_summary">Toggle between the light and dark UI. This will restart the app.</string>
     <string name="theme_settings_switch_dark_ui_summary_on">The dark side of the app.</string>
     <string name="theme_settings_switch_dark_ui_summary_off">The light side of the app.</string>
 
