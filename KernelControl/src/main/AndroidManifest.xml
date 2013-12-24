@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.vork.KernelControl.MainActivity"
+            android:name=".Activities.CPU"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
 
         <activity android:name=".Settings.AppSettings"
             android:label="@string/action_settings"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".Activities.CPU"
             android:theme="@style/AppTheme"/>
 
         <meta-data android:name="com.crashlytics.ApiKey" android:value="14b856af3c3c97073c12fdaec9d804057fbf7331"/>

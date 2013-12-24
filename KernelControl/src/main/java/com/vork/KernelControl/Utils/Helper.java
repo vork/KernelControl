@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.vork.KernelControl.MainActivity;
+import com.vork.KernelControl.Activities.CPU;
 import com.vork.KernelControl.R;
 
 import junit.framework.Assert;
@@ -26,7 +26,7 @@ public class Helper implements Preferences {
         activity.overridePendingTransition(enter_anim, exit_anim);
         activity.finish();
         activity.overridePendingTransition(enter_anim, exit_anim);
-        activity.startActivity(new Intent(activity, MainActivity.class).
+        activity.startActivity(new Intent(activity, CPU.class).
                 setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK)
         );
