@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/BlueLight" >
         <activity
             android:name=".Activities.CPU"
             android:label="@string/app_name" >
@@ -22,7 +22,7 @@
         <activity android:name=".Settings.AppSettings"
             android:label="@string/action_settings"
             android:parentActivityName=".Activities.CPU"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/BlueLight"/>
 
         <meta-data android:name="com.crashlytics.ApiKey" android:value="14b856af3c3c97073c12fdaec9d804057fbf7331"/>
     </application>
