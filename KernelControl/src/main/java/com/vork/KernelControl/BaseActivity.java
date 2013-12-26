@@ -13,20 +13,29 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
-import com.vork.KernelControl.Activities.CPU;
+import com.vork.KernelControl.Adapter.NavigationDrawerAdapter;
 import com.vork.KernelControl.Settings.AppSettings;
-import com.vork.KernelControl.UI.SlidingMenu;
 import com.vork.KernelControl.Utils.Helper;
 
-public class BaseActivity extends FragmentActivity {
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class BaseActivity extends FragmentActivity implements NavigationDrawerAdapter.ToggleGroupListener {
     private static final int MENU_ITEM_CPU_ID = 0;
     private static final int MENU_ITEM_MEM_ID = 1;
     private static final int MENU_ITEM_MISC_ID = 2;
@@ -34,10 +43,15 @@ public class BaseActivity extends FragmentActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
-    private SlidingMenu.MenuAdapter mAdapter;
+    private ExpandableListView mDrawerList;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+    private NavigationDrawerAdapter mAdapter;
+
+    private ArrayList<String> mGroupList;
+    private List<String> mChildList;
+    private Map<String, List<String>> mChildCollection;
+
 
     //For HoloAccent
     private final AccentHelper mAccentHelper = new AccentHelper();
@@ -56,6 +70,50 @@ public class BaseActivity extends FragmentActivity {
 
         Crashlytics.start(this);
 
+        setGroupData();
+        setChildData();
+
+        setupNavDrawer();
+    }
+
+    private void setGroupData() {
+        mGroupList = new ArrayList<String>();
+        mGroupList.add("CPU");
+        mGroupList.add("Memory & I/O");
+        mGroupList.add("Misc");
+        mGroupList.add("Info");
+    }
+
+    private void setChildData() {
+        String[] cpuTabs = {"Frequency", "Voltage"};
+        String[] memTabs = {"Memory", "I/O"};
+        String[] miscTabs = {}; //Empty for now
+        String[] infoTabs = {"General", "Time in state", "Memory"};
+
+        mChildCollection = new LinkedHashMap<String, List<String>>();
+
+        for (String item : mGroupList) {
+            if (item.equals("CPU")) {
+                loadChild(cpuTabs);
+            } else if (item.equals("Memory & I/O")) {
+                loadChild(memTabs);
+            } else if (item.equals("Misc")) {
+                loadChild(miscTabs);
+            } else if (item.equals("Info")) {
+                loadChild(infoTabs);
+            }
+
+            mChildCollection.put(item, mChildList);
+        }
+    }
+
+    private void loadChild(String[] items) {
+        mChildList = new ArrayList<String>();
+        for (String item : items)
+            mChildList.add(item);
+    }
+
+    private void setupNavDrawer() {
         final ActionBar actionBar = getActionBar();
         assert actionBar != null;
         mTitle = mDrawerTitle = getTitle();
@@ -64,15 +122,36 @@ public class BaseActivity extends FragmentActivity {
         boolean darkUI = preferences.getBoolean("dark_ui_switch", false);
 
         //Setup the navigation drawer
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
+        if(darkUI) {
+            mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_darkTheme));
+        } else {
+            mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_lightTheme));
+        }
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mAdapter = new SlidingMenu.MenuAdapter(this);
-        mAdapter.add(new SlidingMenu.MenuItemList(getString(R.string.menu_item_cpu),
-                darkUI ? R.drawable.ic_ic_menu_cpu_d : R.drawable.ic_ic_menu_cpu_l, MENU_ITEM_CPU_ID));
+        mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection, darkUI);
+        mAdapter.setListener(this);
 
         mDrawerList.setAdapter(mAdapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                //ToDo jump to correct tab
+                final String selected = (String) mAdapter.getChild(
+                        groupPosition, childPosition);
+                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+        mDrawerList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                final String selected = (String) mAdapter.getGroup(groupPosition);
+                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
@@ -128,6 +207,16 @@ public class BaseActivity extends FragmentActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    public boolean toggleGroupState(int groupPos) {
+        if (mDrawerList.isGroupExpanded(groupPos)) {
+            mDrawerList.collapseGroup(groupPos);
+            return false;
+        } else {
+            mDrawerList.expandGroup(groupPos);
+            return true;
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -155,23 +244,35 @@ public class BaseActivity extends FragmentActivity {
         Handler h = new Handler();
         //Smooth menu closing
         postDelayed = 120;
-        mDrawerLayout.closeDrawer(mDrawerList);
+//        mDrawerLayout.closeDrawer(mDrawerList);
         mDrawerList.setItemChecked(position, true);
 
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                switch (((SlidingMenu.MenuItemList) mAdapter.getItem(position)).mId) {
-                    case MENU_ITEM_CPU_ID:
-                        startActivity(new Intent(context, CPU.class).
-                                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                        Crashlytics.log("CPU");
-                        break;
-                    default:
-                        break;
-                }
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        }, postDelayed);
+//        h.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                switch (((SlidingMenu.MenuItemList) mAdapter.getItem(position)).mId) {
+//                    case MENU_ITEM_CPU_ID:
+//                        startActivity(new Intent(context, CPU.class).
+//                                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+//                        Crashlytics.log("CPU");
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//            }
+//        }, postDelayed);
     }
+
+    /**
+     * Returns true if the navigation drawer is open.
+     */
+    protected boolean isDrawerOpen() {
+        return mDrawerLayout.isDrawerOpen(mDrawerList);
+    }
+
+    public void setDrawerIndicatorEnabled(boolean isEnabled) {
+        mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
+    }
+
 }

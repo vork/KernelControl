@@ -7,9 +7,11 @@
 
     <!-- Text sizes -->
     <dimen name="action_bar_title_text_size">26dp</dimen>
-    <dimen name="menu_item_text_size">28dp</dimen>
+    <dimen name="menu_item_text_size">26dp</dimen>
 
     <!-- Padding sizes -->
     <dimen name="padding_medium">8dp</dimen>
+
+    <dimen name="default_touch_size">48dp</dimen>
 
     </resources>

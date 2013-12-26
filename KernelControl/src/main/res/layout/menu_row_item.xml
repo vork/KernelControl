@@ -14,24 +14,26 @@
   ~    limitations under the License.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/menu_icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="@dimen/padding_medium"
-        android:src="@drawable/ic_launcher" />
+    android:layout_height="48dp"
+    android:orientation="horizontal"
+    android:background="@color/menu_group_lightTheme">
 
     <TextView
-        android:id="@+id/menu_title"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_toRightOf="@+id/menu_icon"
+        android:id="@+id/group_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:text="@string/app_name"
+        android:padding="@dimen/padding_medium"
+        android:layout_weight="1"
         android:textAppearance="@style/MenuItemLight" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/expandable_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_medium"
+        android:src="@drawable/ic_action_expand_light" />
+</LinearLayout>
