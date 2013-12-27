@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/spinner_drop_down_item"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:minHeight="@dimen/default_touch_size"
+        android:layout_gravity="center_vertical"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="@dimen/action_bar_title_text_size_no_spinner"
+        android:textColor="@android:color/primary_text_dark"
+        android:textAllCaps="true"
+        android:fontFamily="sans-serif-light" />
+</LinearLayout>

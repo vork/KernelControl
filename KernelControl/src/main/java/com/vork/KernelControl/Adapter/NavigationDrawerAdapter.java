@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vork.KernelControl.R;
-import com.vork.KernelControl.Utils.Helper;
 
 import java.util.List;
 import java.util.Map;
