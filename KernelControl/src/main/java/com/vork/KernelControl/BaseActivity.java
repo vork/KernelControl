@@ -55,6 +55,8 @@ public class BaseActivity extends FragmentActivity implements
     private ArrayList<SpinnerNavItem> mNavSpinnerItems;
     private ActionBarSpinnerAdapter mSpinnerAdapter;
 
+    private boolean mDarkUi = false;
+
 
     //For HoloAccent
     private final AccentHelper mAccentHelper = new AccentHelper();
@@ -131,7 +133,7 @@ public class BaseActivity extends FragmentActivity implements
                 mNavSpinnerItems.add(new SpinnerNavItem(curTab, subtitle));
             }
 
-            mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), mNavSpinnerItems);
+            mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), mNavSpinnerItems, mDarkUi);
 
             actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
         }
@@ -143,18 +145,18 @@ public class BaseActivity extends FragmentActivity implements
         mTitle = mDrawerTitle = getTitle();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean darkUI = preferences.getBoolean("dark_ui_switch", false);
+        mDarkUi = preferences.getBoolean("dark_ui_switch", false);
 
         //Setup the navigation drawer
         mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
-        if (darkUI) {
+        if (mDarkUi) {
             mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_darkTheme));
         } else {
             mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_lightTheme));
         }
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection, darkUI);
+        mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection, mDarkUi);
         mAdapter.setListener(this);
 
         mDrawerList.setAdapter(mAdapter);

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Text size for action bar titles -->
-    <dimen name="action_bar_title_text_size">16dp</dimen>
+    <dimen name="action_bar_title_text_size">15.5dp</dimen>
     <!-- Text size for action bar subtitles -->
-    <dimen name="action_bar_subtitle_text_size">12dp</dimen>
+    <dimen name="action_bar_subtitle_text_size">11.5dp</dimen>
     <!-- Top margin for action bar subtitles -->
-    <dimen name="action_bar_subtitle_top_margin">-2dp</dimen>
+    <dimen name="action_bar_subtitle_top_margin">-4dp</dimen>
     <!-- Bottom margin for action bar subtitles -->
-    <dimen name="action_bar_subtitle_bottom_margin">4dip</dimen>
+    <dimen name="action_bar_subtitle_bottom_margin">6dip</dimen>
 </resources>

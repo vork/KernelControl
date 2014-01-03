@@ -9,27 +9,22 @@
     android:paddingRight="5dp">
 
     <TextView
-        android:id="@+id/spinner_list_item_header"
+        android:id="@android:id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
         android:text="@string/app_name"
-        android:textSize="@dimen/action_bar_title_text_size"
-        android:textColor="@android:color/primary_text_dark"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-condensed"/>
+        android:textAppearance="@style/KC.TextAppearance.Widget.ActionBar.Spinner.Title" />
 
     <TextView
-        android:id="@+id/spinner_list_item_subtitle"
+        android:id="@android:id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/action_bar_subtitle_top_margin"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textColor="@android:color/primary_text_dark"
         android:textAllCaps="true"
-        android:fontFamily="sans-serif"
-        android:textSize="@dimen/action_bar_subtitle_text_size" />
+        android:textAppearance="@style/KC.TextAppearance.Widget.ActionBar.Spinner.SubTitle" />
 
 </LinearLayout>
