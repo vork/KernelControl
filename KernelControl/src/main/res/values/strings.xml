@@ -15,6 +15,16 @@
     <string name="theme_settings_switch_dark_ui_summary_off">The light side of the app.</string>
 
     <string name="menu_item_cpu">CPU</string>
+    <string name="menu_item_cpu_child_frequency">Frequency</string>
+    <string name="menu_item_cpu_child_voltage">Voltage</string>
+    <string name="menu_item_memory">Memory &amp; I/O</string>
+    <string name="menu_item_memory_child_memory">Memory</string>
+    <string name="menu_item_memory_child_io">I/O</string>
+    <string name="menu_item_misc">Miscellaneous</string>
+    <string name="menu_item_info">Info</string>
+    <string name="menu_item_info_child_general">General</string>
+    <string name="menu_item_info_child_tis">Time in state</string>
+    <string name="menu_item_info_child_memory">Memory</string>
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

@@ -1,14 +1,18 @@
 package com.vork.KernelControl;
 
 import android.app.ActionBar;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.vork.KernelControl.Adapter.ActionBarSpinnerAdapter;
 
 import java.util.ArrayList;
 
-public class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity {
+public class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity implements
+        ActionBar.OnNavigationListener {
     private ArrayList<SpinnerNavItem> mNavSpinnerItems;
-    private ActionBarSpinnerAdapter mSpinnerAdapter;
+    protected ActionBarSpinnerAdapter mSpinnerAdapter;
+    protected int mSelectedSpinnerItem = -1;
 
     protected void setupActionBarSpinner(String curTab) {
         final ActionBar actionBar = getActionBar();
@@ -29,5 +33,14 @@ public class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity {
 
             actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        mSelectedSpinnerItem = itemPosition;
+        Log.d("KernelControl", "Item selected " + itemPosition);
+        setSelectedItem(((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getTitle(),
+                ((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getSubtitle());
+        return false;
     }
 }

@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BaseNavDrawerActivity extends BaseActivity implements
-        NavigationDrawerAdapter.ToggleGroupListener,
-        ActionBar.OnNavigationListener {
+        NavigationDrawerAdapter.ToggleGroupListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ExpandableListView mDrawerList;
@@ -53,28 +53,35 @@ public class BaseNavDrawerActivity extends BaseActivity implements
 
     private void setGroupData() {
         mGroupList = new ArrayList<String>();
-        mGroupList.add("CPU");
-        mGroupList.add("Memory & I/O");
-        mGroupList.add("Misc");
-        mGroupList.add("Info");
+        mGroupList.add(getString(R.string.menu_item_cpu));
+        mGroupList.add(getString(R.string.menu_item_memory));
+        mGroupList.add(getString(R.string.menu_item_misc));
+        mGroupList.add(getString(R.string.menu_item_info));
     }
 
     private void setChildData() {
-        String[] cpuTabs = {"Frequency", "Voltage"};
-        String[] memTabs = {"Memory", "I/O"};
+        String[] cpuTabs = {getString(R.string.menu_item_cpu_child_frequency),
+                getString(R.string.menu_item_cpu_child_voltage)};
+
+        String[] memTabs = {getString(R.string.menu_item_memory_child_memory),
+                getString(R.string.menu_item_memory_child_io)};
+
         String[] miscTabs = {}; //Empty for now
-        String[] infoTabs = {"General", "Time in state", "Memory"};
+
+        String[] infoTabs = {getString(R.string.menu_item_info_child_general),
+                getString(R.string.menu_item_info_child_tis),
+                getString(R.string.menu_item_info_child_memory)};
 
         mChildCollection = new LinkedHashMap<String, List<String>>();
 
         for (String item : mGroupList) {
-            if (item.equals("CPU")) {
+            if (item.equals(getString(R.string.menu_item_cpu))) {
                 loadChild(cpuTabs);
-            } else if (item.equals("Memory & I/O")) {
+            } else if (item.equals(getString(R.string.menu_item_memory))) {
                 loadChild(memTabs);
-            } else if (item.equals("Misc")) {
+            } else if (item.equals(getString(R.string.menu_item_misc))) {
                 loadChild(miscTabs);
-            } else if (item.equals("Info")) {
+            } else if (item.equals(getString(R.string.menu_item_info))) {
                 loadChild(infoTabs);
             }
 
@@ -113,15 +120,16 @@ public class BaseNavDrawerActivity extends BaseActivity implements
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 //ToDo jump to correct tab
-                final String selected = (String) mAdapter.getChild(
+                final String child = (String) mAdapter.getChild(
                         groupPosition, childPosition);
+                final String group = (String) mAdapter.getGroup(groupPosition);
                 return false;
             }
         });
         mDrawerList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                final String selected = (String) mAdapter.getGroup(groupPosition);
+                final String group = (String) mAdapter.getGroup(groupPosition);
                 return true;
             }
         });
@@ -205,11 +213,6 @@ public class BaseNavDrawerActivity extends BaseActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        return false;
-    }
-
     private void selectItem(final Context context, final int position) {
         int postDelayed = 0;
         Handler h = new Handler();
@@ -244,6 +247,52 @@ public class BaseNavDrawerActivity extends BaseActivity implements
 
     public void setDrawerIndicatorEnabled(boolean isEnabled) {
         mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
+    }
+
+    protected void setSelectedItem(String activityName, String tabName) {
+        int index = mDrawerList.getFlatListPosition(ExpandableListView.getPackedPositionForChild(
+                getGroupIndex(activityName), getChildIndex(activityName, tabName)));
+        mDrawerList.setItemChecked(index, true);
+        setSelectedItem(activityName);
+    }
+
+    protected void setSelectedItem(String activityName) {
+        int index = mDrawerList.getFlatListPosition(ExpandableListView.getPackedPositionForGroup(getGroupIndex(activityName)));
+        mDrawerList.setItemChecked(index, true);
+    }
+
+    private int getGroupIndex(String groupName) {
+        Set<String> groups = mChildCollection.keySet();
+        int toRet = -1;
+
+        int temp = 0;
+        for(String group : groups) {
+            if(group.equals(groupName)) {
+                toRet = temp;
+                break;
+            } else {
+                temp ++;
+            }
+        }
+
+        return toRet;
+    }
+
+    private int getChildIndex(String groupName, String childName) {
+        int toRet = -1;
+
+        List<String> childs = mChildCollection.get(groupName);
+
+        int temp = 0;
+        for(String child : childs) {
+            if(child.equals(childName)) {
+                toRet = temp;
+            } else {
+                temp++;
+            }
+        }
+
+        return toRet;
     }
 
     /**

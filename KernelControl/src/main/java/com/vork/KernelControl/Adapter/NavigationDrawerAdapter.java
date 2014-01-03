@@ -56,7 +56,7 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
         TextView item = (TextView) convertView.findViewById(R.id.child_title);
         item.setText(ChildName);
 
-        if(mDarkUi) {
+        if (mDarkUi) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.menu_child_darkTheme));
             item.setTextAppearance(context, R.style.KC_Dark_NavDrawer_MenuItem);
         }
@@ -94,7 +94,7 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 
         final ImageView expandIcon = (ImageView) convertView.findViewById(R.id.expandable_icon);
 
-        if(mDarkUi) {
+        if (mDarkUi) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.menu_group_darkTheme));
             expandIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_action_expand_dark));
             item.setTextAppearance(context, R.style.KC_Dark_NavDrawer_MenuItem);
@@ -103,10 +103,10 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
         if (getChildrenCount(groupPosition) == 0) {
             expandIcon.setVisibility(View.INVISIBLE);
         } else {
-            expandIcon.setPivotX(expandIcon.getWidth()/2);
-            expandIcon.setPivotY(expandIcon.getHeight()/2);
+            expandIcon.setPivotX(expandIcon.getWidth() / 2);
+            expandIcon.setPivotY(expandIcon.getHeight() / 2);
             expandIcon.setVisibility(View.VISIBLE);
-            if(isExpanded) {
+            if (isExpanded) {
                 expandIcon.setRotation(180);
             } else {
                 expandIcon.setRotation(0);
@@ -116,13 +116,14 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
                 public void onClick(View v) {
                     boolean expanded = mToggleListener.toggleGroupState(groupPosition);
                     //Rotate the icon
-                    expandIcon.setPivotX(expandIcon.getWidth()/2);
-                    expandIcon.setPivotY(expandIcon.getHeight()/2);
-                    if(expanded) {
+                    expandIcon.setPivotX(expandIcon.getWidth() / 2);
+                    expandIcon.setPivotY(expandIcon.getHeight() / 2);
+                    if (expanded) {
                         expandIcon.setRotation(180);
                     } else {
                         expandIcon.setRotation(0);
                     }
+                    expandIcon.setPressed(true);
                 }
             });
         }

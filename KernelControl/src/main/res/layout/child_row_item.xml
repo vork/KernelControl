@@ -3,8 +3,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/menu_child_lightTheme"
-    android:paddingLeft="@dimen/padding_medium">
+    android:background="@color/menu_child_lightTheme">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ha__list_selector"
+        android:paddingLeft="@dimen/padding_medium">
 
     <TextView
         android:id="@+id/child_title"
@@ -14,5 +19,7 @@
         android:text="@string/app_name"
         android:padding="@dimen/padding_medium"
         android:textAppearance="@style/KC.Light.NavDrawer.MenuItem" />
+
+    </LinearLayout>
 
 </LinearLayout>
