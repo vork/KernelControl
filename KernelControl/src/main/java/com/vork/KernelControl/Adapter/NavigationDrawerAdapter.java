@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vork.KernelControl.R;
-import com.vork.KernelControl.Utils.Helper;
 
 import java.util.List;
 import java.util.Map;
@@ -60,7 +59,7 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 
         if(mDarkUi) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.menu_child_darkTheme));
-            item.setTextAppearance(context, R.style.MenuItemDark);
+            item.setTextAppearance(context, R.style.KC_Dark_NavDrawer_MenuItem);
         }
 
         return convertView;
@@ -99,7 +98,7 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
         if(mDarkUi) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.menu_group_darkTheme));
             expandIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_action_expand_dark));
-            item.setTextAppearance(context, R.style.MenuItemDark);
+            item.setTextAppearance(context, R.style.KC_Dark_NavDrawer_MenuItem);
         }
 
         if (getChildrenCount(groupPosition) == 0) {

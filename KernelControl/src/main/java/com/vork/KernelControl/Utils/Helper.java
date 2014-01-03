@@ -48,29 +48,29 @@ public class Helper implements Preferences {
 
         if (color == activity.getResources().getColor(R.color.accentPurple)) {
             if (darkUI)
-                activity.setTheme(R.style.PurleDark);
+                activity.setTheme(R.style.KC_Dark_Purle);
             else
-                activity.setTheme(R.style.PurpleLight);
+                activity.setTheme(R.style.KC_Light_Purple);
         } else if (color == activity.getResources().getColor(R.color.accentGreen)) {
             if (darkUI)
-                activity.setTheme(R.style.GreenDark);
+                activity.setTheme(R.style.KC_Dark_Green);
             else
-                activity.setTheme(R.style.GreenLight);
+                activity.setTheme(R.style.KC_Light_Green);
         } else if (color == activity.getResources().getColor(R.color.accentOrange)) {
             if (darkUI)
-                activity.setTheme(R.style.OrangeDark);
+                activity.setTheme(R.style.KC_Dark_Orange);
             else
-                activity.setTheme(R.style.OrangeLight);
+                activity.setTheme(R.style.KC_Light_Orange);
         } else if (color == activity.getResources().getColor(R.color.accentRed)) {
             if (darkUI)
-                activity.setTheme(R.style.RedDark);
+                activity.setTheme(R.style.KC_Dark_Red);
             else
-                activity.setTheme(R.style.RedLight);
+                activity.setTheme(R.style.KC_Light_Red);
         } else { // Blue
             if (darkUI)
-                activity.setTheme(R.style.BlueDark);
+                activity.setTheme(R.style.KC_Dark_Blue);
             else
-                activity.setTheme(R.style.BlueLight);
+                activity.setTheme(R.style.KC_Light_Blue);
         }
     }
 }

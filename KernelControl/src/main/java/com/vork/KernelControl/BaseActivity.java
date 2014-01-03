@@ -13,19 +13,17 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
+import com.vork.KernelControl.Adapter.ActionBarSpinnerAdapter;
 import com.vork.KernelControl.Adapter.NavigationDrawerAdapter;
 import com.vork.KernelControl.Settings.AppSettings;
 import com.vork.KernelControl.Utils.Helper;
@@ -35,7 +33,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BaseActivity extends FragmentActivity implements NavigationDrawerAdapter.ToggleGroupListener {
+public class BaseActivity extends FragmentActivity implements
+        NavigationDrawerAdapter.ToggleGroupListener,
+        ActionBar.OnNavigationListener {
     private static final int MENU_ITEM_CPU_ID = 0;
     private static final int MENU_ITEM_MEM_ID = 1;
     private static final int MENU_ITEM_MISC_ID = 2;
@@ -51,6 +51,11 @@ public class BaseActivity extends FragmentActivity implements NavigationDrawerAd
     private ArrayList<String> mGroupList;
     private List<String> mChildList;
     private Map<String, List<String>> mChildCollection;
+
+    private ArrayList<SpinnerNavItem> mNavSpinnerItems;
+    private ActionBarSpinnerAdapter mSpinnerAdapter;
+
+    private boolean mDarkUi = false;
 
 
     //For HoloAccent
@@ -113,24 +118,45 @@ public class BaseActivity extends FragmentActivity implements NavigationDrawerAd
             mChildList.add(item);
     }
 
+    protected void setupActionBarSpinner(String curTab) {
+        final ActionBar actionBar = getActionBar();
+        assert actionBar != null;
+
+        ArrayList<String> tabs = (ArrayList<String>) mChildCollection.get(curTab);
+
+        if (tabs.size() > 0) { //Make sure there are tabs
+            actionBar.setDisplayShowTitleEnabled(false); //No title - just the spinner
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+            mNavSpinnerItems = new ArrayList<SpinnerNavItem>();
+            for(String subtitle : tabs) {
+                mNavSpinnerItems.add(new SpinnerNavItem(curTab, subtitle));
+            }
+
+            mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), mNavSpinnerItems, mDarkUi);
+
+            actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
+        }
+    }
+
     private void setupNavDrawer() {
         final ActionBar actionBar = getActionBar();
         assert actionBar != null;
         mTitle = mDrawerTitle = getTitle();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean darkUI = preferences.getBoolean("dark_ui_switch", false);
+        mDarkUi = preferences.getBoolean("dark_ui_switch", false);
 
         //Setup the navigation drawer
         mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
-        if(darkUI) {
+        if (mDarkUi) {
             mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_darkTheme));
         } else {
             mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_lightTheme));
         }
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection, darkUI);
+        mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection, mDarkUi);
         mAdapter.setListener(this);
 
         mDrawerList.setAdapter(mAdapter);
@@ -232,6 +258,11 @@ public class BaseActivity extends FragmentActivity implements NavigationDrawerAd
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        return false;
+    }
+
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -275,4 +306,25 @@ public class BaseActivity extends FragmentActivity implements NavigationDrawerAd
         mDrawerToggle.setDrawerIndicatorEnabled(isEnabled);
     }
 
+    /**
+     * Holder for the ActionBar Spinner Items
+     */
+    public class SpinnerNavItem {
+
+        private String mTitle;
+        private String mSubtitle;
+
+        public SpinnerNavItem(String title, String subtitle) {
+            this.mTitle = title;
+            this.mSubtitle = subtitle;
+        }
+
+        public String getTitle() {
+            return this.mTitle;
+        }
+
+        public String getSubtitle() {
+            return this.mSubtitle;
+        }
+    }
 }
