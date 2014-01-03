@@ -2,7 +2,6 @@ package com.vork.KernelControl.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -119,7 +118,6 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
                     //Rotate the icon
                     expandIcon.setPivotX(expandIcon.getWidth()/2);
                     expandIcon.setPivotY(expandIcon.getHeight()/2);
-                    Log.d("KC", item.getText() + " is expanded: " + expanded);
                     if(expanded) {
                         expandIcon.setRotation(180);
                     } else {

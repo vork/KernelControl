@@ -2,27 +2,25 @@ package com.vork.KernelControl.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.vork.KernelControl.BaseActivity;
+import com.vork.KernelControl.BaseNavDrawerActivity;
 import com.vork.KernelControl.R;
 
 import java.util.ArrayList;
 
 public class ActionBarSpinnerAdapter extends BaseAdapter {
 
-    private ArrayList<BaseActivity.SpinnerNavItem> mSpinnerNavItem;
+    private ArrayList<BaseNavDrawerActivity.SpinnerNavItem> mSpinnerNavItem;
     private Context mContext;
     private Boolean mDarkUi;
 
     public ActionBarSpinnerAdapter(Context context,
-                                  ArrayList<BaseActivity.SpinnerNavItem> spinnerNavItem, boolean darkUi) {
+                                  ArrayList<BaseNavDrawerActivity.SpinnerNavItem> spinnerNavItem, boolean darkUi) {
         this.mSpinnerNavItem = spinnerNavItem;
         this.mContext = context;
         this.mDarkUi = darkUi;
