@@ -4,14 +4,13 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.vork.KernelControl.BaseNavDrawerActivity;
-import com.vork.KernelControl.BaseNavDrawerSpinnerActivity;
+import com.vork.KernelControl.Activities.Base.Abstract.AbstractBaseNavDrawerSpinnerActivity;
+import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
 
 public class CPU extends BaseNavDrawerSpinnerActivity {

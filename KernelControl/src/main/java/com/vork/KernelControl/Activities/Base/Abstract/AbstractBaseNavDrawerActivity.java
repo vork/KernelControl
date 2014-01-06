@@ -1,4 +1,4 @@
-package com.vork.KernelControl;
+package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
 import android.content.Context;
@@ -19,6 +19,7 @@ import android.widget.ExpandableListView;
 
 import com.crashlytics.android.Crashlytics;
 import com.vork.KernelControl.Adapter.NavigationDrawerAdapter;
+import com.vork.KernelControl.R;
 import com.vork.KernelControl.Settings.AppSettings;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class BaseNavDrawerActivity extends BaseActivity implements
+public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity implements
         NavigationDrawerAdapter.ToggleGroupListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -37,8 +38,11 @@ public abstract class BaseNavDrawerActivity extends BaseActivity implements
     private NavigationDrawerAdapter mAdapter;
 
     private ArrayList<String> mGroupList;
-    private List<String> mChildList;
     protected Map<String, List<String>> mChildCollection;
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Android specific methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +50,8 @@ public abstract class BaseNavDrawerActivity extends BaseActivity implements
 
         setContentView(R.layout.activity_nav_drawer_base);
 
-        setGroupData();
-        setChildData();
+        mGroupList = setGroupData();
+        mChildCollection = setChildData(mGroupList);
 
         setupNavDrawer();
     }
@@ -67,7 +71,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -82,49 +85,56 @@ public abstract class BaseNavDrawerActivity extends BaseActivity implements
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void setGroupData() {
-        mGroupList = new ArrayList<String>();
-        mGroupList.add(getString(R.string.menu_item_cpu));
-        mGroupList.add(getString(R.string.menu_item_memory));
-        mGroupList.add(getString(R.string.menu_item_misc));
-        mGroupList.add(getString(R.string.menu_item_info));
-    }
-
-    private void setChildData() {
-        String[] cpuTabs = {getString(R.string.menu_item_cpu_child_frequency),
-                getString(R.string.menu_item_cpu_child_voltage)};
-
-        String[] memTabs = {getString(R.string.menu_item_memory_child_memory),
-                getString(R.string.menu_item_memory_child_io)};
-
-        String[] miscTabs = {}; //Empty for now
-
-        String[] infoTabs = {getString(R.string.menu_item_info_child_general),
-                getString(R.string.menu_item_info_child_tis),
-                getString(R.string.menu_item_info_child_memory)};
-
-        mChildCollection = new LinkedHashMap<String, List<String>>();
-
-        for (String item : mGroupList) {
-            if (item.equals(getString(R.string.menu_item_cpu))) {
-                loadChild(cpuTabs);
-            } else if (item.equals(getString(R.string.menu_item_memory))) {
-                loadChild(memTabs);
-            } else if (item.equals(getString(R.string.menu_item_misc))) {
-                loadChild(miscTabs);
-            } else if (item.equals(getString(R.string.menu_item_info))) {
-                loadChild(infoTabs);
-            }
-
-            mChildCollection.put(item, mChildList);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, AppSettings.class));
+            overridePendingTransition(android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right);
+            Crashlytics.log("Settings");
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-    private void loadChild(String[] items) {
-        mChildList = new ArrayList<String>();
-        for (String item : items)
-            mChildList.add(item);
-    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Abstract methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Creates the group data for the navigation drawer
+     * @return list with group items
+     */
+    protected abstract ArrayList<String> setGroupData();
+
+    /**
+     * Creates the child data for the navigation drawer
+     * @param groupList the groups used in the drawer
+     * @return a map with the children belonging to the group
+     */
+    protected abstract Map<String, List<String>> setChildData(ArrayList<String> groupList);
+
+    /**
+     * Executed when a child is pressed
+     * @param groupNr the position of the group in the navigation drawer
+     * @param group the label of the group
+     * @param childNr the number of the pressed child
+     */
+    abstract protected void executeOnChildPress(int groupNr, String group, int childNr);
+
+    /**
+     * Executed when a group is pressed
+     * @param groupNr the position of the group in the navigation drawer
+     * @param group the label of the group
+     */
+    abstract protected void executeOnGroupPress(int groupNr, String group);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Internal methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void setupNavDrawer() {
         final ActionBar actionBar = getActionBar();
@@ -154,7 +164,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity implements
                 //                final String child = (String) mAdapter.getChild(
 //                        groupPosition, childPosition);
                 final String group = (String) mAdapter.getGroup(groupPosition);
-                Log.d("KernelControl", groupPosition + " " + childPosition);
                 executeOnChildPress(groupPosition, group, childPosition);
                 return false;
             }
@@ -200,25 +209,6 @@ public abstract class BaseNavDrawerActivity extends BaseActivity implements
             mDrawerList.expandGroup(groupPos);
             return true;
         }
-    }
-
-    //Needs to be overwritten
-    abstract protected void executeOnChildPress(int groupNr, String group, int childNr);
-    abstract protected void executeOnGroupPress(int groupNr, String group);
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, AppSettings.class));
-            overridePendingTransition(android.R.anim.slide_in_left,
-                    android.R.anim.slide_out_right);
-            Crashlytics.log("Settings");
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void selectItem(final Context context, final int position) {

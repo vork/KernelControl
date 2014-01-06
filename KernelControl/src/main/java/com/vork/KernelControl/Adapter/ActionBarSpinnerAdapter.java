@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.vork.KernelControl.BaseNavDrawerActivity;
+import com.vork.KernelControl.Activities.Base.Abstract.AbstractBaseNavDrawerActivity;
 import com.vork.KernelControl.R;
 
 import java.util.ArrayList;
 
 public class ActionBarSpinnerAdapter extends BaseAdapter {
 
-    private ArrayList<BaseNavDrawerActivity.SpinnerNavItem> mSpinnerNavItem;
+    private ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> mSpinnerNavItem;
     private Context mContext;
     private Boolean mDarkUi;
 
     public ActionBarSpinnerAdapter(Context context,
-                                  ArrayList<BaseNavDrawerActivity.SpinnerNavItem> spinnerNavItem, boolean darkUi) {
+                                  ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> spinnerNavItem, boolean darkUi) {
         this.mSpinnerNavItem = spinnerNavItem;
         this.mContext = context;
         this.mDarkUi = darkUi;

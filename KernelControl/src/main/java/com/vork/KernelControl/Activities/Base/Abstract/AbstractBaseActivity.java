@@ -1,4 +1,4 @@
-package com.vork.KernelControl;
+package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import com.negusoft.holoaccent.AccentHelper;
 import com.vork.KernelControl.Utils.Constants;
 import com.vork.KernelControl.Utils.Helper;
 
-public abstract class BaseActivity extends FragmentActivity implements Constants {
+public abstract class AbstractBaseActivity extends FragmentActivity implements Constants {
     protected boolean mDarkUi = false;
 
     //For HoloAccent

@@ -1,16 +1,13 @@
-package com.vork.KernelControl;
+package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
-import android.os.Bundle;
-import android.util.Log;
 
 import com.vork.KernelControl.Adapter.ActionBarSpinnerAdapter;
 
 import java.util.ArrayList;
 
-public abstract class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity implements
+public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseNavDrawerActivity implements
         ActionBar.OnNavigationListener {
-    private ArrayList<SpinnerNavItem> mNavSpinnerItems;
     protected ActionBarSpinnerAdapter mSpinnerAdapter;
     protected int mSelectedSpinnerItem = -1;
 
@@ -24,12 +21,12 @@ public abstract class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity
             actionBar.setDisplayShowTitleEnabled(false); //No title - just the spinner
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-            mNavSpinnerItems = new ArrayList<SpinnerNavItem>();
+            ArrayList<SpinnerNavItem> navSpinnerItems = new ArrayList<SpinnerNavItem>();
             for(String subtitle : tabs) {
-                mNavSpinnerItems.add(new SpinnerNavItem(curTab, subtitle));
+                navSpinnerItems.add(new SpinnerNavItem(curTab, subtitle));
             }
 
-            mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), mNavSpinnerItems, mDarkUi);
+            mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), navSpinnerItems, mDarkUi);
 
             actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
         }
