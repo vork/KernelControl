@@ -1,6 +1,5 @@
 package com.vork.KernelControl.Activities;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.vork.KernelControl.Activities.Base.Abstract.AbstractBaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
 
@@ -27,8 +25,8 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
         int selectedTab = intent.getIntExtra(NAV_DRAWER_BUNDLE_EXTRA, 0);
 
         if(savedInstanceState == null) {
-            final ActionBar actionBar = getActionBar();
-            actionBar.setSelectedNavigationItem(selectedTab);
+            setSelectedTab(selectedTab);
+
             if(selectedTab == VOLTAGE_TAB) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new CpuVoltageTab())
@@ -38,41 +36,6 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
                         .replace(R.id.content_frame, new CpuFrequencyTab())
                         .commit();
             }
-        }
-    }
-
-    @Override
-    protected void executeOnChildPress(int groupNr, String group, int childNr) {
-        Intent intent = null;
-        if(group.equals(getString(R.string.menu_item_cpu))) {
-            intent = new Intent(this, CPU.class);
-        } else if (group.equals(getString(R.string.menu_item_memory))) {
-            intent = new Intent(this, Memory.class);
-        } else if (group.equals(getString(R.string.menu_item_misc))) {
-
-        } else if (group.equals(getString(R.string.menu_item_info))) {
-
-        }
-        if (intent != null) {
-            intent.putExtra(NAV_DRAWER_BUNDLE_EXTRA, childNr);
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    protected void executeOnGroupPress(int groupNr, String group) {
-        Intent intent = null;
-        if(group.equals(getString(R.string.menu_item_cpu))) {
-            intent = new Intent(this, CPU.class);
-        } else if (group.equals(getString(R.string.menu_item_memory))) {
-            intent = new Intent(this, Memory.class);
-        } else if (group.equals(getString(R.string.menu_item_misc))) {
-
-        } else if (group.equals(getString(R.string.menu_item_info))) {
-
-        }
-        if (intent != null) {
-            startActivity(intent);
         }
     }
 

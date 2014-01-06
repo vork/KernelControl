@@ -32,6 +32,14 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
         }
     }
 
+    public void setSelectedTab(int position) {
+        final ActionBar actionBar = getActionBar();
+
+        if (actionBar != null) {
+            actionBar.setSelectedNavigationItem(position);
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         mSelectedSpinnerItem = itemPosition;

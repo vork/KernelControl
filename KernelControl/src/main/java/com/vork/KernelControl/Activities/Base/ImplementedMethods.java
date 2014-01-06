@@ -2,6 +2,7 @@ package com.vork.KernelControl.Activities.Base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 
 import com.vork.KernelControl.Activities.CPU;
 import com.vork.KernelControl.Activities.Memory;
@@ -16,41 +17,41 @@ import java.util.Map;
 public class ImplementedMethods implements Constants {
 
     public static void executeChildPress(Activity activity, int groupNr, String group, int childNr) {
-        Intent intent = null;
+        Class<?> cls = null;
         if(group.equals(activity.getString(R.string.menu_item_cpu))) {
-            intent = new Intent(activity, CPU.class);
+            cls = CPU.class;
         } else if (group.equals(activity.getString(R.string.menu_item_memory))) {
-            intent = new Intent(activity, Memory.class);
+            cls = Memory.class;
         } else if (group.equals(activity.getString(R.string.menu_item_misc))) {
 
         } else if (group.equals(activity.getString(R.string.menu_item_info))) {
 
         }
-        if (intent != null) {
-            intent.putExtra(NAV_DRAWER_BUNDLE_EXTRA, childNr);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            activity.startActivity(intent);
+        if (cls != null) {
+            Intent intent = new Intent(activity, cls);
+            intent.putExtra(NAV_DRAWER_BUNDLE_EXTRA, childNr);
+
+            activityStarter(activity, cls, intent);
         }
     }
 
     public static void executeGroupPress(Activity activity, int groupNr, String group) {
-        Intent intent = null;
+        Class<?> cls = null;
         if(group.equals(activity.getString(R.string.menu_item_cpu))) {
-            intent = new Intent(activity, CPU.class);
+            cls = CPU.class;
         } else if (group.equals(activity.getString(R.string.menu_item_memory))) {
-            intent = new Intent(activity, Memory.class);
+            cls = Memory.class;
         } else if (group.equals(activity.getString(R.string.menu_item_misc))) {
 
         } else if (group.equals(activity.getString(R.string.menu_item_info))) {
 
         }
-        if (intent != null) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            activity.startActivity(intent);
+        if (cls != null) {
+            Intent intent = new Intent(activity, cls);
+
+            activityStarter(activity, cls, intent);
         }
     }
 
@@ -103,5 +104,41 @@ public class ImplementedMethods implements Constants {
             mChildList.add(item);
 
         return mChildList;
+    }
+
+    private static void activityStarter(final Activity activity, final Class<?> cls, final Intent intent) {
+        int postDelayed = 140;
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        if(activity instanceof  BaseNavDrawerActivity) {
+            ((BaseNavDrawerActivity) activity).closeNavigationDrawer();
+        } else if (activity instanceof  BaseNavDrawerSpinnerActivity) { //TODO: A bit ugly - I know
+            ((BaseNavDrawerSpinnerActivity) activity).closeNavigationDrawer();
+        }
+
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                boolean sameActivity = false;
+                if (activity.getClass().getSimpleName().equals(cls.getSimpleName())) {
+                    sameActivity = true;
+                }
+
+                if(sameActivity) {
+                    if(activity instanceof  BaseNavDrawerSpinnerActivity) { //Only for spinner
+                        //If a group item is pressed there are no extras in the intent
+                        //So we just set the selectedTab to -1 and ignoring it
+                        int selectedTab = intent.getIntExtra(NAV_DRAWER_BUNDLE_EXTRA, -1);
+                        if(selectedTab != -1) {
+                            ((BaseNavDrawerSpinnerActivity) activity).setSelectedTab(selectedTab);
+                        }
+                    }
+                } else {
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+            }
+        }, postDelayed);
     }
 }

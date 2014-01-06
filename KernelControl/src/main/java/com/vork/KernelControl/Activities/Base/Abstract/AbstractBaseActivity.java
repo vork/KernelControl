@@ -27,4 +27,10 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
 
         Crashlytics.start(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 }

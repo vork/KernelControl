@@ -133,6 +133,14 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
     abstract protected void executeOnGroupPress(int groupNr, String group);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Public methods
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void closeNavigationDrawer() {
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     // Internal methods
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -209,31 +217,6 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
             mDrawerList.expandGroup(groupPos);
             return true;
         }
-    }
-
-    private void selectItem(final Context context, final int position) {
-        int postDelayed = 0;
-        Handler h = new Handler();
-        //Smooth menu closing
-        postDelayed = 120;
-//        mDrawerLayout.closeDrawer(mDrawerList);
-        mDrawerList.setItemChecked(position, true);
-
-//        h.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                switch (((SlidingMenu.MenuItemList) mAdapter.getItem(position)).mId) {
-//                    case MENU_ITEM_CPU_ID:
-//                        startActivity(new Intent(context, CPU.class).
-//                                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-//                        Crashlytics.log("CPU");
-//                        break;
-//                    default:
-//                        break;
-//                }
-//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-//            }
-//        }, postDelayed);
     }
 
     /**

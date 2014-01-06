@@ -1,6 +1,5 @@
 package com.vork.KernelControl.Activities;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.vork.KernelControl.Activities.Base.Abstract.AbstractBaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
 
@@ -27,8 +25,8 @@ public class Memory extends BaseNavDrawerSpinnerActivity {
         int selectedTab = intent.getIntExtra(NAV_DRAWER_BUNDLE_EXTRA, 0);
 
         if(savedInstanceState == null) {
-            final ActionBar actionBar = getActionBar();
-            actionBar.setSelectedNavigationItem(selectedTab);
+            setSelectedTab(selectedTab);
+
             if(selectedTab == IO_TAB) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new MemoryIoTab())
