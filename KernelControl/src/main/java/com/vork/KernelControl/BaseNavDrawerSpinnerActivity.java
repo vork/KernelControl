@@ -8,7 +8,7 @@ import com.vork.KernelControl.Adapter.ActionBarSpinnerAdapter;
 
 import java.util.ArrayList;
 
-public class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity implements
+public abstract class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity implements
         ActionBar.OnNavigationListener {
     private ArrayList<SpinnerNavItem> mNavSpinnerItems;
     protected ActionBarSpinnerAdapter mSpinnerAdapter;
@@ -38,7 +38,6 @@ public class BaseNavDrawerSpinnerActivity extends BaseNavDrawerActivity implemen
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         mSelectedSpinnerItem = itemPosition;
-        Log.d("KernelControl", "Item selected " + itemPosition);
         setSelectedItem(((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getTitle(),
                 ((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getSubtitle());
         return false;

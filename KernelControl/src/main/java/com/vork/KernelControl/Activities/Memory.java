@@ -4,25 +4,23 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.vork.KernelControl.BaseNavDrawerActivity;
 import com.vork.KernelControl.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
 
-public class CPU extends BaseNavDrawerSpinnerActivity {
-    private final static int FREQUENCY_TAB = 0;
-    private final static int VOLTAGE_TAB = 1;
+public class Memory extends BaseNavDrawerSpinnerActivity {
+    private final static int MEMORY_TAB = 0;
+    private final static int IO_TAB = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupActionBarSpinner(getString(R.string.menu_item_cpu));
+        setupActionBarSpinner(getString(R.string.menu_item_memory));
 
         Intent intent = getIntent();
         int selectedTab = intent.getIntExtra(NAV_DRAWER_BUNDLE_EXTRA, 0);
@@ -30,13 +28,13 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
         if(savedInstanceState == null) {
             final ActionBar actionBar = getActionBar();
             actionBar.setSelectedNavigationItem(selectedTab);
-            if(selectedTab == VOLTAGE_TAB) {
+            if(selectedTab == IO_TAB) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new CpuVoltageTab())
+                        .replace(R.id.content_frame, new MemoryIoTab())
                         .commit();
             } else {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new CpuFrequencyTab())
+                        .replace(R.id.content_frame, new MemoryMemTab())
                         .commit();
             }
         }
@@ -82,19 +80,19 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
         super.onNavigationItemSelected(itemPosition, itemId);
         if(itemPosition == 0) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new CpuFrequencyTab())
+                    .replace(R.id.content_frame, new MemoryMemTab())
                     .commit();
         } else {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new CpuVoltageTab())
+                    .replace(R.id.content_frame, new MemoryIoTab())
                     .commit();
         }
 
         return false;
     }
 
-    public static class CpuFrequencyTab extends Fragment {
-        public CpuFrequencyTab() {
+    public static class MemoryMemTab extends Fragment {
+        public MemoryMemTab() {
 
         }
 
@@ -104,15 +102,15 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
             View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
 
             TextView txtDummy = (TextView) rootView.findViewById(R.id.txt_dummy);
-            txtDummy.setText("Frequency");
+            txtDummy.setText("Memory");
 
             return rootView;
         }
 
-        }
+    }
 
-    public static class CpuVoltageTab extends Fragment {
-        public CpuVoltageTab() {
+    public static class MemoryIoTab extends Fragment {
+        public MemoryIoTab() {
 
         }
 
@@ -122,7 +120,7 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
             View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
 
             TextView txtDummy = (TextView) rootView.findViewById(R.id.txt_dummy);
-            txtDummy.setText("Voltage");
+            txtDummy.setText("I/O");
 
             return rootView;
         }

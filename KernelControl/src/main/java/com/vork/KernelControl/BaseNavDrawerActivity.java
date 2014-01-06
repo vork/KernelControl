@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class BaseNavDrawerActivity extends BaseActivity implements
+public abstract class BaseNavDrawerActivity extends BaseActivity implements
         NavigationDrawerAdapter.ToggleGroupListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -49,6 +50,36 @@ public class BaseNavDrawerActivity extends BaseActivity implements
         setChildData();
 
         setupNavDrawer();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void setGroupData() {
@@ -120,9 +151,11 @@ public class BaseNavDrawerActivity extends BaseActivity implements
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 //ToDo jump to correct tab
-                final String child = (String) mAdapter.getChild(
-                        groupPosition, childPosition);
+                //                final String child = (String) mAdapter.getChild(
+//                        groupPosition, childPosition);
                 final String group = (String) mAdapter.getGroup(groupPosition);
+                Log.d("KernelControl", groupPosition + " " + childPosition);
+                executeOnChildPress(groupPosition, group, childPosition);
                 return false;
             }
         });
@@ -130,6 +163,7 @@ public class BaseNavDrawerActivity extends BaseActivity implements
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 final String group = (String) mAdapter.getGroup(groupPosition);
+                executeOnGroupPress(groupPosition, group);
                 return true;
             }
         });
@@ -158,36 +192,6 @@ public class BaseNavDrawerActivity extends BaseActivity implements
         getActionBar().setHomeButtonEnabled(true);
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    /* Called whenever we call invalidateOptionsMenu() */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     public boolean toggleGroupState(int groupPos) {
         if (mDrawerList.isGroupExpanded(groupPos)) {
             mDrawerList.collapseGroup(groupPos);
@@ -197,6 +201,10 @@ public class BaseNavDrawerActivity extends BaseActivity implements
             return true;
         }
     }
+
+    //Needs to be overwritten
+    abstract protected void executeOnChildPress(int groupNr, String group, int childNr);
+    abstract protected void executeOnGroupPress(int groupNr, String group);
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

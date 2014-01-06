@@ -6,9 +6,10 @@ import android.support.v4.app.FragmentActivity;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
+import com.vork.KernelControl.Utils.Constants;
 import com.vork.KernelControl.Utils.Helper;
 
-public class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity implements Constants {
     protected boolean mDarkUi = false;
 
     //For HoloAccent

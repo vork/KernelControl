@@ -19,6 +19,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activities.Memory"
+            android:label="@string/app_name"/>
+
         <activity android:name=".Settings.AppSettings"
             android:label="@string/action_settings"
             android:parentActivityName=".Activities.CPU"
