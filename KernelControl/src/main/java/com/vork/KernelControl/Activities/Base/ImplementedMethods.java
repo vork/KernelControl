@@ -28,6 +28,9 @@ public class ImplementedMethods implements Constants {
         }
         if (intent != null) {
             intent.putExtra(NAV_DRAWER_BUNDLE_EXTRA, childNr);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             activity.startActivity(intent);
         }
     }
@@ -44,6 +47,9 @@ public class ImplementedMethods implements Constants {
 
         }
         if (intent != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             activity.startActivity(intent);
         }
     }
