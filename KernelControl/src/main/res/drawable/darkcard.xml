@@ -4,4 +4,4 @@
     android:shape="rectangle">
     <solid android:color="@color/card_background_darkTheme" />
     <corners android:radius="@dimen/card_background_default_radius" />
- </shape>
+</shape>

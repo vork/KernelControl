@@ -1,17 +1,14 @@
 package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +21,6 @@ import com.vork.KernelControl.R;
 import com.vork.KernelControl.Settings.AppSettings;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -106,12 +102,14 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
 
     /**
      * Creates the group data for the navigation drawer
+     *
      * @return list with group items
      */
     protected abstract ArrayList<String> setGroupData();
 
     /**
      * Creates the child data for the navigation drawer
+     *
      * @param groupList the groups used in the drawer
      * @return a map with the children belonging to the group
      */
@@ -119,16 +117,18 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
 
     /**
      * Executed when a child is pressed
+     *
      * @param groupNr the position of the group in the navigation drawer
-     * @param group the label of the group
+     * @param group   the label of the group
      * @param childNr the number of the pressed child
      */
     abstract protected void executeOnChildPress(int groupNr, String group, int childNr);
 
     /**
      * Executed when a group is pressed
+     *
      * @param groupNr the position of the group in the navigation drawer
-     * @param group the label of the group
+     * @param group   the label of the group
      */
     abstract protected void executeOnGroupPress(int groupNr, String group);
 
@@ -247,12 +247,12 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         int toRet = -1;
 
         int temp = 0;
-        for(String group : groups) {
-            if(group.equals(groupName)) {
+        for (String group : groups) {
+            if (group.equals(groupName)) {
                 toRet = temp;
                 break;
             } else {
-                temp ++;
+                temp++;
             }
         }
 
@@ -265,8 +265,8 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         List<String> childs = mChildCollection.get(groupName);
 
         int temp = 0;
-        for(String child : childs) {
-            if(child.equals(childName)) {
+        for (String child : childs) {
+            if (child.equals(childName)) {
                 toRet = temp;
             } else {
                 temp++;

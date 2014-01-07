@@ -31,7 +31,7 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
             actionBar.setDisplayShowCustomEnabled(true);
 
             ArrayList<SpinnerNavItem> navSpinnerItems = new ArrayList<SpinnerNavItem>();
-            for(String subtitle : tabs) {
+            for (String subtitle : tabs) {
                 navSpinnerItems.add(new SpinnerNavItem(curTab, subtitle));
             }
 
@@ -63,7 +63,7 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
-            if(drawerOpen) {
+            if (drawerOpen) {
                 actionBar.setDisplayShowTitleEnabled(true);
                 actionBar.setDisplayShowCustomEnabled(false);
             } else {

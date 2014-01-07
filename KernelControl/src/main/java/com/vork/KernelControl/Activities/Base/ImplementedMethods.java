@@ -18,7 +18,7 @@ public class ImplementedMethods implements Constants {
 
     public static void executeChildPress(Activity activity, int groupNr, String group, int childNr) {
         Class<?> cls = null;
-        if(group.equals(activity.getString(R.string.menu_item_cpu))) {
+        if (group.equals(activity.getString(R.string.menu_item_cpu))) {
             cls = CPU.class;
         } else if (group.equals(activity.getString(R.string.menu_item_memory))) {
             cls = Memory.class;
@@ -38,7 +38,7 @@ public class ImplementedMethods implements Constants {
 
     public static void executeGroupPress(Activity activity, int groupNr, String group) {
         Class<?> cls = null;
-        if(group.equals(activity.getString(R.string.menu_item_cpu))) {
+        if (group.equals(activity.getString(R.string.menu_item_cpu))) {
             cls = CPU.class;
         } else if (group.equals(activity.getString(R.string.menu_item_memory))) {
             cls = Memory.class;
@@ -110,9 +110,9 @@ public class ImplementedMethods implements Constants {
         int postDelayed = 140;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        if(activity instanceof  BaseNavDrawerActivity) {
+        if (activity instanceof BaseNavDrawerActivity) {
             ((BaseNavDrawerActivity) activity).closeNavigationDrawer();
-        } else if (activity instanceof  BaseNavDrawerSpinnerActivity) { //TODO: A bit ugly - I know
+        } else if (activity instanceof BaseNavDrawerSpinnerActivity) { //TODO: A bit ugly - I know
             ((BaseNavDrawerSpinnerActivity) activity).closeNavigationDrawer();
         }
 
@@ -125,12 +125,12 @@ public class ImplementedMethods implements Constants {
                     sameActivity = true;
                 }
 
-                if(sameActivity) {
-                    if(activity instanceof  BaseNavDrawerSpinnerActivity) { //Only for spinner
+                if (sameActivity) {
+                    if (activity instanceof BaseNavDrawerSpinnerActivity) { //Only for spinner
                         //If a group item is pressed there are no extras in the intent
                         //So we just set the selectedTab to -1 and ignoring it
                         int selectedTab = intent.getIntExtra(NAV_DRAWER_BUNDLE_EXTRA, -1);
-                        if(selectedTab != -1) {
+                        if (selectedTab != -1) {
                             ((BaseNavDrawerSpinnerActivity) activity).setSelectedTab(selectedTab);
                         }
                     }

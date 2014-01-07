@@ -20,8 +20,8 @@ public class Helper implements Preferences {
      * replaces a layout with a fragment and animates the switch
      *
      * @param fragmentManager
-     * @param contentId the layout which will be replaced
-     * @param fragment the fragment the layout is replaced with
+     * @param contentId       the layout which will be replaced
+     * @param fragment        the fragment the layout is replaced with
      */
     public static void switchFragment(FragmentManager fragmentManager, int contentId, Fragment fragment) {
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -45,12 +45,11 @@ public class Helper implements Preferences {
         activity.overridePendingTransition(enter_anim, exit_anim);
         activity.startActivity(new Intent(activity, CPU.class).
                 setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                            Intent.FLAG_ACTIVITY_NEW_TASK)
+                        Intent.FLAG_ACTIVITY_NEW_TASK)
         );
     }
 
-    public static int getDrawable(Context context, String name)
-    {
+    public static int getDrawable(Context context, String name) {
         Assert.assertNotNull(context);
         Assert.assertNotNull(name);
 

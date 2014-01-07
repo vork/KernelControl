@@ -33,12 +33,12 @@ public class AppSettingsFragment extends PreferenceFragment implements Preferenc
 
         Preference chooseAccentColor = findPreference("accent_color");
 
-        if(chooseAccentColor != null) {
+        if (chooseAccentColor != null) {
             final ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
-            colorPickerDialog.initialize(R.string.theme_settings_accent_color, new int[] {
+            colorPickerDialog.initialize(R.string.theme_settings_accent_color, new int[]{
                     getResources().getColor(R.color.accentBlue), getResources().getColor(R.color.accentPurple),
                     getResources().getColor(R.color.accentGreen), getResources().getColor(R.color.accentOrange),
-                    getResources().getColor(R.color.accentRed) }, accentColor, 5, 2);
+                    getResources().getColor(R.color.accentRed)}, accentColor, 5, 2);
             colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
                 @Override
                 public void onColorSelected(int color) {

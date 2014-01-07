@@ -17,7 +17,7 @@
     <dimen name="action_bar_spinner_subtitle_top_margin">-3dp</dimen>
     <!-- Bottom margin for action bar subtitles -->
     <dimen name="action_bar_spinner_subtitle_bottom_margin">5dip</dimen>
-    
+
     <!--Action Bar related -->
     <dimen name="drop_down_item_padding">8dp</dimen>
 
@@ -26,4 +26,4 @@
 
     <dimen name="default_touch_size">48dp</dimen>
 
-    </resources>
+</resources>

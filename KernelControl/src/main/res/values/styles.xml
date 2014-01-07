@@ -1,4 +1,5 @@
 <resources>
+
     <style name="KC"></style>
 
     <!-- Base application theme. -->
@@ -6,7 +7,9 @@
         <item name="android:listViewStyle">@style/KC.Light.NavDrawer</item>
 
         <!-- Use the white overflow icon-->
-        <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.ActionButton.Overflow</item>
+        <item name="android:actionOverflowButtonStyle">
+            @android:style/Widget.Holo.ActionButton.Overflow
+        </item>
 
         <!-- Change the dropdown spinners to light style-->
         <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Light</item>
@@ -40,7 +43,9 @@
 
     <!-- Action Bar Customization-->
     <style name="KC.ActionBar.Widget"></style>
+
     <style name="KC.ActionBar.Widget.Light.DropDownItem"></style>
+
     <style name="KC.ActionBar.Widget.Dark.DropDownItem"></style>
 
     <style name="KC.ActionBar" parent="android:Widget.Holo.ActionBar.Solid">
@@ -50,19 +55,27 @@
 
     <!-- The Action Bar DropDown Customization-->
     <style name="KC.ActionBar.Widget.Light" parent="KC">
-        <item name="android:spinnerDropDownItemStyle">@style/KC.ActionBar.Widget.Light.DropDownItem.Spinner</item>
+        <item name="android:spinnerDropDownItemStyle">
+            @style/KC.ActionBar.Widget.Light.DropDownItem.Spinner
+        </item>
     </style>
 
     <style name="KC.ActionBar.Widget.Light.DropDownItem.Spinner">
-        <item name="android:textAppearance">@style/KC.Light.TextAppearance.Widget.ActionBar.Spinner.DropDownItem</item>
+        <item name="android:textAppearance">
+            @style/KC.Light.TextAppearance.Widget.ActionBar.Spinner.DropDownItem
+        </item>
     </style>
 
     <style name="KC.ActionBar.Widget.Dark" parent="KC">
-        <item name="android:spinnerDropDownItemStyle">@style/KC.ActionBar.Widget.Dark.DropDownItem.Spinner</item>
+        <item name="android:spinnerDropDownItemStyle">
+            @style/KC.ActionBar.Widget.Dark.DropDownItem.Spinner
+        </item>
     </style>
 
     <style name="KC.ActionBar.Widget.Dark.DropDownItem.Spinner">
-        <item name="android:textAppearance">@style/KC.Dark.TextAppearance.Widget.ActionBar.Spinner.DropDownItem</item>
+        <item name="android:textAppearance">
+            @style/KC.Dark.TextAppearance.Widget.ActionBar.Spinner.DropDownItem
+        </item>
     </style>
 
     <!-- Holo color accented themes -->
@@ -153,8 +166,11 @@
 
     <!-- TextAppearance -->
     <style name="KC.TextAppearance"></style>
+
     <style name="KC.TextAppearance.Widget"></style>
+
     <style name="KC.TextAppearance.Widget.ActionBar"></style>
+
     <style name="KC.TextAppearance.Widget.ActionBar.Spinner"></style>
 
     <style name="KC.ActionBar.TextAppearance.Title" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
@@ -177,17 +193,14 @@
     </style>
 
     <!-- Generic attributes -->
-    <style name="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem" parent="TextAppearance.HoloAccent.Widget.DropDownItem">
-    </style>
+    <style name="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem" parent="TextAppearance.HoloAccent.Widget.DropDownItem"></style>
 
     <!-- specific -->
-    <style name="KC.Light.TextAppearance.Widget.ActionBar.Spinner.DropDownItem"
-        parent="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem">
+    <style name="KC.Light.TextAppearance.Widget.ActionBar.Spinner.DropDownItem" parent="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem">
         <item name="android:textColor">@android:color/primary_text_light</item>
     </style>
 
-    <style name="KC.Dark.TextAppearance.Widget.ActionBar.Spinner.DropDownItem"
-        parent="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem">
+    <style name="KC.Dark.TextAppearance.Widget.ActionBar.Spinner.DropDownItem" parent="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem">
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 

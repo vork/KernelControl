@@ -3,7 +3,6 @@ package com.vork.KernelControl;
 import android.app.Application;
 
 
-
 public class KernelControl extends Application {
     @Override
     public void onCreate() {

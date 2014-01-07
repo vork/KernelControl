@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.vork.KernelControl" >
+    package="com.vork.KernelControl">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/KC.Light.Blue" >
+        android:theme="@style/KC.Light.Blue">
         <activity
             android:name=".Activities.CPU"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,15 +19,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.Memory"
-            android:label="@string/app_name"/>
+        <activity
+            android:name=".Activities.Memory"
+            android:label="@string/app_name" />
 
-        <activity android:name=".Settings.AppSettings"
+        <activity
+            android:name=".Settings.AppSettings"
             android:label="@string/action_settings"
             android:parentActivityName=".Activities.CPU"
-            android:theme="@style/KC.Light.Blue"/>
+            android:theme="@style/KC.Light.Blue" />
 
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="14b856af3c3c97073c12fdaec9d804057fbf7331"/>
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="14b856af3c3c97073c12fdaec9d804057fbf7331" />
     </application>
 
 </manifest>

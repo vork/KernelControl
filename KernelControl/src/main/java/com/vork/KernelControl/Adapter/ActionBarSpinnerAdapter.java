@@ -20,7 +20,7 @@ public class ActionBarSpinnerAdapter extends BaseAdapter {
     private Boolean mDarkUi;
 
     public ActionBarSpinnerAdapter(Context context,
-                                  ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> spinnerNavItem, boolean darkUi) {
+                                   ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> spinnerNavItem, boolean darkUi) {
         this.mSpinnerNavItem = spinnerNavItem;
         this.mContext = context;
         this.mDarkUi = darkUi;
@@ -86,7 +86,7 @@ public class ActionBarSpinnerAdapter extends BaseAdapter {
 
         holder.mTxtTitle.setText(mSpinnerNavItem.get(position).getSubtitle());
 
-        if(mDarkUi) {
+        if (mDarkUi) {
             holder.mTxtTitle.setTextAppearance(mContext, R.style.KC_Dark_TextAppearance_Widget_ActionBar_Spinner_DropDownItem);
         } else {
             holder.mTxtTitle.setTextAppearance(mContext, R.style.KC_Light_TextAppearance_Widget_ActionBar_Spinner_DropDownItem);
