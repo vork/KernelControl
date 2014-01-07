@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
+import com.vork.KernelControl.Utils.Helper;
 
 public class CPU extends BaseNavDrawerSpinnerActivity {
     private final static int FREQUENCY_TAB = 0;
@@ -24,10 +25,10 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
         Intent intent = getIntent();
         int selectedTab = intent.getIntExtra(NAV_DRAWER_BUNDLE_EXTRA, 0);
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             setSelectedTab(selectedTab);
 
-            if(selectedTab == VOLTAGE_TAB) {
+            if (selectedTab == VOLTAGE_TAB) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new CpuVoltageTab())
                         .commit();
@@ -42,14 +43,10 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         super.onNavigationItemSelected(itemPosition, itemId);
-        if(itemPosition == 0) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new CpuFrequencyTab())
-                    .commit();
+        if (itemPosition == 0) {
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new CpuFrequencyTab());
         } else {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new CpuVoltageTab())
-                    .commit();
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new CpuVoltageTab());
         }
 
         return false;
@@ -71,7 +68,7 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
             return rootView;
         }
 
-        }
+    }
 
     public static class CpuVoltageTab extends Fragment {
         public CpuVoltageTab() {

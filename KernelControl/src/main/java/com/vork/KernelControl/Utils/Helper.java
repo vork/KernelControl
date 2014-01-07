@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.vork.KernelControl.Activities.CPU;
 import com.vork.KernelControl.R;
@@ -12,6 +15,20 @@ import com.vork.KernelControl.R;
 import junit.framework.Assert;
 
 public class Helper implements Preferences {
+
+    /**
+     * replaces a layout with a fragment and animates the switch
+     *
+     * @param fragmentManager
+     * @param contentId the layout which will be replaced
+     * @param fragment the fragment the layout is replaced with
+     */
+    public static void switchFragment(FragmentManager fragmentManager, int contentId, Fragment fragment) {
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        ft.replace(contentId, fragment);
+        ft.commit();
+    }
 
     /**
      * Restart the activity smoothly

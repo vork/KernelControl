@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
+import com.vork.KernelControl.Utils.Helper;
 
 public class Memory extends BaseNavDrawerSpinnerActivity {
     private final static int MEMORY_TAB = 0;
@@ -24,10 +25,10 @@ public class Memory extends BaseNavDrawerSpinnerActivity {
         Intent intent = getIntent();
         int selectedTab = intent.getIntExtra(NAV_DRAWER_BUNDLE_EXTRA, 0);
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             setSelectedTab(selectedTab);
 
-            if(selectedTab == IO_TAB) {
+            if (selectedTab == IO_TAB) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, new MemoryIoTab())
                         .commit();
@@ -42,14 +43,10 @@ public class Memory extends BaseNavDrawerSpinnerActivity {
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         super.onNavigationItemSelected(itemPosition, itemId);
-        if(itemPosition == 0) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new MemoryMemTab())
-                    .commit();
+        if (itemPosition == 0) {
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new MemoryMemTab());
         } else {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new MemoryIoTab())
-                    .commit();
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new MemoryIoTab());
         }
 
         return false;
