@@ -1,1 +1,1 @@
-include ':KernelControl', ':HoloAccent', ':ColorPicker'
+include ':KernelControl', ':HoloAccent'
