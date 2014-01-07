@@ -71,7 +71,6 @@ public class ActionBarSpinnerAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater)
                     mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-//            convertView = mInflater.inflate(R.layout.actionbar_spinner_dropdown_item, null);
             convertView = mInflater.inflate(android.R.layout.simple_spinner_dropdown_item, null);
 
             convertView.setMinimumHeight(mContext.getResources().

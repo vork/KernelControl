@@ -3,6 +3,7 @@ package com.vork.KernelControl.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         super.onNavigationItemSelected(itemPosition, itemId);
+        Log.d("KernelControl", "pos: " + itemPosition);
         if(itemPosition == 0) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_frame, new CpuFrequencyTab())

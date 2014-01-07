@@ -1,5 +1,7 @@
 package com.vork.KernelControl.Activities.Base;
 
+import android.widget.AdapterView;
+
 import com.vork.KernelControl.Activities.Base.Abstract.AbstractBaseNavDrawerSpinnerActivity;
 
 import java.util.ArrayList;
@@ -27,5 +29,15 @@ public class BaseNavDrawerSpinnerActivity extends AbstractBaseNavDrawerSpinnerAc
     @Override
     protected void executeOnGroupPress(int groupNr, String group) {
         ImplementedMethods.executeGroupPress(this, groupNr, group);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        return false;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

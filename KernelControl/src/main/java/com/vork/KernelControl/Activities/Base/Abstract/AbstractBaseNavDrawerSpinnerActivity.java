@@ -1,15 +1,20 @@
 package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import com.vork.KernelControl.Adapter.ActionBarSpinnerAdapter;
+import com.vork.KernelControl.R;
 
 import java.util.ArrayList;
 
-public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseNavDrawerActivity implements
-        ActionBar.OnNavigationListener {
+public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseNavDrawerActivity
+        implements AdapterView.OnItemSelectedListener {
     protected ActionBarSpinnerAdapter mSpinnerAdapter;
     protected int mSelectedSpinnerItem = -1;
+    protected Spinner mActionBarSpinner;
 
     protected void setupActionBarSpinner(String curTab) {
         final ActionBar actionBar = getActionBar();
@@ -19,7 +24,9 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
 
         if (tabs.size() > 0) { //Make sure there are tabs
             actionBar.setDisplayShowTitleEnabled(false); //No title - just the spinner
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            View actionBarSpinnerCustomView = getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
+            actionBar.setCustomView(actionBarSpinnerCustomView);
+            actionBar.setDisplayShowCustomEnabled(true);
 
             ArrayList<SpinnerNavItem> navSpinnerItems = new ArrayList<SpinnerNavItem>();
             for(String subtitle : tabs) {
@@ -28,23 +35,26 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
 
             mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), navSpinnerItems, mDarkUi);
 
-            actionBar.setListNavigationCallbacks(mSpinnerAdapter, this);
+            if (actionBarSpinnerCustomView != null) {
+                mActionBarSpinner = (Spinner) actionBarSpinnerCustomView.findViewById(R.id.spinner);
+                mActionBarSpinner.setAdapter(mSpinnerAdapter);
+                mActionBarSpinner.setOnItemSelectedListener(this);
+            }
         }
     }
 
     public void setSelectedTab(int position) {
-        final ActionBar actionBar = getActionBar();
-
-        if (actionBar != null) {
-            actionBar.setSelectedNavigationItem(position);
-        }
+        mActionBarSpinner.setSelection(position, true);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        mSelectedSpinnerItem = itemPosition;
-        setSelectedItem(((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getTitle(),
-                ((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getSubtitle());
-        return false;
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        mSelectedSpinnerItem = pos;
+        //TODO Selection needs fixing
+//        setSelectedItem(((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getTitle(),
+//                ((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getSubtitle());
+        onNavigationItemSelected(pos, id);
     }
+
+    public abstract boolean onNavigationItemSelected(int itemPosition, long itemId);
 }

@@ -10,9 +10,6 @@
 
         <!-- Change the dropdown spinners to light style-->
         <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Light</item>
-
-        <!-- Use the white spinner indicator -->
-        <item name="android:actionDropDownStyle">@style/KC.Light.ActionBar.Spinner</item>
     </style>
 
     <style name="KC.Dark" parent="Theme.HoloAccent">
@@ -20,9 +17,6 @@
 
         <!-- Change the dropdown spinners to dark style-->
         <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Dark</item>
-
-        <!-- Use the white spinner indicator -->
-        <item name="android:actionDropDownStyle">@style/KC.ActionBar.Spinner</item>
     </style>
 
     <!-- Nav Drawer customization -->
@@ -52,15 +46,6 @@
     <style name="KC.ActionBar" parent="android:Widget.Holo.ActionBar.Solid">
         <item name="android:icon">@drawable/ic_actionbar_icon</item>
         <item name="android:titleTextStyle">@style/KC.ActionBar.TextAppearance.Title</item>
-    </style>
-
-    <!-- Use a white spinner in the ActionBar -->
-    <style name="KC.ActionBar.Spinner" parent="android:Widget.Holo.Spinner">
-        <item name="android:background">@drawable/spinner_ab</item>
-    </style>
-
-    <style name="KC.Light.ActionBar.Spinner" parent="KC.ActionBar.Spinner">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_light</item>
     </style>
 
     <!-- The Action Bar DropDown Customization-->
@@ -193,8 +178,6 @@
 
     <!-- Generic attributes -->
     <style name="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem" parent="TextAppearance.HoloAccent.Widget.DropDownItem">
-        <item name="android:textSize">@dimen/action_bar_title_text_size_no_spinner</item>
-        <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
     <!-- specific -->
