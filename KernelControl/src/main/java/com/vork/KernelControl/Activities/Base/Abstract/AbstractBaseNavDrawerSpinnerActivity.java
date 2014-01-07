@@ -28,22 +28,26 @@ import com.vork.KernelControl.R;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseNavDrawerActivity
         implements AdapterView.OnItemSelectedListener {
     protected ActionBarSpinnerAdapter mSpinnerAdapter;
     protected int mSelectedSpinnerItem = -1;
-    protected Spinner mActionBarSpinner;
+    @InjectView(R.id.spinner) protected Spinner mActionBarSpinner;
 
     protected void setupActionBarSpinner(String curTab) {
         final ActionBar actionBar = getActionBar();
         assert actionBar != null;
 
         ArrayList<String> tabs = (ArrayList<String>) mChildCollection.get(curTab);
+        View actionBarSpinnerCustomView = getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
+        ButterKnife.inject(this, actionBarSpinnerCustomView);
 
         if (tabs.size() > 0) { //Make sure there are tabs
             actionBar.setDisplayShowTitleEnabled(false); //No title - just the spinner
 
-            View actionBarSpinnerCustomView = getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
             actionBar.setCustomView(actionBarSpinnerCustomView);
             actionBar.setDisplayShowCustomEnabled(true);
 
@@ -55,7 +59,6 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
             mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), navSpinnerItems, mDarkUi);
 
             if (actionBarSpinnerCustomView != null) {
-                mActionBarSpinner = (Spinner) actionBarSpinnerCustomView.findViewById(R.id.spinner);
                 mActionBarSpinner.setAdapter(mSpinnerAdapter);
                 mActionBarSpinner.setOnItemSelectedListener(this);
             }

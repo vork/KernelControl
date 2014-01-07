@@ -1,20 +1,3 @@
-/*
- * This file is part of KernelControl.
- *
- *     KernelControl is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     KernelControl is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with KernelControl.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
@@ -36,6 +19,8 @@ import com.crashlytics.android.Crashlytics;
 import com.vork.KernelControl.Adapter.NavigationDrawerAdapter;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Settings.AppSettings;
+
+import static butterknife.ButterKnife.findById;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,13 +155,13 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         mDarkUi = preferences.getBoolean("dark_ui_switch", false);
 
         //Setup the navigation drawer
-        mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
+        mDrawerList = findById(this, R.id.left_drawer);
         if (mDarkUi) {
             mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_darkTheme));
         } else {
             mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_lightTheme));
         }
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findById(this, R.id.drawer_layout);
 
         mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection, mDarkUi);
         mAdapter.setListener(this);

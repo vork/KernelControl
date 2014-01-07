@@ -29,6 +29,8 @@ import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Helper;
 
+import static butterknife.ButterKnife.findById;
+
 public class Memory extends BaseNavDrawerSpinnerActivity {
     private final static int MEMORY_TAB = 0;
     private final static int IO_TAB = 1;
@@ -69,7 +71,7 @@ public class Memory extends BaseNavDrawerSpinnerActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
 
-            TextView txtDummy = (TextView) rootView.findViewById(R.id.txt_dummy);
+            TextView txtDummy = findById(rootView, R.id.txt_dummy);
             txtDummy.setText("Memory");
 
             return rootView;
@@ -87,7 +89,7 @@ public class Memory extends BaseNavDrawerSpinnerActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
 
-            TextView txtDummy = (TextView) rootView.findViewById(R.id.txt_dummy);
+            TextView txtDummy = findById(rootView, R.id.txt_dummy);
             txtDummy.setText("I/O");
 
             return rootView;

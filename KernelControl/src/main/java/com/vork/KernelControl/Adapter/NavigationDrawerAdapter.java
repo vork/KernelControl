@@ -28,6 +28,8 @@ import android.widget.TextView;
 
 import com.vork.KernelControl.R;
 
+import static butterknife.ButterKnife.findById;
+
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +72,7 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 
         assert convertView != null;
 
-        TextView item = (TextView) convertView.findViewById(R.id.child_title);
+        TextView item = findById(convertView, R.id.child_title);
         item.setText(ChildName);
 
         if (mDarkUi) {
@@ -106,10 +108,10 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.menu_row_item,
                     null);
         }
-        final TextView item = (TextView) convertView.findViewById(R.id.group_title);
+        final TextView item = findById(convertView, R.id.group_title);
         item.setText(groupName);
 
-        final ImageView expandIcon = (ImageView) convertView.findViewById(R.id.expandable_icon);
+        final ImageView expandIcon = findById(convertView, R.id.expandable_icon);
 
         if (mDarkUi) {
             convertView.setBackgroundColor(context.getResources().getColor(R.color.menu_group_darkTheme));
@@ -117,6 +119,7 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
             item.setTextAppearance(context, R.style.KC_Dark_NavDrawer_MenuItem);
         }
 
+        //Rotate the expand icon as a indicator
         if (getChildrenCount(groupPosition) == 0) {
             expandIcon.setVisibility(View.INVISIBLE);
         } else {

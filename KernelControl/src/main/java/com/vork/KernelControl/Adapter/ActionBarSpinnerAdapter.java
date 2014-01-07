@@ -30,6 +30,10 @@ import com.vork.KernelControl.R;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.Optional;
+
 public class ActionBarSpinnerAdapter extends BaseAdapter {
 
     private ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> mSpinnerNavItem;
@@ -66,10 +70,7 @@ public class ActionBarSpinnerAdapter extends BaseAdapter {
                     mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.actionbar_spinner_item, null);
 
-            holder = new ViewHolder();
-            holder.mTxtTitle = (TextView) convertView.findViewById(android.R.id.text1);
-            holder.mTxtSubTitle = (TextView) convertView.findViewById(android.R.id.text2);
-
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -93,9 +94,7 @@ public class ActionBarSpinnerAdapter extends BaseAdapter {
             convertView.setMinimumHeight(mContext.getResources().
                     getDimensionPixelOffset(R.dimen.default_touch_size));
 
-            holder = new ViewHolder();
-            holder.mTxtTitle = (TextView) convertView.findViewById(android.R.id.text1);
-
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -113,8 +112,12 @@ public class ActionBarSpinnerAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        public TextView mTxtTitle;
-        public TextView mTxtSubTitle;
+        @InjectView(android.R.id.text1) public TextView mTxtTitle;
+        @Optional @InjectView(android.R.id.text2) public TextView mTxtSubTitle;
+
+        public ViewHolder(View view) {
+            ButterKnife.inject(this, view);
+        }
     }
 
 }
