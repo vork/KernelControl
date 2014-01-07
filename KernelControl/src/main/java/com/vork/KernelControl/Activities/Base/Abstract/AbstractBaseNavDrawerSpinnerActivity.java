@@ -1,6 +1,7 @@
 package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -24,6 +25,7 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
 
         if (tabs.size() > 0) { //Make sure there are tabs
             actionBar.setDisplayShowTitleEnabled(false); //No title - just the spinner
+
             View actionBarSpinnerCustomView = getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
             actionBar.setCustomView(actionBarSpinnerCustomView);
             actionBar.setDisplayShowCustomEnabled(true);
@@ -54,6 +56,22 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
 //        setSelectedItem(((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getTitle(),
 //                ((SpinnerNavItem) mSpinnerAdapter.getItem(mSelectedSpinnerItem)).getSubtitle());
         onNavigationItemSelected(pos, id);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            if(drawerOpen) {
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setDisplayShowCustomEnabled(false);
+            } else {
+                actionBar.setDisplayShowTitleEnabled(false);
+                actionBar.setDisplayShowCustomEnabled(true);
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public abstract boolean onNavigationItemSelected(int itemPosition, long itemId);

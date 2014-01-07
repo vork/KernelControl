@@ -30,9 +30,9 @@ import java.util.Set;
 
 public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity implements
         NavigationDrawerAdapter.ToggleGroupListener {
-    private DrawerLayout mDrawerLayout;
+    protected DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private ExpandableListView mDrawerList;
+    protected ExpandableListView mDrawerList;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private NavigationDrawerAdapter mAdapter;
@@ -80,8 +80,6 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-//        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
