@@ -44,16 +44,6 @@ public class Memory extends BaseNavDrawerSpinnerActivity {
 
         if (savedInstanceState == null) {
             setSelectedTab(selectedTab);
-
-            if (selectedTab == IO_TAB) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new MemoryIoTab())
-                        .commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new MemoryMemTab())
-                        .commit();
-            }
         }
     }
 

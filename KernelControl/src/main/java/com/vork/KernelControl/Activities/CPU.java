@@ -44,16 +44,6 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
 
         if (savedInstanceState == null) {
             setSelectedTab(selectedTab);
-
-            if (selectedTab == VOLTAGE_TAB) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new CpuVoltageTab())
-                        .commit();
-            } else {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_frame, new CpuFrequencyTab())
-                        .commit();
-            }
         }
     }
 
