@@ -20,18 +20,51 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent" android:layout_gravity="center"
-    android:gravity="center">
+    android:gravity="center_horizontal">
     
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/theme_settings_accent_color"
-        android:textAppearance="@style/KC.TextAppearance.Accent.Light.BigText"/>
+        android:textAppearance="@style/KC.TextAppearance.Accent.Light.BigText"
+        android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <com.vork.KernelControl.Ui.ColorPicker.ColorPickerPalette
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/color_picker"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_marginTop="@dimen/padding_medium"/>
+
+    <com.negusoft.holoaccent.widget.AccentSwitch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dark_ui_switch"
+        android:text="@string/theme_settings_switch_dark_ui"
+        android:textAppearance="@android:style/TextAppearance.Holo"
+        android:layout_marginTop="@dimen/padding_medium"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_save_theme"
+        android:text="@string/theme_save_and_restart"
+        style="?attr/buttonStyle"
+        android:layout_marginRight="@dimen/padding_medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/KC.TextAppearance.Accent.Regular.SmallText"
+            android:textStyle="italic"
+            android:text="@string/theme_save_and_restart_summary"/>
+
+    </LinearLayout>
 </LinearLayout>

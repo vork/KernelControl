@@ -77,7 +77,7 @@ public class Helper implements Preferences {
     public static void setTheme(Activity activity) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         int color = preferences.getInt(ACCENT_COLOR_PREF, activity.getResources().getColor(R.color.accentBlue));
-        boolean darkUI = preferences.getBoolean("dark_ui_switch", false);
+        boolean darkUI = preferences.getBoolean(DARK_UI_PREF, false);
 
         if (color == activity.getResources().getColor(R.color.accentPurple)) {
             if (darkUI)

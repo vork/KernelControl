@@ -18,75 +18,97 @@
 package com.vork.KernelControl.Settings;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
-import com.fourmob.colorpicker.ColorPickerDialog;
-import com.fourmob.colorpicker.ColorPickerSwatch;
 import com.vork.KernelControl.R;
+import com.vork.KernelControl.Ui.ColorPicker.ColorPickerPalette;
+import com.vork.KernelControl.Ui.ColorPicker.ColorPickerSwatch;
 import com.vork.KernelControl.Utils.Helper;
 import com.vork.KernelControl.Utils.Preferences;
 
-public class AppSettingsFragment extends PreferenceFragment implements Preferences {
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
+import static butterknife.ButterKnife.findById;
+
+public class AppSettingsFragment extends Fragment implements Preferences, ColorPickerSwatch.OnColorSelectedListener {
     private Activity mActivity;
     private SharedPreferences mPreferences;
+
+    private int mAccentColor;
+    private int[] mColors;
+
+    private boolean mDarkUi;
+
+    @InjectView(R.id.color_picker) protected ColorPickerPalette mColorPicker;
+
+    @OnClick(R.id.btn_save_theme)
+    public void saveThemeRestrat() {
+        SharedPreferences.Editor editor = mPreferences.edit();
+
+        editor.putBoolean(DARK_UI_PREF, mDarkUi);
+        editor.putInt(ACCENT_COLOR_PREF, mAccentColor);
+
+        editor.commit();
+
+        Helper.restartKC(mActivity);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.theme_settings);
-
         mActivity = getActivity();
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(mActivity);
 
-        int accentColor = mPreferences.getInt(ACCENT_COLOR_PREF,
+        mAccentColor = mPreferences.getInt(ACCENT_COLOR_PREF,
                 getResources().getColor(R.color.accentBlue));
+    }
 
-        Preference chooseAccentColor = findPreference("accent_color");
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.theme_preference, null);
 
-        if (chooseAccentColor != null) {
-            final ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
-            colorPickerDialog.initialize(R.string.theme_settings_accent_color, new int[]{
-                    getResources().getColor(R.color.accentBlue), getResources().getColor(R.color.accentPurple),
-                    getResources().getColor(R.color.accentGreen), getResources().getColor(R.color.accentOrange),
-                    getResources().getColor(R.color.accentRed)}, accentColor, 5, 2);
-            colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
-                @Override
-                public void onColorSelected(int color) {
-                    SharedPreferences.Editor editor = mPreferences.edit();
-                    editor.putInt(ACCENT_COLOR_PREF, color);
-                    editor.commit();
-                    Helper.restartKC(mActivity);
-                }
-            });
+        ButterKnife.inject(this, v);
 
-            chooseAccentColor.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    colorPickerDialog.show(getFragmentManager(), "colorpicker");
-                    return false;
-                }
-            });
+        com.negusoft.holoaccent.widget.AccentSwitch darkUiSwitch = findById(v, R.id.dark_ui_switch);
+
+        mDarkUi = mPreferences.getBoolean(DARK_UI_PREF, false);
+        darkUiSwitch.setChecked(mDarkUi);
+
+        darkUiSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mDarkUi = isChecked;
+            }
+        });
+
+        mColors = new int[]{getResources().getColor(R.color.accentBlue), getResources().getColor(R.color.accentPurple),
+                getResources().getColor(R.color.accentGreen), getResources().getColor(R.color.accentOrange),
+                getResources().getColor(R.color.accentRed)};
+
+        mColorPicker.init(2, 5, this);
+        mColorPicker.drawPalette(mColors, mAccentColor);
+
+        return v;
+    }
+
+    @Override
+    public void onColorSelected(int color) {
+        if (color != mAccentColor) {
+            mAccentColor = color;
+            // Redraw palette to show checkmark on newly selected color before dismissing.
+            mColorPicker.drawPalette(mColors, mAccentColor);
         }
-
-        CheckBoxPreference darkUiSwitch = (CheckBoxPreference) findPreference("dark_ui_switch");
-
-        if (darkUiSwitch != null) {
-            darkUiSwitch.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Helper.restartKC(mActivity);
-                    return false;
-                }
-            });
-        }
-
-
     }
 }

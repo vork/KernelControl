@@ -26,10 +26,11 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
-import com.fourmob.colorpicker.R;
+import com.vork.KernelControl.R;
+
 
 public class ColorPickerPalette extends TableLayout {
-    public com.fourmob.colorpicker.ColorPickerSwatch.OnColorSelectedListener mOnColorSelectedListener;
+    public ColorPickerSwatch.OnColorSelectedListener mOnColorSelectedListener;
     private String mDescription;
     private String mDescriptionSelected;
     private int mMarginSize;
@@ -60,8 +61,8 @@ public class ColorPickerPalette extends TableLayout {
         return imageView;
     }
 
-    private com.fourmob.colorpicker.ColorPickerSwatch createColorSwatch(int color, int selectedColor) {
-        com.fourmob.colorpicker.ColorPickerSwatch colorPickerSwatch = new com.fourmob.colorpicker.ColorPickerSwatch(getContext(), color, color == selectedColor, this.mOnColorSelectedListener);
+    private ColorPickerSwatch createColorSwatch(int color, int selectedColor) {
+        ColorPickerSwatch colorPickerSwatch = new ColorPickerSwatch(getContext(), color, color == selectedColor, this.mOnColorSelectedListener);
         TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(this.mSwatchLength, this.mSwatchLength);
         layoutParams.setMargins(this.mMarginSize, this.mMarginSize, this.mMarginSize, this.mMarginSize);
         colorPickerSwatch.setLayoutParams(layoutParams);
@@ -134,7 +135,7 @@ public class ColorPickerPalette extends TableLayout {
         }
     }
 
-    public void init(int size, int numColumns, com.fourmob.colorpicker.ColorPickerSwatch.OnColorSelectedListener onColorSelectedListener) {
+    public void init(int size, int numColumns, ColorPickerSwatch.OnColorSelectedListener onColorSelectedListener) {
         this.mNumColumns = numColumns;
         Resources resources = getResources();
         if (size == 1) {

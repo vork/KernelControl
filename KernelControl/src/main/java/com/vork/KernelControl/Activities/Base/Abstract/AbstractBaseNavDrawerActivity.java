@@ -19,6 +19,7 @@ import com.crashlytics.android.Crashlytics;
 import com.vork.KernelControl.Adapter.NavigationDrawerAdapter;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Settings.AppSettings;
+import com.vork.KernelControl.Utils.Preferences;
 
 import static butterknife.ButterKnife.findById;
 
@@ -28,7 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity implements
-        NavigationDrawerAdapter.ToggleGroupListener {
+        NavigationDrawerAdapter.ToggleGroupListener, Preferences {
     protected DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     protected ExpandableListView mDrawerList;
@@ -152,7 +153,7 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         mTitle = mDrawerTitle = getTitle();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mDarkUi = preferences.getBoolean("dark_ui_switch", false);
+        mDarkUi = preferences.getBoolean(DARK_UI_PREF, false);
 
         //Setup the navigation drawer
         mDrawerList = findById(this, R.id.left_drawer);

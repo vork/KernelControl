@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.fourmob.colorpicker.R;
+import com.vork.KernelControl.R;
 
 public class ColorPickerSwatch extends FrameLayout implements View.OnClickListener {
     private ImageView mCheckmarkImage;
@@ -60,7 +60,7 @@ public class ColorPickerSwatch extends FrameLayout implements View.OnClickListen
     protected void setColor(int color) {
         Drawable[] drawables = new Drawable[1];
         drawables[0] = getContext().getResources().getDrawable(R.drawable.color_picker_swatch);
-        this.mSwatchImage.setImageDrawable(new com.fourmob.colorpicker.ColorStateDrawable(drawables, color));
+        this.mSwatchImage.setImageDrawable(new ColorStateDrawable(drawables, color));
     }
 
     public static abstract interface OnColorSelectedListener {

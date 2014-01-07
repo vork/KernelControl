@@ -28,6 +28,8 @@
             @android:style/Widget.Holo.ActionButton.Overflow
         </item>
 
+        <item name="buttonStyle">@android:style/Widget.Holo.Light.Button</item>
+
         <!-- Change the dropdown spinners to light style-->
         <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Light</item>
     </style>
@@ -37,6 +39,8 @@
 
         <!-- Change the dropdown spinners to dark style-->
         <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Dark</item>
+
+        <item name="buttonStyle">@android:style/Widget.Holo.Button</item>
     </style>
 
     <!-- Nav Drawer customization -->
@@ -219,6 +223,27 @@
 
     <style name="KC.Dark.TextAppearance.Widget.ActionBar.Spinner.DropDownItem" parent="KC.TextAppearance.Widget.ActionBar.Spinner.DropDownItem">
         <item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>
+
+    <!-- Genereal text styles-->
+    <style name="KC.TextAppearance.Accent">
+        <item name="android:textColor">?attr/accentColor</item>
+    </style>
+
+    <style name="KC.TextAppearance.Accent.Regular" parent="KC.TextAppearance.Accent">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="KC.TextAppearance.Accent.Regular.SmallText" parent="KC.TextAppearance.Accent.Regular">
+        <item name="android:textSize">@dimen/normal_text_small_size</item>
+    </style>
+
+    <style name="KC.TextAppearance.Accent.Light" parent="KC.TextAppearance.Accent">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="KC.TextAppearance.Accent.Light.BigText" parent="KC.TextAppearance.Accent.Light">
+        <item name="android:textSize">@dimen/normal_text_big_size</item>
     </style>
 
 </resources>

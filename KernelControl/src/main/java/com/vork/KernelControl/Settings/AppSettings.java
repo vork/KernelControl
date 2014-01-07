@@ -30,10 +30,11 @@ import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Helper;
+import com.vork.KernelControl.Utils.Preferences;
 
 import java.util.List;
 
-public class AppSettings extends PreferenceActivity {
+public class AppSettings extends PreferenceActivity implements Preferences {
 
     //For HoloAccent
     private final AccentHelper mAccentHelper = new AccentHelper();
@@ -69,7 +70,7 @@ public class AppSettings extends PreferenceActivity {
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.settings_headers, target);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean darkUI = preferences.getBoolean("dark_ui_switch", false);
+        boolean darkUI = preferences.getBoolean(DARK_UI_PREF, false);
         if (darkUI) {
             for (Header header : target) {
                 if (header.titleRes == R.string.theme_settings) {
