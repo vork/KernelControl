@@ -12,6 +12,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +49,8 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_nav_drawer_base);
+//        setContentView(R.layout.activity_nav_drawer_base);
+        LayoutInflater.from(this).inflate(R.layout.activity_nav_drawer_base, mViewGroupContent);
 
         mGroupList = setGroupData();
         mChildCollection = setChildData(mGroupList);

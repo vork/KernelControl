@@ -57,11 +57,17 @@ android {
             packageNameSuffix ".debug"
             debuggable true
         }
+
+        scalpeldebug.initWith(buildTypes.debug)
+        scalpeldebug {
+
+        }
     }
 }
 
 dependencies {
     compile 'com.crashlytics.android:crashlytics:1.+'
+    compile 'com.jakewharton.scalpel:scalpel:1.0.0'
     compile project(":HoloAccent")
     compile project(":ColorPicker")
 }
