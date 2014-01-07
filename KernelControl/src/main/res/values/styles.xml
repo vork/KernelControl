@@ -165,14 +165,14 @@
 
     <style name="KC.TextAppearance.Widget.ActionBar.Spinner.Title">
         <item name="android:textColor">@android:color/primary_text_dark</item>
-        <item name="android:textSize">@dimen/action_bar_title_text_size</item>
+        <item name="android:textSize">@dimen/action_bar_spinner_title_text_size</item>
         <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="KC.TextAppearance.Widget.ActionBar.Spinner.SubTitle">
         <item name="android:textColor">@android:color/primary_text_dark</item>
-        <item name="android:textSize">@dimen/action_bar_subtitle_text_size</item>
+        <item name="android:textSize">@dimen/action_bar_spinner_subtitle_text_size</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 

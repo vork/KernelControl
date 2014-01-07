@@ -6,17 +6,17 @@
     <dimen name="card_background_default_radius">2dip</dimen>
 
     <!-- Text sizes -->
-    <dimen name="action_bar_title_text_size_no_spinner">26dp</dimen>
+    <dimen name="action_bar_title_text_size">26dp</dimen>
     <dimen name="menu_item_text_size">26dp</dimen>
 
     <!-- Text size for action bar titles -->
-    <dimen name="action_bar_title_text_size">18dp</dimen>
+    <dimen name="action_bar_spinner_title_text_size">18dp</dimen>
     <!-- Text size for action bar subtitles -->
-    <dimen name="action_bar_subtitle_text_size">14dp</dimen>
+    <dimen name="action_bar_spinner_subtitle_text_size">14dp</dimen>
     <!-- Top margin for action bar subtitles -->
-    <dimen name="action_bar_subtitle_top_margin">-3dp</dimen>
+    <dimen name="action_bar_spinner_subtitle_top_margin">-3dp</dimen>
     <!-- Bottom margin for action bar subtitles -->
-    <dimen name="action_bar_subtitle_bottom_margin">5dip</dimen>
+    <dimen name="action_bar_spinner_subtitle_bottom_margin">5dip</dimen>
     
     <!--Action Bar related -->
     <dimen name="drop_down_item_padding">8dp</dimen>
