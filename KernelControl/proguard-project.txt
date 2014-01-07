@@ -14,3 +14,8 @@
 
 #for debugging
 -keepattributes SourceFile,LineNumberTable
+
+#for butterknife
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}

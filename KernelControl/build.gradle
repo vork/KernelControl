@@ -85,6 +85,7 @@ android {
 dependencies {
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile 'com.jakewharton.scalpel:scalpel:1.0.0'
+    compile 'com.jakewharton:butterknife:4.0.1'
     compile project(":HoloAccent")
     compile project(":ColorPicker")
 }
