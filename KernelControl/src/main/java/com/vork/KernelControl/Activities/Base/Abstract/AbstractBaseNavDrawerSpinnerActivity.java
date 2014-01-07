@@ -56,7 +56,7 @@ public abstract class AbstractBaseNavDrawerSpinnerActivity extends AbstractBaseN
                 navSpinnerItems.add(new SpinnerNavItem(curTab, subtitle));
             }
 
-            mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), navSpinnerItems, mDarkUi);
+            mSpinnerAdapter = new ActionBarSpinnerAdapter(getApplicationContext(), navSpinnerItems);
 
             if (actionBarSpinnerCustomView != null) {
                 mActionBarSpinner.setAdapter(mSpinnerAdapter);

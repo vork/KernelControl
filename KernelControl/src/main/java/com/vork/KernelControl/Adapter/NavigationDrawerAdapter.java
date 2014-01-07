@@ -39,14 +39,12 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
     private Map<String, List<String>> mGroups;
     private List<String> mChilds;
     private ToggleGroupListener mToggleListener;
-    private boolean mDarkUi;
 
     public NavigationDrawerAdapter(Activity context, List<String> mChilds,
-                                   Map<String, List<String>> groupCollection, boolean darkUI) {
+                                   Map<String, List<String>> groupCollection) {
         this.context = context;
         this.mGroups = groupCollection;
         this.mChilds = mChilds;
-        this.mDarkUi = darkUI;
     }
 
     public void setListener(ToggleGroupListener listener) {
@@ -74,11 +72,6 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 
         TextView item = findById(convertView, R.id.child_title);
         item.setText(ChildName);
-
-        if (mDarkUi) {
-            convertView.setBackgroundColor(context.getResources().getColor(R.color.menu_child_darkTheme));
-            item.setTextAppearance(context, R.style.KC_Dark_NavDrawer_MenuItem);
-        }
 
         return convertView;
     }
@@ -112,12 +105,6 @@ public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
         item.setText(groupName);
 
         final ImageView expandIcon = findById(convertView, R.id.expandable_icon);
-
-        if (mDarkUi) {
-            convertView.setBackgroundColor(context.getResources().getColor(R.color.menu_group_darkTheme));
-            expandIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_action_expand_dark));
-            item.setTextAppearance(context, R.style.KC_Dark_NavDrawer_MenuItem);
-        }
 
         //Rotate the expand icon as a indicator
         if (getChildrenCount(groupPosition) == 0) {

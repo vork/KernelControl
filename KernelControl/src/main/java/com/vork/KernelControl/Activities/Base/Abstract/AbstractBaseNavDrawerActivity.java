@@ -153,18 +153,12 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         mTitle = mDrawerTitle = getTitle();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mDarkUi = preferences.getBoolean(DARK_UI_PREF, false);
 
         //Setup the navigation drawer
         mDrawerList = findById(this, R.id.left_drawer);
-        if (mDarkUi) {
-            mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_darkTheme));
-        } else {
-            mDrawerList.setBackgroundColor(getResources().getColor(R.color.card_background_lightTheme));
-        }
         mDrawerLayout = findById(this, R.id.drawer_layout);
 
-        mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection, mDarkUi);
+        mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection);
         mAdapter.setListener(this);
 
         mDrawerList.setAdapter(mAdapter);

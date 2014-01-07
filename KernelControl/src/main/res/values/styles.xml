@@ -16,33 +16,6 @@
   -->
 
 <resources>
-
-    <style name="KC"></style>
-
-    <!-- Base application theme. -->
-    <style name="KC.Light" parent="Theme.HoloAccent.Light.DarkActionBar">
-        <item name="android:listViewStyle">@style/KC.Light.NavDrawer</item>
-
-        <!-- Use the white overflow icon-->
-        <item name="android:actionOverflowButtonStyle">
-            @android:style/Widget.Holo.ActionButton.Overflow
-        </item>
-
-        <item name="buttonStyle">@android:style/Widget.Holo.Light.Button</item>
-
-        <!-- Change the dropdown spinners to light style-->
-        <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Light</item>
-    </style>
-
-    <style name="KC.Dark" parent="Theme.HoloAccent">
-        <item name="android:listViewStyle">@style/KC.Dark.NavDrawer</item>
-
-        <!-- Change the dropdown spinners to dark style-->
-        <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Dark</item>
-
-        <item name="buttonStyle">@android:style/Widget.Holo.Button</item>
-    </style>
-
     <!-- Nav Drawer customization -->
     <style name="KC.Light.NavDrawer" parent="android:Widget.Holo.Light.ListView">
         <item name="android:background">@color/card_background_lightTheme</item>
@@ -64,14 +37,13 @@
 
     <!-- Action Bar Customization-->
     <style name="KC.ActionBar.Widget"></style>
-
     <style name="KC.ActionBar.Widget.Light.DropDownItem"></style>
-
     <style name="KC.ActionBar.Widget.Dark.DropDownItem"></style>
 
     <style name="KC.ActionBar" parent="android:Widget.Holo.ActionBar.Solid">
         <item name="android:icon">@drawable/ic_actionbar_icon</item>
         <item name="android:titleTextStyle">@style/KC.ActionBar.TextAppearance.Title</item>
+        <item name="android:background">?attr/accentColor</item>
     </style>
 
     <!-- The Action Bar DropDown Customization-->
@@ -97,92 +69,6 @@
         <item name="android:textAppearance">
             @style/KC.Dark.TextAppearance.Widget.ActionBar.Spinner.DropDownItem
         </item>
-    </style>
-
-    <!-- Holo color accented themes -->
-    <style name="KC.Light.Blue" parent="KC.Light">
-        <item name="accentColor">@color/accentBlue</item>
-        <item name="accentColorTranslucent">@color/accentBlueTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarBlue</item>
-    </style>
-
-    <style name="KC.Dark.Blue" parent="KC.Dark">
-        <item name="accentColor">@color/accentBlue</item>
-        <item name="accentColorTranslucent">@color/accentBlueTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarBlue</item>
-        <item name="android:windowBackground">@color/background_darkTheme</item>
-    </style>
-
-    <style name="KC.Light.Purple" parent="KC.Light">
-        <item name="accentColor">@color/accentPurple</item>
-        <item name="accentColorTranslucent">@color/accentPurpleTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarPurple</item>
-    </style>
-
-    <style name="KC.Dark.Purle" parent="KC.Dark">
-        <item name="accentColor">@color/accentPurple</item>
-        <item name="accentColorTranslucent">@color/accentPurpleTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarPurple</item>
-        <item name="android:windowBackground">@color/background_darkTheme</item>
-    </style>
-
-    <style name="KC.Light.Green" parent="KC.Light">
-        <item name="accentColor">@color/accentGreen</item>
-        <item name="accentColorTranslucent">@color/accentGreenTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarGreen</item>
-    </style>
-
-    <style name="KC.Dark.Green" parent="KC.Dark">
-        <item name="accentColor">@color/accentGreen</item>
-        <item name="accentColorTranslucent">@color/accentGreenTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarGreen</item>
-        <item name="android:windowBackground">@color/background_darkTheme</item>
-    </style>
-
-    <style name="KC.Light.Orange" parent="KC.Light">
-        <item name="accentColor">@color/accentOrange</item>
-        <item name="accentColorTranslucent">@color/accentOrangeTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarOrange</item>
-    </style>
-
-    <style name="KC.Dark.Orange" parent="KC.Dark">
-        <item name="accentColor">@color/accentOrange</item>
-        <item name="accentColorTranslucent">@color/accentOrangeTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarOrange</item>
-        <item name="android:windowBackground">@color/background_darkTheme</item>
-    </style>
-
-    <style name="KC.Light.Red" parent="KC.Light">
-        <item name="accentColor">@color/accentRed</item>
-        <item name="accentColorTranslucent">@color/accentRedTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarRed</item>
-    </style>
-
-    <style name="KC.Dark.Red" parent="KC.Dark">
-        <item name="accentColor">@color/accentRed</item>
-        <item name="accentColorTranslucent">@color/accentRedTrans</item>
-        <item name="android:actionBarStyle">@style/ActionBarRed</item>
-        <item name="android:windowBackground">@color/background_darkTheme</item>
-    </style>
-
-    <style name="ActionBarBlue" parent="KC.ActionBar">
-        <item name="android:background">@color/accentBlue</item>
-    </style>
-
-    <style name="ActionBarPurple" parent="KC.ActionBar">
-        <item name="android:background">@color/accentPurple</item>
-    </style>
-
-    <style name="ActionBarGreen" parent="KC.ActionBar">
-        <item name="android:background">@color/accentGreen</item>
-    </style>
-
-    <style name="ActionBarOrange" parent="KC.ActionBar">
-        <item name="android:background">@color/accentOrange</item>
-    </style>
-
-    <style name="ActionBarRed" parent="KC.ActionBar">
-        <item name="android:background">@color/accentRed</item>
     </style>
 
     <!-- TextAppearance -->
@@ -234,12 +120,12 @@
         <item name="android:fontFamily">sans-serif</item>
     </style>
 
-    <style name="KC.TextAppearance.Accent.Regular.SmallText" parent="KC.TextAppearance.Accent.Regular">
-        <item name="android:textSize">@dimen/normal_text_small_size</item>
-    </style>
-
     <style name="KC.TextAppearance.Accent.Light" parent="KC.TextAppearance.Accent">
         <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="KC.TextAppearance.Accent.Regular.SmallText" parent="KC.TextAppearance.Accent.Regular">
+        <item name="android:textSize">@dimen/normal_text_small_size</item>
     </style>
 
     <style name="KC.TextAppearance.Accent.Light.BigText" parent="KC.TextAppearance.Accent.Light">

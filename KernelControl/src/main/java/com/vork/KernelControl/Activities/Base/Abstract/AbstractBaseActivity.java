@@ -29,7 +29,6 @@ import com.vork.KernelControl.Utils.Constants;
 import com.vork.KernelControl.Utils.Helper;
 
 public abstract class AbstractBaseActivity extends FragmentActivity implements Constants {
-    protected boolean mDarkUi = false;
     protected ViewGroup mViewGroupContent;
 
     //For HoloAccent

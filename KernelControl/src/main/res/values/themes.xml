@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This file is part of KernelControl.
+  ~
+  ~     KernelControl is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     KernelControl is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with KernelControl.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <style name="KC"></style>
+
+    <!-- Base application theme. -->
+    <style name="KC.Light" parent="Theme.HoloAccent.Light.DarkActionBar">
+        <item name="android:listViewStyle">@style/KC.Light.NavDrawer</item>
+
+        <!-- Colored ActionBar -->
+        <item name="android:actionBarStyle">@style/KC.ActionBar</item>
+
+        <!-- Use the white overflow icon-->
+        <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.ActionButton.Overflow</item>
+
+        <!-- Change the dropdown spinners to light style-->
+        <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Light</item>
+
+        <!-- Background color -->
+        <item name="android:windowBackground">@color/background_lightTheme</item>
+        <item name="backgroundColor">@color/background_lightTheme</item>
+
+        <!-- Save the theme specific button style -->
+        <item name="buttonStyle">@android:style/Widget.Holo.Light.Button</item>
+
+        <!-- Menu Drawer -->
+        <item name="navDrawerChildBackground">@color/menu_child_lightTheme</item>
+        <item name="navDrawerGroupBackground">@color/menu_group_lightTheme</item>
+        <item name="navDrawerMenuItemTextAppearance">@style/KC.Light.NavDrawer.MenuItem</item>
+        <item name="navDrawerExpandIcon">@drawable/ic_action_expand_light</item>
+
+        <!--Settings-->
+        <item name="settings_ThemeHeaderIcon">@drawable/ic_action_theme</item>
+    </style>
+
+    <style name="KC.Dark" parent="Theme.HoloAccent">
+        <item name="android:listViewStyle">@style/KC.Dark.NavDrawer</item>
+
+        <!-- Change the dropdown spinners to dark style-->
+        <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Dark</item>
+
+        <!-- Colored ActionBar -->
+        <item name="android:actionBarStyle">@style/KC.ActionBar</item>
+
+        <!-- Background color -->
+        <item name="android:windowBackground">@color/background_darkTheme</item>
+        <item name="backgroundColor">@color/background_darkTheme</item>
+
+        <!-- Save the theme specific button style -->
+        <item name="buttonStyle">@android:style/Widget.Holo.Button</item>
+
+        <!-- Menu Drawer -->
+        <item name="navDrawerChildBackground">@color/menu_child_darkTheme</item>
+        <item name="navDrawerGroupBackground">@color/menu_group_darkTheme</item>
+        <item name="navDrawerMenuItemTextAppearance">@style/KC.Dark.NavDrawer.MenuItem</item>
+        <item name="navDrawerExpandIcon">@drawable/ic_action_expand_dark</item>
+
+        <!--Settings-->
+        <item name="settings_ThemeHeaderIcon">@drawable/ic_action_theme_dark</item>
+    </style>
+
+    <!-- Holo color accented themes -->
+    <style name="KC.Light.Blue" parent="KC.Light">
+        <item name="accentColor">@color/accentBlue</item>
+        <item name="accentColorTranslucent">@color/accentBlueTrans</item>
+    </style>
+
+    <style name="KC.Dark.Blue" parent="KC.Dark">
+        <item name="accentColor">@color/accentBlue</item>
+        <item name="accentColorTranslucent">@color/accentBlueTrans</item>
+    </style>
+
+    <style name="KC.Light.Purple" parent="KC.Light">
+        <item name="accentColor">@color/accentPurple</item>
+        <item name="accentColorTranslucent">@color/accentPurpleTrans</item>
+    </style>
+
+    <style name="KC.Dark.Purle" parent="KC.Dark">
+        <item name="accentColor">@color/accentPurple</item>
+        <item name="accentColorTranslucent">@color/accentPurpleTrans</item>
+    </style>
+
+    <style name="KC.Light.Green" parent="KC.Light">
+        <item name="accentColor">@color/accentGreen</item>
+        <item name="accentColorTranslucent">@color/accentGreenTrans</item>
+    </style>
+
+    <style name="KC.Dark.Green" parent="KC.Dark">
+        <item name="accentColor">@color/accentGreen</item>
+        <item name="accentColorTranslucent">@color/accentGreenTrans</item>
+    </style>
+
+    <style name="KC.Light.Orange" parent="KC.Light">
+        <item name="accentColor">@color/accentOrange</item>
+        <item name="accentColorTranslucent">@color/accentOrangeTrans</item>
+    </style>
+
+    <style name="KC.Dark.Orange" parent="KC.Dark">
+        <item name="accentColor">@color/accentOrange</item>
+        <item name="accentColorTranslucent">@color/accentOrangeTrans</item>
+    </style>
+
+    <style name="KC.Light.Red" parent="KC.Light">
+        <item name="accentColor">@color/accentRed</item>
+        <item name="accentColorTranslucent">@color/accentRedTrans</item>
+    </style>
+
+    <style name="KC.Dark.Red" parent="KC.Dark">
+        <item name="accentColor">@color/accentRed</item>
+        <item name="accentColorTranslucent">@color/accentRedTrans</item>
+    </style>
+</resources>

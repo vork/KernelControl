@@ -19,6 +19,8 @@ package com.vork.KernelControl.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import android.widget.TextView;
 
 import com.vork.KernelControl.Activities.Base.Abstract.AbstractBaseNavDrawerActivity;
 import com.vork.KernelControl.R;
+import com.vork.KernelControl.Utils.Preferences;
 
 import java.util.ArrayList;
 
@@ -34,17 +37,15 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
 
-public class ActionBarSpinnerAdapter extends BaseAdapter {
+public class ActionBarSpinnerAdapter extends BaseAdapter implements Preferences {
 
     private ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> mSpinnerNavItem;
     private Context mContext;
-    private Boolean mDarkUi;
 
     public ActionBarSpinnerAdapter(Context context,
-                                   ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> spinnerNavItem, boolean darkUi) {
+                                   ArrayList<AbstractBaseNavDrawerActivity.SpinnerNavItem> spinnerNavItem) {
         this.mSpinnerNavItem = spinnerNavItem;
         this.mContext = context;
-        this.mDarkUi = darkUi;
     }
 
     @Override
@@ -102,7 +103,9 @@ public class ActionBarSpinnerAdapter extends BaseAdapter {
 
         holder.mTxtTitle.setText(mSpinnerNavItem.get(position).getSubtitle());
 
-        if (mDarkUi) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        boolean darkUi = preferences.getBoolean(DARK_UI_PREF, false);
+        if (darkUi) {
             holder.mTxtTitle.setTextAppearance(mContext, R.style.KC_Dark_TextAppearance_Widget_ActionBar_Spinner_DropDownItem);
         } else {
             holder.mTxtTitle.setTextAppearance(mContext, R.style.KC_Light_TextAppearance_Widget_ActionBar_Spinner_DropDownItem);

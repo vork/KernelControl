@@ -21,7 +21,7 @@
 
     <header
         android:fragment="com.vork.KernelControl.Settings.AppSettingsFragment"
-        android:icon="@drawable/ic_action_theme"
+        android:icon="?attr/settings_ThemeHeaderIcon"
         android:title="@string/theme_settings"
         android:summary="@string/theme_settings_summary" />
 </preference-headers>

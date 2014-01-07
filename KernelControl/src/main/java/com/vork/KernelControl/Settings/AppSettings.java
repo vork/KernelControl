@@ -69,15 +69,6 @@ public class AppSettings extends PreferenceActivity implements Preferences {
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.settings_headers, target);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean darkUI = preferences.getBoolean(DARK_UI_PREF, false);
-        if (darkUI) {
-            for (Header header : target) {
-                if (header.titleRes == R.string.theme_settings) {
-                    header.iconRes = Helper.getDrawable(this, "ic_action_theme_dark");
-                }
-            }
-        }
     }
 
 
