@@ -20,6 +20,7 @@ package com.vork.KernelControl.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,11 @@ import android.widget.TextView;
 
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
+import com.vork.KernelControl.Utils.Database.DatabaseHandler;
+import com.vork.KernelControl.Utils.Database.DatabaseObjects.KernelInterface;
 import com.vork.KernelControl.Utils.Helper;
+
+import java.util.List;
 
 import static butterknife.ButterKnife.findById;
 
@@ -47,6 +52,34 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
         if (savedInstanceState == null) {
             setSelectedTab(selectedTab);
         }
+
+        DatabaseHandler db = new DatabaseHandler(this);
+        KernelInterface frequency = new KernelInterface("Frequency", "This sets the CPU Frequency.", "/sys/sys/sys/");
+        frequency = db.addKernelInterface(frequency);
+        KernelInterface governor = new KernelInterface("Governor", "/sys/sys/sys/");
+        governor = db.addKernelInterface(governor);
+        governor.setSetOnBoot(true);
+
+        Log.d("KernelControl", "Reading all interfaces");
+        List<KernelInterface> interfaces = db.getAllKernelInterfaces();
+
+        for(KernelInterface kernelInterface : interfaces) {
+            String log = "Id: " + kernelInterface.getId() + " Name: " + kernelInterface.getName() +
+                    " Description: " + kernelInterface.getDescription() + " Path: " + kernelInterface.getPath() +
+                    " Value: " + kernelInterface.getValue() + " SOB: " + kernelInterface.getSetOnBoot();
+            Log.d("KernelControl" , log);
+        }
+
+        governor.setSetOnBoot(true);
+        governor.setValue("2");
+
+        db.updateKernelInterface(governor);
+
+        governor = db.getKernelInterface("Governor");
+        String log = "Id: " + governor.getId() + " Name: " + governor.getName() +
+                " Description: " + governor.getDescription() + " Path: " + governor.getPath() +
+                " Value: " + governor.getValue() + " SOB: " + governor.getSetOnBoot();
+        Log.d("KernelControl" , log);
     }
 
     @Override
