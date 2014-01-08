@@ -17,19 +17,27 @@
 
 package com.vork.KernelControl.Activities.Base.Abstract;
 
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.ViewGroup;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
+import com.negusoft.holoaccent.dialog.AccentAlertDialog;
+import com.stericson.RootTools.RootTools;
 import com.vork.KernelControl.ActivityViewGroup;
+import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Constants;
 import com.vork.KernelControl.Utils.Helper;
+import com.vork.KernelControl.Utils.Preferences;
 
-public abstract class AbstractBaseActivity extends FragmentActivity implements Constants {
+public abstract class AbstractBaseActivity extends FragmentActivity implements Constants, Preferences {
     protected ViewGroup mViewGroupContent;
+    private SharedPreferences mPreferences;
 
     //For HoloAccent
     private final AccentHelper mAccentHelper = new AccentHelper();
@@ -45,7 +53,99 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
         super.onCreate(savedInstanceState);
         mViewGroupContent = ActivityViewGroup.get(this);
 
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        boolean firstRun = mPreferences.getBoolean(FIRST_RUN_PREF, true);
+        boolean suDenied = mPreferences.getBoolean(SU_DENIED, false);
+        boolean suAvailable = RootTools.isRootAvailable();
+
+        if((firstRun || suDenied) && suAvailable) {
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putBoolean(FIRST_RUN_PREF, false);
+            editor.commit();
+            launchFirstRunDialog();
+        } else if (firstRun && !suAvailable) { // Device isn't rooted
+            String title = getString(R.string.device_no_su_title);
+            String message = getString(R.string.device_no_su_message);
+
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putBoolean(SU_DENIED, true);
+            editor.commit();
+
+            suCheckResultDialog(title, message);
+        }
+
         Crashlytics.start(this);
+    }
+
+    private void setupDatabase() {
+
+    }
+
+    private void launchFirstRunDialog() {
+        String title = getString(R.string.first_run_title);
+        String message = getString(R.string.first_run_message);
+        String grant = getString(R.string.first_run_grant);
+        String deny = getString(R.string.first_run_deny);
+
+        AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(grant, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setupDatabase();
+
+                boolean checkSu = RootTools.isAccessGiven();
+                if(checkSu) {
+                    String title = getString(R.string.su_success_title);
+                    String message = getString(R.string.su_success_message);
+
+                    SharedPreferences.Editor editor = mPreferences.edit();
+                    editor.putBoolean(SU_DENIED, false);
+                    editor.commit();
+
+                    suCheckResultDialog(title, message);
+                } else {
+                    String title = getString(R.string.su_failed_title);
+                    String message = getString(R.string.su_failed_message);
+
+                    SharedPreferences.Editor editor = mPreferences.edit();
+                    editor.putBoolean(SU_DENIED, true);
+                    editor.commit();
+
+                    suCheckResultDialog(title, message);
+                }
+            }
+        });
+        builder.setNegativeButton(deny, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String title = getString(R.string.su_denied_title);
+                String message = getString(R.string.su_denied_message);
+
+                SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putBoolean(SU_DENIED, true);
+                editor.commit();
+
+                suCheckResultDialog(title, message);
+            }
+        });
+        builder.show();
+    }
+
+    private void suCheckResultDialog(String title, String message) {
+        AccentAlertDialog.Builder builder = new AccentAlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Do nothing. Absolutely nothing..
+            }
+        });
+        builder.show();
     }
 
     @Override

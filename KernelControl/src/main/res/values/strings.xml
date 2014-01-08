@@ -17,11 +17,38 @@
   -->
 
 <resources>
-
     <string name="app_name">KernelControl</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <!-- First run dialog -->
+    <string name="first_run_title">Root check</string>
+    <string name="first_run_message">
+        The app needs root access to unlock the full feature set.
+        If you choose not to grant root access the only feature will be system monitoring.
+    </string>
+    <string name="first_run_grant">OK, grant access</string>
+    <string name="first_run_deny">Deny</string>
+    <string name="device_no_su_title">No root access found.</string>
+    <string name="device_no_su_message">
+        The device isn\'t rooted. If you want to use the full feature set of this app: consider rooting your device.
+        Instructions on rooting your device can be found on the xda-developers forum.
+    </string>
+    <string name="su_denied_title">:(</string>
+    <string name="su_denied_message">Have fun with the app anyway.</string>
+    <string name="su_success_title">Access granted</string>
+    <string name="su_success_message">
+        KernelControl received full root permission. Have fun with the app.
+    </string>
+    <string name="su_failed_title">Access denied</string>
+    <string name="su_failed_message">
+        There was a problem with the root access. Most features won\'t work. Sorry.
+    </string>
+
+    <!--Overflow icons-->
     <string name="action_settings">Settings</string>
 
+    <!--Theme settings-->
     <string name="theme_settings">Themes</string>
     <string name="theme_settings_summary">Tune the look of the app to your needs.</string>
     <string name="theme_settings_accent_color">Pick a accent color</string>
@@ -29,21 +56,26 @@
     <string name="theme_save_and_restart">Apply</string>
     <string name="theme_save_and_restart_summary">This will restart the application.</string>
 
+    <!--CPU Activity-->
     <string name="menu_item_cpu">CPU</string>
     <string name="menu_item_cpu_child_frequency">Frequency</string>
     <string name="menu_item_cpu_child_voltage">Voltage</string>
+
+    <!--Memory Activity -->
     <string name="menu_item_memory">Memory &amp; I/O</string>
     <string name="menu_item_memory_child_memory">Memory</string>
     <string name="menu_item_memory_child_io">I/O</string>
+
+    <!-- Misc Activity -->
     <string name="menu_item_misc">Miscellaneous</string>
+
+    <!-- Infor Activity -->
     <string name="menu_item_info">Info</string>
     <string name="menu_item_info_child_general">General</string>
     <string name="menu_item_info_child_tis">Time in state</string>
     <string name="menu_item_info_child_memory">Memory</string>
 
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-
+    <!-- Color picker -->
     <string name="color_swatch_description">Color %1$d</string>
     <string name="color_swatch_description_selected">Color %1$d selected</string>
 
