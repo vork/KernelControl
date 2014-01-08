@@ -31,6 +31,8 @@ import com.vork.KernelControl.R;
 
 import junit.framework.Assert;
 
+import hugo.weaving.DebugLog;
+
 public class Helper implements Preferences {
 
     /**
@@ -66,6 +68,7 @@ public class Helper implements Preferences {
         );
     }
 
+    @DebugLog
     public static int getDrawable(Context context, String name) {
         Assert.assertNotNull(context);
         Assert.assertNotNull(name);
