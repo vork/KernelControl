@@ -42,8 +42,8 @@
     <color name="card_background_lightTheme">#FFF</color>
     <color name="card_background_darkTheme">#252628</color>
 
-    <color name="menu_group_lightTheme">#80bebebe</color>
-    <color name="menu_child_lightTheme">#bebebe</color>
+    <color name="menu_group_lightTheme">#70b3b3b3</color>
+    <color name="menu_child_lightTheme">#B4b3b3b3</color>
     <color name="menu_group_darkTheme">#1b1b1c</color>
     <color name="menu_child_darkTheme">#801b1b1c</color>
 
