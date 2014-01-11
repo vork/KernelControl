@@ -46,7 +46,7 @@ public class Helper implements Preferences {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         ft.replace(contentId, fragment);
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 
     /**
