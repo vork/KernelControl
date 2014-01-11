@@ -20,7 +20,7 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header
-        android:fragment="com.vork.KernelControl.Settings.AppSettingsFragment"
+        android:fragment="com.vork.KernelControl.Settings.ThemeSettingsFragment"
         android:title="@string/theme_settings"
         android:icon="@drawable/ic_action_theme"
         android:summary="@string/theme_settings_summary" />

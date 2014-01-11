@@ -23,11 +23,11 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
-import com.negusoft.holoaccent.AccentPalette;
 import com.negusoft.holoaccent.dialog.AccentAlertDialog;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.stericson.RootTools.RootTools;
@@ -61,7 +61,13 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
 
-        tintManager.setNavigationBarAlpha(0.1f);
+        TypedValue a = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            tintManager.setNavigationBarTintColor(a.data);
+        } else {
+            tintManager.setNavigationBarAlpha(0.1f);
+        }
 
         int accentColor = mPreferences.getInt(ACCENT_COLOR_PREF, getResources().getColor(R.color.accentBlue));
         tintManager.setStatusBarTintColor(accentColor);

@@ -39,7 +39,7 @@ import butterknife.OnClick;
 
 import static butterknife.ButterKnife.findById;
 
-public class AppSettingsFragment extends Fragment implements Preferences, ColorPickerSwatch.OnColorSelectedListener {
+public class ThemeSettingsFragment extends Fragment implements Preferences, ColorPickerSwatch.OnColorSelectedListener {
     private Activity mActivity;
     private SharedPreferences mPreferences;
 

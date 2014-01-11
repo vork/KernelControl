@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.util.TypedValue;
 import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
@@ -56,7 +57,13 @@ public class AppSettings extends PreferenceActivity implements Preferences {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setNavigationBarTintEnabled(true);
 
-        tintManager.setNavigationBarAlpha(0.1f);
+        TypedValue a = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            tintManager.setNavigationBarTintColor(a.data);
+        } else {
+            tintManager.setNavigationBarAlpha(0.1f);
+        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -69,7 +76,7 @@ public class AppSettings extends PreferenceActivity implements Preferences {
     }
 
     protected boolean isValidFragment(String fragmentName) {
-        if (AppSettingsFragment.class.getName().equals(fragmentName))
+        if (ThemeSettingsFragment.class.getName().equals(fragmentName))
             return true;
         return false;
 
