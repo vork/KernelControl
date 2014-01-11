@@ -2,11 +2,8 @@ package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,12 +19,12 @@ import com.vork.KernelControl.R;
 import com.vork.KernelControl.Settings.AppSettings;
 import com.vork.KernelControl.Utils.Preferences;
 
-import static butterknife.ButterKnife.findById;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static butterknife.ButterKnife.findById;
 
 public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity implements
         NavigationDrawerAdapter.ToggleGroupListener, Preferences {

@@ -28,10 +28,10 @@ import android.widget.TextView;
 
 import com.vork.KernelControl.R;
 
-import static butterknife.ButterKnife.findById;
-
 import java.util.List;
 import java.util.Map;
+
+import static butterknife.ButterKnife.findById;
 
 public class NavigationDrawerAdapter extends BaseExpandableListAdapter {
 

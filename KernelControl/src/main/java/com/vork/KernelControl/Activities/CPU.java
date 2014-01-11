@@ -20,7 +20,6 @@ package com.vork.KernelControl.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +27,7 @@ import android.widget.TextView;
 
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
 import com.vork.KernelControl.R;
-import com.vork.KernelControl.Utils.Database.DatabaseHandler;
-import com.vork.KernelControl.Utils.Database.DatabaseObjects.KernelInterface;
 import com.vork.KernelControl.Utils.Helper;
-
-import java.util.List;
 
 import static butterknife.ButterKnife.findById;
 
