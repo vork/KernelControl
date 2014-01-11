@@ -22,6 +22,8 @@
     <!-- Base application theme. -->
     <style name="KC.Light" parent="Theme.HoloAccent.Light.DarkActionBar">
         <item name="android:listViewStyle">@style/KC.Light.NavDrawer</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
 
         <!-- Colored ActionBar -->
         <item name="android:actionBarStyle">@style/KC.ActionBar</item>
@@ -51,6 +53,8 @@
 
     <style name="KC.Dark" parent="Theme.HoloAccent">
         <item name="android:listViewStyle">@style/KC.Dark.NavDrawer</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
 
         <!-- Change the dropdown spinners to dark style-->
         <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Dark</item>

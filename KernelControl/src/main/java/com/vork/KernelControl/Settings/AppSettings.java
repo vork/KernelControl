@@ -28,6 +28,7 @@ import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Helper;
 import com.vork.KernelControl.Utils.Preferences;
@@ -50,6 +51,17 @@ public class AppSettings extends PreferenceActivity implements Preferences {
         super.onCreate(savedInstanceState);
 
         final ActionBar bar = getActionBar();
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setNavigationBarTintEnabled(true);
+
+        tintManager.setNavigationBarAlpha(0.1f);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        int accentColor = preferences.getInt(ACCENT_COLOR_PREF, getResources().getColor(R.color.accentBlue));
+        tintManager.setStatusBarTintColor(accentColor);
 
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);

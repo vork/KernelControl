@@ -88,6 +88,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:4.0.1'
     compile 'com.github.gabrielemariotti.cards:library:1.2.0'
     compile 'uk.co.chrisjenx.paralloid:paralloid:0.1.+'
+    compile 'com.readystatesoftware.systembartint:systembartint:+'
     compile "com.android.support:support-v4:18.0.+"
     compile project(":HoloAccent")
     compile fileTree(dir: 'libs', include: '*.jar')
