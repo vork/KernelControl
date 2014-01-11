@@ -19,10 +19,14 @@ package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 
@@ -34,8 +38,12 @@ import com.stericson.RootTools.RootTools;
 import com.vork.KernelControl.ActivityViewGroup;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Constants;
+import com.vork.KernelControl.Utils.Database.DatabaseHandler;
+import com.vork.KernelControl.Utils.Database.DatabaseObjects.KernelInterface;
 import com.vork.KernelControl.Utils.Helper;
 import com.vork.KernelControl.Utils.Preferences;
+
+import java.util.List;
 
 public abstract class AbstractBaseActivity extends FragmentActivity implements Constants, Preferences {
     protected ViewGroup mViewGroupContent;
@@ -93,11 +101,31 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
             suCheckResultDialog(title, message);
         }
 
+        String versionNr = mPreferences.getString(CUR_APP_VERSION, "");
+        PackageInfo pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String version = "";
+        if (pInfo != null) {
+             version = pInfo.versionName;
+        }
+
+        //Only fill the db when a new version is installed
+        if(!versionNr.equals(pInfo.versionName)) {
+            setupDatabase();
+            //Save current app version
+            mPreferences.edit().putString(CUR_APP_VERSION, version);
+        }
+
         Crashlytics.start(this);
     }
 
     private void setupDatabase() {
-
+        DatabaseHandler db = new DatabaseHandler(this);
+        //ToDo clear database first, then add new entries
     }
 
     private void launchFirstRunDialog() {
@@ -112,8 +140,6 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
         builder.setPositiveButton(grant, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                setupDatabase();
-
                 boolean checkSu = RootTools.isAccessGiven();
                 if(checkSu) {
                     String title = getString(R.string.su_success_title);

@@ -22,4 +22,5 @@ public interface Preferences {
     public static final String DARK_UI_PREF = "dark_ui";
     public static final String FIRST_RUN_PREF = "first_run";
     public static final String SU_DENIED = "su_denied";
+    public static final String CUR_APP_VERSION = "app_version";
 }
