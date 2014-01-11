@@ -83,7 +83,6 @@ public class LineChart extends View {
         super(context, attrs, defStyle);
 
         this.setWillNotDraw(false);
-        this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.LineChartView);
 
