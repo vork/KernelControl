@@ -37,13 +37,13 @@
     <color name="accentRedTrans">#66FF4444</color>
     <color name="accentRedDark">#CC0000</color>
 
-    <color name="background_lightTheme">#fff3f3f3</color>
+    <color name="background_lightTheme">#ffdadada</color>
     <color name="background_darkTheme">#ff38383a</color>
     <color name="card_background_lightTheme">#FFFFFFFF</color>
     <color name="card_background_darkTheme">#FF212224</color>
 
-    <color name="menu_group_lightTheme">#70b3b3b3</color>
-    <color name="menu_child_lightTheme">#B4b3b3b3</color>
+    <color name="menu_group_lightTheme">#A0c1c1c1</color>
+    <color name="menu_child_lightTheme">#A0b4b4b4</color>
     <color name="menu_group_darkTheme">#1b1b1c</color>
     <color name="menu_child_darkTheme">#801b1b1c</color>
 
