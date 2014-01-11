@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
+import com.vork.KernelControl.Fragments.DummyFragment;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Helper;
 
@@ -53,46 +54,11 @@ public class Memory extends BaseNavDrawerSpinnerActivity {
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         super.onNavigationItemSelected(itemPosition, itemId);
         if (itemPosition == 0) {
-            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new MemoryMemTab());
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new DummyFragment("Memory"));
         } else {
-            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new MemoryIoTab());
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new DummyFragment("I/O"));
         }
 
         return false;
-    }
-
-    public static class MemoryMemTab extends Fragment {
-        public MemoryMemTab() {
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
-
-            TextView txtDummy = findById(rootView, R.id.txt_dummy);
-            txtDummy.setText("Memory");
-
-            return rootView;
-        }
-
-    }
-
-    public static class MemoryIoTab extends Fragment {
-        public MemoryIoTab() {
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
-
-            TextView txtDummy = findById(rootView, R.id.txt_dummy);
-            txtDummy.setText("I/O");
-
-            return rootView;
-        }
     }
 }

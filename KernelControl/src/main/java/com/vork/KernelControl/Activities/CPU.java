@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vork.KernelControl.Activities.Base.BaseNavDrawerSpinnerActivity;
+import com.vork.KernelControl.Fragments.DummyFragment;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Helper;
 
@@ -53,46 +54,11 @@ public class CPU extends BaseNavDrawerSpinnerActivity {
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
         super.onNavigationItemSelected(itemPosition, itemId);
         if (itemPosition == 0) {
-            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new CpuFrequencyTab());
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new DummyFragment("Frequency"));
         } else {
-            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new CpuVoltageTab());
+            Helper.switchFragment(getSupportFragmentManager(), R.id.content_frame, new DummyFragment("Voltage"));
         }
 
         return false;
-    }
-
-    public static class CpuFrequencyTab extends Fragment {
-        public CpuFrequencyTab() {
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
-
-            TextView txtDummy = findById(rootView, R.id.txt_dummy);
-            txtDummy.setText("Frequency");
-
-            return rootView;
-        }
-
-    }
-
-    public static class CpuVoltageTab extends Fragment {
-        public CpuVoltageTab() {
-
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
-
-            TextView txtDummy = findById(rootView, R.id.txt_dummy);
-            txtDummy.setText("Voltage");
-
-            return rootView;
-        }
     }
 }
