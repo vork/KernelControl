@@ -117,7 +117,7 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
         if(!versionNr.equals(pInfo.versionName)) {
             setupDatabase();
             //Save current app version
-            mPreferences.edit().putString(CUR_APP_VERSION, version);
+            mPreferences.edit().putString(CUR_APP_VERSION, version).commit();
         }
 
         Crashlytics.start(this);
