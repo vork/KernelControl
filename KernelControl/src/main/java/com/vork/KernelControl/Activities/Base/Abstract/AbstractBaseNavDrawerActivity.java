@@ -160,10 +160,6 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection);
         mAdapter.setListener(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mDrawerList.setFitsSystemWindows(true);
-        }
-
         mDrawerList.setAdapter(mAdapter);
         mDrawerList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override

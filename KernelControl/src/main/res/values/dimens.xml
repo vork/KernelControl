@@ -49,4 +49,8 @@
     <dimen name="color_swatch_margins_large">8.0dip</dimen>
     <dimen name="color_swatch_margins_small">4.0dip</dimen>
 
+    <!-- Padding for translucent status bars -->
+    <dimen name="translucentPaddingTop">0dp</dimen>
+    <dimen name="translucentPaddingBottom">0dp</dimen>
+    <dimen name="translucentPaddingRight">0dp</dimen>
 </resources>
