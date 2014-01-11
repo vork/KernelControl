@@ -20,13 +20,10 @@ package com.vork.KernelControl.Utils.Database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.EventLogTags;
 
 import com.vork.KernelControl.Utils.Database.DatabaseObjects.KernelInterface;
-import com.vork.KernelControl.Utils.Database.DatabaseObjects.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createInterfaceTable = "CREATE TABLE " + TABLE_KERNEL_INTERFACE + "(" +
                 KEY_INTERFACE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_INTERFACE_NAME + " TEXT UNIQUE," +
+                KEY_INTERFACE_NAME + " TEXT," +
                 KEY_INTERFACE_DESCRIPTION + " TEXT," +
                 KEY_INTERFACE_PATH + " TEXT not null," +
                 KEY_INTERFACE_SAVED_VALUE + " TEXT," +
@@ -113,45 +110,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_INTERFACE_SAVED_VALUE, kernelInterface.getValue());
         values.put(KEY_INTERFACE_SOB, kernelInterface.getSetOnBoot());
 
-        db.insert(TABLE_KERNEL_INTERFACE, null, values);
-        db.close();
-
-        return getKernelInterface(kernelInterface.getName());
-    }
-
-    public KernelInterface getKernelInterface(String name) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        KernelInterface toRet = null;
-
         if (db != null) {
-            Cursor cursor = db.query(TABLE_KERNEL_INTERFACE,
-                    COLUMNS_TO_READ,
-                    KEY_INTERFACE_NAME + "=?",
-                    new String[] {name},
-                    null,
-                    null,
-                    null,
-                    null);
-
-            if(cursor != null) {
-                cursor.moveToFirst();
-            }
-
-            toRet = new KernelInterface(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3));
-
-            String savedValue = cursor.getString(4);
-
-            if (savedValue != null) {
-                if (!savedValue.equals("")) {
-                    toRet.setValue(savedValue);
-                }
-            }
-            toRet.setSetOnBoot(cursor.getInt(5) == 1);
+            db.insert(TABLE_KERNEL_INTERFACE, null, values);
+            db.close();
         }
 
-        return toRet;
+        db = this.getReadableDatabase();
+        Cursor cursorGetId = null;
+        if (db != null) {
+            cursorGetId = db.rawQuery("SELECT MAX(" + KEY_INTERFACE_ID + ") FROM " + TABLE_KERNEL_INTERFACE, null);
+        }
+
+        int id = -1;
+        if(cursorGetId != null) {
+            cursorGetId.moveToFirst();
+            id = cursorGetId.getInt(0);
+        }
+
+        kernelInterface.setId(id);
+
+        return kernelInterface;
     }
 
     public KernelInterface getKernelInterface(int id) {
@@ -171,19 +149,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
             if(cursor != null) {
                 cursor.moveToFirst();
-            }
+                toRet = new KernelInterface(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                        cursor.getString(3));
+                String savedValue = cursor.getString(4);
 
-            toRet = new KernelInterface(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                    cursor.getString(3));
-
-            String savedValue = cursor.getString(4);
-
-            if (savedValue != null) {
-                if (!savedValue.equals("")) {
-                    toRet.setValue(savedValue);
+                if (savedValue != null) {
+                    if (!savedValue.equals("")) {
+                        toRet.setValue(savedValue);
+                    }
                 }
+                toRet.setSetOnBoot(cursor.getInt(5) == 1);
             }
-            toRet.setSetOnBoot(cursor.getInt(5) == 1);
         }
 
         return toRet;
@@ -194,23 +170,28 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String selectQuery = "SELECT * FROM " + TABLE_KERNEL_INTERFACE;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            do {
-                KernelInterface kernelInterface = new KernelInterface(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3));
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(selectQuery, null);
+        }
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    KernelInterface kernelInterface = new KernelInterface(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                            cursor.getString(3));
 
-                String savedValue = cursor.getString(4);
+                    String savedValue = cursor.getString(4);
 
-                if (savedValue != null) {
-                    if (!savedValue.equals("")) {
-                        kernelInterface.setValue(savedValue);
+                    if (savedValue != null) {
+                        if (!savedValue.equals("")) {
+                            kernelInterface.setValue(savedValue);
+                        }
                     }
-                }
-                kernelInterface.setSetOnBoot(cursor.getInt(5) == 1);
+                    kernelInterface.setSetOnBoot(cursor.getInt(5) == 1);
 
-                toRet.add(kernelInterface);
-            } while (cursor.moveToNext());
+                    toRet.add(kernelInterface);
+                } while (cursor.moveToNext());
+            }
         }
 
         return toRet;
@@ -220,15 +201,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_KERNEL_INTERFACE;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(countQuery, null);
+            cursor.close();
+        }
 
         // return count
-        return cursor.getCount();
+        if (cursor != null) {
+            return cursor.getCount();
+        }
+        return 0;
     }
 
-    public int updateKernelInterface(KernelInterface kernelInterface) {
+    public void updateKernelInterface(KernelInterface kernelInterface) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        int id = kernelInterface.getId();
 
         ContentValues values = new ContentValues();
         values.put(KEY_INTERFACE_NAME, kernelInterface.getName());
@@ -237,15 +226,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_INTERFACE_SAVED_VALUE, kernelInterface.getValue());
         values.put(KEY_INTERFACE_SOB, kernelInterface.getSetOnBoot());
 
-        return db.update(TABLE_KERNEL_INTERFACE, values, KEY_INTERFACE_NAME + " = ?",
-                new String[] { kernelInterface.getName() });
+        if (db != null) {
+            db.update(TABLE_KERNEL_INTERFACE, values, KEY_INTERFACE_ID + " = ?",
+                    new String[] { String.valueOf(id) });
+            db.close();
+        }
     }
 
     public void deleteKernelInterface(KernelInterface kernelInterface) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_KERNEL_INTERFACE, KEY_INTERFACE_NAME + " = ?",
-                new String[] { kernelInterface.getName() });
-        db.close();
+
+        int id = kernelInterface.getId();
+
+        if (db != null) {
+            db.delete(TABLE_KERNEL_INTERFACE, KEY_INTERFACE_ID + " = ?",
+                    new String[] { String.valueOf(id) });
+            db.close();
+        }
+
     }
 
     /*
