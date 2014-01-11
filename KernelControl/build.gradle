@@ -90,5 +90,6 @@ dependencies {
     compile 'com.readystatesoftware.systembartint:systembartint:+'
     compile "com.android.support:support-v4:18.0.+"
     compile project(":HoloAccent")
+    compile project(":paralloidviews")
     compile fileTree(dir: 'libs', include: '*.jar')
 }
