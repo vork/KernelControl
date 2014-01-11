@@ -17,19 +17,21 @@
 
 package com.vork.KernelControl.Settings;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
 import com.negusoft.holoaccent.AccentHelper;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Utils.Helper;
 import com.vork.KernelControl.Utils.Preferences;
@@ -46,6 +48,7 @@ public class AppSettings extends PreferenceActivity implements Preferences {
         return mAccentHelper.getResources(this, super.getResources());
     }
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Helper.setTheme(this);
@@ -53,22 +56,11 @@ public class AppSettings extends PreferenceActivity implements Preferences {
 
         final ActionBar bar = getActionBar();
 
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        tintManager.setNavigationBarTintEnabled(true);
-
-        TypedValue a = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
-        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
-            tintManager.setNavigationBarTintColor(a.data);
-        } else {
-            tintManager.setNavigationBarAlpha(0.1f);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        int accentColor = preferences.getInt(ACCENT_COLOR_PREF, getResources().getColor(R.color.accentBlue));
-        tintManager.setStatusBarTintColor(accentColor);
 
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);

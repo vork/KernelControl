@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -152,14 +153,16 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         assert actionBar != null;
         mTitle = mDrawerTitle = getTitle();
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         //Setup the navigation drawer
         mDrawerList = findById(this, R.id.left_drawer);
         mDrawerLayout = findById(this, R.id.drawer_layout);
 
         mAdapter = new NavigationDrawerAdapter(this, mGroupList, mChildCollection);
         mAdapter.setListener(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            mDrawerList.setFitsSystemWindows(true);
+        }
 
         mDrawerList.setAdapter(mAdapter);
         mDrawerList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

@@ -65,6 +65,7 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
         getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
         if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
             tintManager.setNavigationBarTintColor(a.data);
+            tintManager.setNavigationBarAlpha(0.3f);
         } else {
             tintManager.setNavigationBarAlpha(0.1f);
         }
