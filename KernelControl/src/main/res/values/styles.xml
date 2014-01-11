@@ -17,13 +17,7 @@
 
 <resources>
     <!-- Nav Drawer customization -->
-    <style name="KC.Light.NavDrawer" parent="android:Widget.Holo.Light.ListView">
-        <item name="android:background">@color/card_background_lightTheme</item>
-    </style>
-
-    <style name="KC.Dark.NavDrawer" parent="android:Widget.Holo.Light.ListView">
-        <item name="android:background">@color/card_background_darkTheme</item>
-    </style>
+    <style name="KC.Light.NavDrawer"></style>
 
     <style name="KC.Light.NavDrawer.MenuItem">
         <item name="android:fontFamily">sans-serif-thin</item>

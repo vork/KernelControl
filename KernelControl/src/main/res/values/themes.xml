@@ -52,7 +52,6 @@
     </style>
 
     <style name="KC.Dark" parent="Theme.HoloAccent">
-        <item name="android:listViewStyle">@style/KC.Dark.NavDrawer</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
 
