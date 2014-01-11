@@ -17,22 +17,29 @@
 
 package com.vork.KernelControl.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.vork.KernelControl.R;
+import com.vork.KernelControl.Ui.Charts.LineChart;
+import com.vork.KernelControl.Ui.Charts.LineSeries;
+import com.vork.KernelControl.Utils.Preferences;
 
 import uk.co.chrisjenx.paralloid.Parallaxor;
 
 import static butterknife.ButterKnife.findById;
 
-public class DummyFragment extends Fragment {
+public class DummyFragment extends Fragment implements Preferences{
     String mName;
+    LineChart mChart;
 
     public DummyFragment() {}
     public DummyFragment(String name) {
@@ -44,16 +51,55 @@ public class DummyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
 
-        TextView txtDummy = findById(rootView, R.id.txt_dummy);
-        txtDummy.setText(mName);
-
         ScrollView scrollView = findById(rootView, R.id.scroll_view);
 
+        mChart = findById(rootView, R.id.chartView);
+        mChart.setRange(100.5f, 0, 59.5f, 0.5f);
+
+        TextView txtChartTitle = findById(rootView, R.id.txt_chartViewTitle);
+        txtChartTitle.setText(mName);
+
+        TextView txtChartValue = findById(rootView, R.id.txt_curValue);
+        txtChartValue.setText("2%");
+
+        RelativeLayout parallaxContainer = findById(rootView, R.id.parallax_container);
         if (scrollView instanceof Parallaxor) {
-            ((Parallaxor) scrollView).parallaxViewBy(txtDummy, 0.25f);
+            ((Parallaxor) scrollView).parallaxViewBy(parallaxContainer, 0.25f);
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int color = preferences.getInt(ACCENT_COLOR_PREF, getResources().getColor(R.color.accentBlue));
+        LineSeries series = new LineSeries(color);
+
+        LineSeries.LinePoint point = new LineSeries.LinePoint();
+        point.set(2, 0);
+        series.addPoint(point);
+
+        point = new LineSeries.LinePoint();
+        point.set(3, 2);
+        series.addPoint(point);
+
+        point = new LineSeries.LinePoint();
+        point.set(10, 10);
+        series.addPoint(point);
+
+        point = new LineSeries.LinePoint();
+        point.set(70, 30);
+        series.addPoint(point);
+
+        point = new LineSeries.LinePoint();
+        point.set(50, 60);
+        series.addPoint(point);
+
+        mChart.drawLine(0, series);
+        mChart.setLineToFill(0);
     }
 
 }

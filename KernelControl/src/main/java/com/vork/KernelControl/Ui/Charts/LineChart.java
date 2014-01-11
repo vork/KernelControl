@@ -27,6 +27,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -34,6 +35,7 @@ import com.vork.KernelControl.R;
 import com.vork.KernelControl.Ui.Charts.Graphics.RectD;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LineChart extends View {
 
@@ -360,6 +362,30 @@ public class LineChart extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        final float dp = getResources().getDisplayMetrics().density;
+
+        final int gridLeft = (int) (mGridLineWidth - 1 * dp);
+
+        int gridTop;
+        if (mLabelMeasureDescription != null || mLabelMax != null) {
+            gridTop = (int) (mTextSize + (5 * dp) + mGridLineWidth - 1);
+        } else {
+            gridTop = (int) (mGridLineWidth - 1);
+        }
+
+        final int gridRight = (int) (getWidth() - mGridLineWidth + 1 * dp);
+
+        int gridBottom;
+        if (mLabelMaxTime != null || mLabelMin != null) {
+            gridBottom = (int) (getHeight() - mTextSize - (2 * dp) - mGridLineWidth);
+        } else {
+            gridBottom = getHeight() - mGridLineWidth;
+        }
+
+        mChartBounds.set(gridLeft, gridTop, gridRight, gridBottom);
+
+        mBounds.set(0, 0, getWidth(), getHeight());
+
         if (fullImage == null || shouldUpdate) {
             fullImage = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas ca = new Canvas(fullImage);
@@ -375,59 +401,56 @@ public class LineChart extends View {
                     mChartBounds.right - mGridLineWidth, mChartBounds.bottom - mGridLineWidth);
 
             int lineCount = 0;
-            for (LineSeries line : mLines) {
-                int count = 0;
-                float lastXPixels = 0, newYPixels = 0;
-                float lastYPixels = 0, newXPixels = 0;
-                float maxY = getMaxY();
-                float minY = getMinY();
-                float maxX = getMaxX();
-                float minX = getMinX();
+            if (mLineToFill != -1) {
+                for (LineSeries line : mLines) {
+                    int count = 0;
+                    float lastXPixels = 0, newYPixels = 0;
+                    float lastYPixels = 0, newXPixels = 0;
+                    float maxY = getMaxY();
+                    float minY = getMinY();
+                    float maxX = getMaxX();
+                    float minX = getMinX();
 
-                mPaint.reset();
-
-                if (lineCount == mLineToFill) {
-                    mPaint.setColor(line.getColor());
-                    mPaint.setAlpha(60);
-                    mPaint.setStrokeWidth(2);
-                    for (int i = 10; i - mChartBounds.width() < mChartBounds.height(); i = i + 20) {
-                        ca.drawLine(i, mChartBounds.bottom, 0,
-                                mChartBounds.bottom - i, mPaint);
-                    }
                     mPaint.reset();
 
-                    mPaint.setXfermode(mXferMode);
-                    for (LineSeries.LinePoint p : line.getPoints()) {
-                        float yPercent = (p.getY() - minY) / (maxY - minY);
-                        float xPercent = (p.getX() - minX) / (maxX - minX);
-                        if (count == 0) {
-                            lastXPixels = mChartBounds.right - xPercent * mChartBounds.right;
-                            lastYPixels = mChartBounds.bottom - (mChartBounds.bottom * yPercent);
-                            Path path = new Path();
-                            path.moveTo(mChartBounds.left + mGridLineWidth, mChartBounds.bottom - mGridLineWidth);
-                            path.lineTo(lastXPixels, mChartBounds.bottom - mGridLineWidth);
-                            path.lineTo(lastXPixels, lastYPixels);
-                            path.lineTo(lastXPixels, mChartBounds.top + mGridLineWidth);
-                            path.lineTo(mChartBounds.left + mGridLineWidth, mChartBounds.top + mGridLineWidth);
-                            path.close();
-                            ca.drawPath(path, mPaint);
-                        } else {
-                            newXPixels = mChartBounds.right - (xPercent * mChartBounds.right);
-                            newYPixels = mChartBounds.bottom - (mChartBounds.bottom * yPercent);
-                            Path pa = new Path();
-                            pa.moveTo(lastXPixels, lastYPixels);
-                            pa.lineTo(newXPixels, newYPixels);
-                            pa.lineTo(newXPixels, 0);
-                            pa.lineTo(lastXPixels, 0);
-                            pa.close();
-                            ca.drawPath(pa, mPaint);
-                            lastXPixels = newXPixels;
-                            lastYPixels = newYPixels;
+                    if (lineCount == mLineToFill) {
+                        mPaint.setColor(line.getColor());
+                        mPaint.setAlpha(90);
+                        mPaint.setStrokeWidth(2 * dp);
+
+                        boolean firstSet = false;
+                        Path linePath = new Path();
+                        for (LineSeries.LinePoint point : line.getPoints()) {
+                            float yPercent = (point.getY() - minY) / (maxY - minY);
+                            float xPercent = (point.getX() - minX) / (maxX - minX);
+                            if (!firstSet) {
+                                lastXPixels = mChartBounds.right - xPercent * mChartBounds.right;
+                                lastYPixels = mChartBounds.bottom - (mChartBounds.bottom * yPercent);
+                                linePath.moveTo(lastXPixels, mChartBounds.bottom - (
+                                        mChartBounds.bottom * (minY / (maxY - minY))));
+                                linePath.lineTo(lastXPixels, lastYPixels);
+                                firstSet = true;
+                            } else {
+                                newXPixels = mChartBounds.right - (xPercent * mChartBounds.right);
+                                newYPixels = mChartBounds.bottom - (mChartBounds.bottom * yPercent);
+                                linePath.lineTo(newXPixels, newYPixels);
+                            }
                         }
-                        count++;
+                        linePath.lineTo(newXPixels, mChartBounds.bottom - (
+                                mChartBounds.bottom * (minY / (maxY - minY))));
+                        linePath.close();
+
+                        ca.drawPath(linePath, mPaint);
+
+//                        mPaint.reset();
+//                        mPaint.setXfermode(mXferMode);
+
+//                        ca.drawPath(erasePath, mPaint);
+
+                        mPaint.reset();
                     }
+                    lineCount++;
                 }
-                lineCount++;
             }
 
             drawGrid(ca);
@@ -470,34 +493,5 @@ public class LineChart extends View {
         }
 
         canvas.drawBitmap(fullImage, 0, 0, null);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        final float dp = getResources().getDisplayMetrics().density;
-
-        final int gridLeft = mGridLineWidth - 1;
-
-        int gridTop;
-        if (mLabelMeasureDescription != null || mLabelMax != null) {
-            gridTop = (int) (mTextSize + (5 * dp) + mGridLineWidth - 1);
-        } else {
-            gridTop = (int) (mGridLineWidth - 1);
-        }
-
-        final int gridRight = getWidth() - mGridLineWidth;
-
-        int gridBottom;
-        if (mLabelMaxTime != null || mLabelMin != null) {
-            gridBottom = (int) (getHeight() - mTextSize - (2 * dp) - mGridLineWidth);
-        } else {
-            gridBottom = getHeight() - mGridLineWidth;
-        }
-
-        mChartBounds.set(gridLeft, gridTop, gridRight, gridBottom);
-
-        mBounds.set(0, 0, getWidth(), getHeight());
     }
 }

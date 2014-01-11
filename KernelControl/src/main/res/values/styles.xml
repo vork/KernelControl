@@ -91,6 +91,7 @@
         <item name="android:textColor">@android:color/primary_text_dark</item>
         <item name="android:textSize">@dimen/action_bar_spinner_subtitle_text_size</item>
         <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:alpha">0.6</item>
     </style>
 
     <!-- Generic attributes -->

@@ -27,4 +27,22 @@
         <attr name="navDrawerExpandIcon" format="reference" />
         <attr name="settings_ThemeHeaderIcon" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="LineChartView">
+        <attr name="drawGrid" format="reference|boolean" />
+        <attr name="drawBorder" format="reference|boolean" />
+        <attr name="gridLineColor" format="reference|color" />
+        <attr name="gridOutlineColor" format="reference|color" />
+        <attr name="lineWidth" format="reference|dimension" />
+        <attr name="gridStepX" format="reference|float" />
+        <attr name="gridStepY" format="reference|float" />
+        <attr name="gridLineWidth" format="reference|dimension" />
+        <attr name="textSize" format="reference|dimension" />
+        <attr name="labelColor" format="reference|color" />
+        <attr name="labelMeasureDescription" format="reference|string" />
+        <attr name="labelMax" format="reference|string" />
+        <attr name="labelMin" format="reference|string" />
+        <attr name="labelMaxTime" format="reference|string" />
+    </declare-styleable>
+
 </resources>
