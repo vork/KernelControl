@@ -29,17 +29,24 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.vork.KernelControl.R;
+import com.vork.KernelControl.Ui.CardGridView;
 import com.vork.KernelControl.Ui.Charts.LineChart;
 import com.vork.KernelControl.Ui.Charts.LineSeries;
 import com.vork.KernelControl.Utils.Preferences;
 
+
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardHeader;
 import uk.co.chrisjenx.paralloid.Parallaxor;
 
 import static butterknife.ButterKnife.findById;
 
-public class DummyFragment extends Fragment implements Preferences{
+public class DummyFragment extends Fragment implements Preferences {
     String mName;
     LineChart mChart;
+    CardGridView mCardsGrid;
+    ScrollView scrollView;
+    RelativeLayout parallaxContainer;
 
     public DummyFragment() {}
     public DummyFragment(String name) {
@@ -51,7 +58,7 @@ public class DummyFragment extends Fragment implements Preferences{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.dummy_fragment, container, false);
 
-        ScrollView scrollView = findById(rootView, R.id.scroll_view);
+        scrollView = findById(rootView, R.id.scroll_view);
 
         mChart = findById(rootView, R.id.chartView);
         mChart.setRange(100.5f, 0, 59.5f, 0.5f);
@@ -62,7 +69,27 @@ public class DummyFragment extends Fragment implements Preferences{
         TextView txtChartValue = findById(rootView, R.id.txt_curValue);
         txtChartValue.setText("2%");
 
-        RelativeLayout parallaxContainer = findById(rootView, R.id.parallax_container);
+        mCardsGrid = findById(rootView, R.id.card_list);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        boolean darkUi = preferences.getBoolean(DARK_UI_PREF, false);
+
+        for(int i = 0; i < 4; i++) {
+            Card card = new Card(getActivity().getApplicationContext());
+            if(darkUi) {
+                card.setBackgroundResourceId(R.drawable.darkcard);
+            }
+            CardHeader header = new CardHeader(getActivity().getApplicationContext());
+            header.setTitle("Card " + i);
+            card.addCardHeader(header);
+            card.setTitle("CardText");
+            mCardsGrid.addCard(card);
+        }
+        mCardsGrid.commitCards();
+
+        parallaxContainer = findById(rootView, R.id.parallax_container);
+
         if (scrollView instanceof Parallaxor) {
             ((Parallaxor) scrollView).parallaxViewBy(parallaxContainer, 0.25f);
         }

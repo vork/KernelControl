@@ -38,7 +38,8 @@
             android:layout_alignParentStart="true"
             android:background="@color/card_background_darkTheme"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin" >
+            android:paddingRight="@dimen/activity_horizontal_margin">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -55,11 +56,11 @@
                 android:textColor="?accentColor"
                 android:alpha="0.5"
                 android:textSize="@dimen/normal_text_big_size"
-                android:fontFamily="sans-serif-condensed" />
-            </LinearLayout>
+                android:fontFamily="sans-serif-condensed"
+                android:paddingRight="@dimen/translucentPaddingRight" />
+        </LinearLayout>
 
-        <com.vork.KernelControl.Ui.Charts.LineChart
-            xmlns:chart="http://schemas.android.com/apk/res-auto"
+        <com.vork.KernelControl.Ui.Charts.LineChart xmlns:chart="http://schemas.android.com/apk/res-auto"
             android:id="@+id/chartView"
             android:layout_width="match_parent"
             android:layout_height="180dp"
@@ -72,9 +73,9 @@
             chart:lineWidth="2dp"
             chart:gridStepX="15"
             chart:gridStepY="30"
-            chart:gridLineWidth="0.5dp"/>
+            chart:gridLineWidth="0.5dp" />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
     <uk.co.chrisjenx.paralloid.views.ParallaxScrollView
         android:id="@+id/scroll_view"
@@ -86,85 +87,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="240dp"
-            android:background="?backgroundColor">
+            android:paddingRight="@dimen/translucentPaddingRight"
+            android:paddingBottom="@dimen/translucentPaddingBottom">
 
-            <TextView
+            <com.vork.KernelControl.Ui.CardGridView xmlns:grid="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/card_list"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:text="text"
-                android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Holo.Medium" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="240dp"
+                android:background="?backgroundColor"
+                android:orientation="vertical"
+                grid:num_of_columns="auto_fit"
+                grid:horizontal_spacing="8dp"
+                grid:vertical_spacing="8dp"
+                grid:stretch_mode="spacingWidth"
+                grid:column_width="378dp" />
 
         </LinearLayout>
 

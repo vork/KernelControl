@@ -19,23 +19,21 @@ package com.vork.KernelControl.Ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Point;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.crashlytics.android.Crashlytics;
-import com.stericson.RootTools.RootTools;
-import com.vork.KernelControl.BuildConfig;
 import com.vork.KernelControl.R;
+
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.view.CardView;
+
 
 import java.util.ArrayList;
 
-public class CardsGrid extends RelativeLayout {
+public class CardGridView extends RelativeLayout {
     /**
      * Disables stretching.
      */
@@ -49,14 +47,10 @@ public class CardsGrid extends RelativeLayout {
      */
     public static final int STRETCH_COLUMN_WIDTH = 2;
     /**
-     * Stretches the spacing between columns. The spacing is uniform.
-     */
-    public static final int STRETCH_SPACING_UNIFORM = 3;
-    /**
      * Creates as many columns as can fit on screen.
      */
     public static final int AUTO_FIT = -1;
-    int mWidthMeasureSpec = 0;
+    protected static String TAG = "CardGridView";
     //StyledAttributes
     private int mNumColumns;
     private int mHorizontalSpacing;
@@ -66,68 +60,128 @@ public class CardsGrid extends RelativeLayout {
     private int mRequestedColumnWidth;
     private int mRequestedNumColumns;
     private int mRequestedHorizontalSpacing;
-    private ArrayList<LinearLayout> mViewList;
+    private ArrayList<CardView> mViewList;
     private ArrayList<Integer> mHeightCalculation;
     private int[][] mIdStorage;
+    private boolean mMeasured = false;
+    private Context mContext;
 
-    public CardsGrid(Context context) {
-        this(context, null, 0);
+    public CardGridView(Context context) {
+        super(context);
+        init(context, null, 0);
     }
 
-    public CardsGrid(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public CardGridView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context, attrs, 0);
     }
 
-    public CardsGrid(Context context, AttributeSet attrs, int defStyle) {
+    public CardGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init(context, attrs, defStyle);
+    }
 
-        final TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.CardsGrid);
+    //--------------------------------------------------------------------------
+    // Init
+    //--------------------------------------------------------------------------
 
-        if (attributes != null) {
-            int numCols = attributes.getInt(R.styleable.CardsGrid_numColumns, -1);
+    /**
+     * Initialize
+     *
+     * @param context
+     * @param attrs
+     * @param defStyle
+     */
+    protected void init(Context context, AttributeSet attrs, int defStyle) {
+        //Init attrs
+        initAttrs(attrs, defStyle);
+
+        mContext = context;
+    }
+
+    /**
+     * Init custom attrs.
+     *
+     * @param attrs
+     * @param defStyle
+     */
+    protected void initAttrs(AttributeSet attrs, int defStyle) {
+
+        TypedArray a = getContext().getTheme().obtainStyledAttributes(
+                attrs, R.styleable.cardgrid, defStyle, defStyle);
+
+        try {
+            int numCols = a.getInt(R.styleable.cardgrid_num_of_columns, AUTO_FIT);
             setNumColumns(numCols);
 
-            int hSpace = attributes.getDimensionPixelOffset(R.styleable.CardsGrid_horizontalSpacing, 0);
-            RootTools.log("hSpace: " + hSpace);
+            int hSpace = a.getDimensionPixelOffset(R.styleable.cardgrid_horizontal_spacing, 0);
             setHorizontalSpacing(hSpace);
 
-            int vSpace = attributes.getDimensionPixelOffset(R.styleable.CardsGrid_verticalSpacing, 0);
-            RootTools.log("vSpace: " + vSpace);
+            int vSpace = a.getDimensionPixelOffset(R.styleable.cardgrid_vertical_spacing, 0);
             setVerticalSpacing(vSpace);
 
-            int index = attributes.getInt(R.styleable.CardsGrid_stretchMode, STRETCH_SPACING);
+            int index = a.getInt(R.styleable.cardgrid_stretch_mode, STRETCH_SPACING);
             if (index >= 0) {
                 setStretchMode(index);
             }
 
-            int colWidth = attributes.getDimensionPixelOffset(R.styleable.CardsGrid_columnWidth, -1);
-            RootTools.log("colWidth: " + colWidth);
+            int colWidth = a.getDimensionPixelOffset(R.styleable.cardgrid_column_width, -1);
             if (colWidth > 0) {
                 setColumnWidth(colWidth);
             }
-
-            attributes.recycle();
+        } finally {
+            a.recycle();
         }
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // PUBLIC METHODS
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public CardsGrid addCard(LinearLayout card) {
+    public CardGridView addCard(Card card) {
+        CardView view = new CardView(mContext);
+        LinearLayout.LayoutParams lay = new LinearLayout.LayoutParams(getColumnWidth(),
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        view.setLayoutParams(lay);
+        view.setCard(card);
+
         if (mViewList == null) {
-            mViewList = new ArrayList<LinearLayout>();
+            mViewList = new ArrayList<CardView>();
         }
-        mViewList.add(card);
+        mViewList.add(view);
 
         return this;
     }
 
     public void commitCards() {
-        addCardsToView();
-        requestLayout();
-        invalidate();
+        //This is a pretty ugly hack. We need the data from onMeasure() before adding the cards to
+        //the layout. onMeasure() is called after onStart() so we're waiting for onMeasure() to finish.
+        final View v = this;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    if (mMeasured) {
+                        v.post(new Runnable() { //Run it on the UI Thread
+                            @Override
+                            public void run() {
+                                addCardsToView();
+                                requestLayout();
+                                invalidate(); //Force redraw with the added cards
+                            }
+                        });
+                        break;
+                    } else {
+                        try {
+                            Thread.sleep(200); //Try again later
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 
     public int getHorizontalSpacing() {
@@ -177,7 +231,6 @@ public class CardsGrid extends RelativeLayout {
     public void setColumnWidth(int columnWidth) {
         if (columnWidth != mRequestedColumnWidth) {
             mRequestedColumnWidth = columnWidth;
-            RootTools.log("RequestedColumnWidth: " + mRequestedColumnWidth);
             requestLayout();
             invalidate();
         }
@@ -199,10 +252,6 @@ public class CardsGrid extends RelativeLayout {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // OVERWRITTEN METHODS
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -215,22 +264,12 @@ public class CardsGrid extends RelativeLayout {
         int paddingTop = this.getPaddingTop();
         int paddingBottom = this.getPaddingBottom();
 
-//        if (widthMode == MeasureSpec.UNSPECIFIED) {
-//            if (mColumnWidth > 0) {
-//                widthSize = mColumnWidth + paddingLeft + paddingRight;
-//            } else {
-//                widthSize = paddingLeft + paddingRight;
-//            }
-//            widthSize += getVerticalScrollbarWidth();
-//        }
-
         widthSize += paddingLeft + paddingRight + getVerticalScrollbarWidth();
 
         int childWidth = widthSize - paddingLeft - paddingRight;
         boolean didNotInitiallyFit = determineColumns(childWidth);
 
         if (heightMode == MeasureSpec.UNSPECIFIED) {
-            RootTools.log("HeightMode: UNSPECIFIED");
             mHeightCalculation = new ArrayList<Integer>();
             for (int i = 0; i < mNumColumns; i++) {
                 mHeightCalculation.add(0);
@@ -254,10 +293,6 @@ public class CardsGrid extends RelativeLayout {
                     getVerticalFadingEdgeLength() * 2;
         }
 
-        if (heightMode == MeasureSpec.AT_MOST) {
-            RootTools.log("HeightMode: AT_MOST");
-        }
-
         if (widthMode == MeasureSpec.AT_MOST && mRequestedNumColumns != AUTO_FIT) {
             int ourSize = (mRequestedNumColumns * mColumnWidth)
                     + ((mRequestedNumColumns - 1) * mHorizontalSpacing)
@@ -267,25 +302,14 @@ public class CardsGrid extends RelativeLayout {
             }
         }
 
-        if (BuildConfig.DEBUG) {
-            Display display = ((WindowManager) getContext().
-                    getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            int width = size.x;
-            int height = size.y;
-
-            RootTools.log("Width Size: " + widthSize + " from: " + width + " height: " + heightSize + "" +
-                    " from: " + height + " columns width: " + mColumnWidth);
-        }
         setMeasuredDimension(widthSize, heightSize);
 
         super.onMeasure(getMeasuredWidthAndState(), getMeasuredHeightAndState());
-        mWidthMeasureSpec = widthMeasureSpec;
+        mMeasured = true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    // PRIVATE METHODS
+    // OVERWRITTEN METHODS
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -299,18 +323,14 @@ public class CardsGrid extends RelativeLayout {
         final int stretchMode = mStretchMode;
         int requestedColumnWidth = mRequestedColumnWidth;
         boolean didNotInitiallyFit = false;
-        if(requestedColumnWidth >= availableSpace) { //Fix for too big layouts
-            Crashlytics.log("available space is smaller than the requested column width");
-            Crashlytics.setInt("Available Space for CardsGrid", availableSpace);
-            Crashlytics.setInt("Requested Column Width", requestedColumnWidth);
-            requestedColumnWidth = availableSpace;
-            didNotInitiallyFit = true;
+        if ((requestedColumnWidth + requestedHorizontalSpacing * 2) >= availableSpace) { //Fix for too big layouts
+            requestedColumnWidth = availableSpace - requestedHorizontalSpacing * 2;
         }
 
         if (mRequestedNumColumns == AUTO_FIT) {
             if (requestedColumnWidth > 0) {
-                mNumColumns = (availableSpace + requestedHorizontalSpacing) /
-                        (requestedColumnWidth + requestedHorizontalSpacing);
+                mNumColumns = (availableSpace + requestedHorizontalSpacing * 2) /
+                        (requestedColumnWidth + requestedHorizontalSpacing * 2);
                 mRequestedNumColumns = mNumColumns;
             } else {
                 // Just make up a number if we don't have enough info
@@ -333,7 +353,7 @@ public class CardsGrid extends RelativeLayout {
                 break;
             default:
                 int spaceLeftOver = availableSpace - (mNumColumns * requestedColumnWidth) -
-                        ((mNumColumns - 1) * requestedHorizontalSpacing);
+                        (mNumColumns * (requestedHorizontalSpacing * 2));
 
                 if (spaceLeftOver < 0) {
                     didNotInitiallyFit = true;
@@ -351,20 +371,9 @@ public class CardsGrid extends RelativeLayout {
                         mColumnWidth = requestedColumnWidth;
                         if (mNumColumns > 1) {
                             mHorizontalSpacing = requestedHorizontalSpacing +
-                                    spaceLeftOver / (mNumColumns - 1);
+                                    spaceLeftOver / mNumColumns / 2;
                         } else {
-                            mHorizontalSpacing = requestedHorizontalSpacing + spaceLeftOver;
-                        }
-                        break;
-
-                    case STRETCH_SPACING_UNIFORM:
-                        // Stretch the spacing between columns
-                        mColumnWidth = requestedColumnWidth;
-                        if (mNumColumns > 1) {
-                            mHorizontalSpacing = requestedHorizontalSpacing +
-                                    spaceLeftOver / (mNumColumns + 1);
-                        } else {
-                            mHorizontalSpacing = requestedHorizontalSpacing + spaceLeftOver;
+                            mHorizontalSpacing = requestedHorizontalSpacing + spaceLeftOver / 2;
                         }
                         break;
                 }
@@ -375,13 +384,16 @@ public class CardsGrid extends RelativeLayout {
         return didNotInitiallyFit;
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // PRIVATE METHODS
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     private void addCardsToView() {
         //Layout position
         mIdStorage = new int[mNumColumns][mViewList.size()];
 
         LayoutParams lay;
         for (int i = 0; i < mViewList.size(); i++) {
-            lay = null;
             final LinearLayout card = mViewList.get(i);
             int id = i + 1 + 100;
             int count = i + 1;
@@ -394,13 +406,12 @@ public class CardsGrid extends RelativeLayout {
 
             card.setId(id);
 
-
-            RootTools.log("Card Id: " + card.getId());
             lay = new LayoutParams(getColumnWidth(),
                     ViewGroup.LayoutParams.WRAP_CONTENT);
 
-            lay.setMargins(getHorizontalSpacing() / 2, getVerticalSpacing(),
-                    getHorizontalSpacing() / 2, getVerticalSpacing());
+            int marginHorizontal = getHorizontalSpacing();
+            int marginVertical = getVerticalSpacing();
+            lay.setMargins(marginHorizontal, marginVertical, marginHorizontal, marginVertical);
 
             int row = totalCardCount % mNumColumns;
 
@@ -411,7 +422,6 @@ public class CardsGrid extends RelativeLayout {
                 if (count <= mNumColumns) { //Add the first cards next to each other
                     int prevId = mIdStorage[row - 1][col];
                     lay.addRule(RIGHT_OF, prevId);
-                    RootTools.log("Adding " + id + " right of " + prevId);
                 } else {
                     int prevId = mIdStorage[row][col - 1];
                     lay.addRule(BELOW, prevId);
@@ -419,11 +429,9 @@ public class CardsGrid extends RelativeLayout {
                         prevId = mIdStorage[row - 1][col];
                         lay.addRule(RIGHT_OF, prevId);
                     }
-                    RootTools.log("Adding " + id + " below " + prevId);
                 }
             } else {
                 lay.addRule(ALIGN_PARENT_START, TRUE);
-                RootTools.log("Adding " + id + " as first card");
             }
 
             this.addView(card, lay);
@@ -440,7 +448,7 @@ public class CardsGrid extends RelativeLayout {
                 toRet = mHeightCalculation.get(i);
             }
         }
-        toRet += getVerticalSpacing() * 4;
+        toRet += getVerticalSpacing() * 2;
         return toRet;
     }
 }

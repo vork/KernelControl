@@ -45,13 +45,13 @@
         <attr name="labelMaxTime" format="reference|string" />
     </declare-styleable>
 
-    <declare-styleable name="CardsGrid">
-        <attr name="numColumns" format="integer">
+    <declare-styleable name="cardgrid">
+        <attr name="num_of_columns" format="integer">
             <enum name="auto_fit" value="-1" />
         </attr>
-        <attr name="horizontalSpacing" format="dimension" />
-        <attr name="verticalSpacing" format="dimension" />
-        <attr name="stretchMode">
+        <attr name="horizontal_spacing" format="dimension" />
+        <attr name="vertical_spacing" format="dimension" />
+        <attr name="stretch_mode">
             <!-- Stretching is disabled. -->
             <enum name="none" value="0" />
             <!-- The spacing between each column is stretched. -->
@@ -61,7 +61,7 @@
             <!-- The spacing between each column is uniformly stretched.. -->
             <enum name="spacingWidthUniform" value="3" />
         </attr>
-        <attr name="columnWidth" format="dimension" />
+        <attr name="column_width" format="dimension" />
     </declare-styleable>
 
 </resources>
