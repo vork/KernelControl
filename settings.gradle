@@ -1,1 +1,1 @@
-include ':KernelControl', ':HoloAccent', ':paralloidviews', ':paralloid'
+include ':KernelControl', ':paralloidviews', ':paralloid'
