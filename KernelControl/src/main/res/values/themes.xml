@@ -19,14 +19,11 @@
 <resources>
     <style name="KC"></style>
 
-    <!-- Base application theme. -->
-    <style name="KC.Light" parent="Theme.HoloAccent.Light.DarkActionBar">
-        <item name="android:listViewStyle">@style/KC.Light.NavDrawer</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="KC.LightBase" parent="Theme.HoloAccent.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/TranslucentActionBar</item>
+        <item name="android:windowActionBarOverlay">true</item>
 
-        <!-- Colored ActionBar -->
-        <item name="android:actionBarStyle">@style/KC.ActionBar</item>
+        <item name="android:listViewStyle">@style/KC.Light.NavDrawer</item>
 
         <!-- Use the white overflow icon-->
         <item name="android:actionOverflowButtonStyle">@android:style/Widget.Holo.ActionButton.Overflow</item>
@@ -52,15 +49,12 @@
         <item name="settings_ThemeHeaderIcon">@drawable/ic_action_theme</item>
     </style>
 
-    <style name="KC.Dark" parent="Theme.HoloAccent">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="KC.DarkBase" parent="Theme.HoloAccent">
+        <item name="android:actionBarStyle">@style/TranslucentActionBar</item>
+        <item name="android:windowActionBarOverlay">true</item>
 
         <!-- Change the dropdown spinners to dark style-->
         <item name="android:actionBarWidgetTheme">@style/KC.ActionBar.Widget.Dark</item>
-
-        <!-- Colored ActionBar -->
-        <item name="android:actionBarStyle">@style/KC.ActionBar</item>
 
         <!-- Background color -->
         <item name="android:windowBackground">@color/background_darkTheme</item>
@@ -78,6 +72,14 @@
 
         <!--Settings-->
         <item name="settings_ThemeHeaderIcon">@drawable/ic_action_theme_dark</item>
+    </style>
+
+    <style name="KC.Light" parent="KC.LightBase">
+        <!--API specific customization-->
+    </style>
+
+    <style name="KC.Dark" parent="KC.DarkBase">
+        <!--API specific customization-->
     </style>
 
     <!-- Holo color accented themes -->

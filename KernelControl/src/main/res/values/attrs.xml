@@ -28,6 +28,10 @@
         <attr name="settings_ThemeHeaderIcon" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="DrawInsetsFrameLayout">
+        <attr name="insetBackground" format="reference|color" />
+    </declare-styleable>
+
     <declare-styleable name="LineChartView">
         <attr name="drawGrid" format="reference|boolean" />
         <attr name="drawBorder" format="reference|boolean" />

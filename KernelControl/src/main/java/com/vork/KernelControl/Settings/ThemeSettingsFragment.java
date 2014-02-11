@@ -51,7 +51,7 @@ public class ThemeSettingsFragment extends Fragment implements Preferences, Colo
     @InjectView(R.id.color_picker) protected ColorPickerPalette mColorPicker;
 
     @OnClick(R.id.btn_save_theme)
-    public void saveThemeRestrat() {
+    public void saveThemeRestart() {
         SharedPreferences.Editor editor = mPreferences.edit();
 
         editor.putBoolean(DARK_UI_PREF, mDarkUi);

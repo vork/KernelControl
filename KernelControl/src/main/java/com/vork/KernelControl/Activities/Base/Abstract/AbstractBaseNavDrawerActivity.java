@@ -1,8 +1,10 @@
 package com.vork.KernelControl.Activities.Base.Abstract;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.crashlytics.android.Crashlytics;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.vork.KernelControl.Adapter.NavigationDrawerAdapter;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Settings.AppSettings;
@@ -53,6 +56,15 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
         mChildCollection = setChildData(mGroupList);
 
         setupNavDrawer();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mDrawerList = findById(this, R.id.left_drawer);
+        mDrawerList.setClipToPadding(false);
+        setInsets(this, mDrawerList);
     }
 
     @Override
@@ -144,6 +156,13 @@ public abstract class AbstractBaseNavDrawerActivity extends AbstractBaseActivity
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Internal methods
     ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public static void setInsets(Activity context, View view) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        SystemBarTintManager tintManager = new SystemBarTintManager(context);
+        SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+        view.setPadding(0, config.getPixelInsetTop(true), 0, config.getPixelInsetBottom());
+    }
 
     private void setupNavDrawer() {
         final ActionBar actionBar = getActionBar();

@@ -17,27 +17,27 @@
 
 package com.vork.KernelControl.Fragments;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.vork.KernelControl.R;
 import com.vork.KernelControl.Ui.CardGridView;
 import com.vork.KernelControl.Ui.Charts.LineChart;
 import com.vork.KernelControl.Ui.Charts.LineSeries;
 import com.vork.KernelControl.Utils.Preferences;
 
-
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
-import uk.co.chrisjenx.paralloid.Parallaxor;
 
 import static butterknife.ButterKnife.findById;
 
@@ -46,11 +46,18 @@ public class DummyFragment extends Fragment implements Preferences {
     LineChart mChart;
     CardGridView mCardsGrid;
     ScrollView scrollView;
-    RelativeLayout parallaxContainer;
 
     public DummyFragment() {}
+
     public DummyFragment(String name) {
         mName = name;
+    }
+
+    public static void setInsets(Activity context, View view) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        SystemBarTintManager tintManager = new SystemBarTintManager(context);
+        SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
+        view.setPadding(0, config.getPixelInsetTop(true), config.getPixelInsetRight(), config.getPixelInsetBottom());
     }
 
     @Override
@@ -75,9 +82,9 @@ public class DummyFragment extends Fragment implements Preferences {
 
         boolean darkUi = preferences.getBoolean(DARK_UI_PREF, false);
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             Card card = new Card(getActivity().getApplicationContext());
-            if(darkUi) {
+            if (darkUi) {
                 card.setBackgroundResourceId(R.drawable.darkcard);
             }
             CardHeader header = new CardHeader(getActivity().getApplicationContext());
@@ -88,13 +95,17 @@ public class DummyFragment extends Fragment implements Preferences {
         }
         mCardsGrid.commitCards();
 
-        parallaxContainer = findById(rootView, R.id.parallax_container);
-
-        if (scrollView instanceof Parallaxor) {
-            ((Parallaxor) scrollView).parallaxViewBy(parallaxContainer, 0.25f);
-        }
-
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        scrollView = findById(view, R.id.scroll_view);
+
+        scrollView.setClipToPadding(false);
+        setInsets(getActivity(), scrollView);
     }
 
     @Override
@@ -128,5 +139,4 @@ public class DummyFragment extends Fragment implements Preferences {
         mChart.drawLine(0, series);
         mChart.setLineToFill(0);
     }
-
 }

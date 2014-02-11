@@ -19,6 +19,7 @@ package com.vork.KernelControl.Settings;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
@@ -26,7 +27,9 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.util.AttributeSet;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -52,19 +55,33 @@ public class AppSettings extends PreferenceActivity implements Preferences {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Helper.setTheme(this);
-        super.onCreate(savedInstanceState);
-
-        final ActionBar bar = getActionBar();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
+        super.onCreate(savedInstanceState);
+
+        final ActionBar bar = getActionBar();
+
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        View v = super.onCreateView(name, context, attrs);
+        if (v != null) {
+            int left = v.getPaddingLeft();
+            int right = v.getPaddingRight();
+            int bottom = v.getPaddingBottom();
+            int top = getActionBar().getHeight();
+
+            v.setPadding(left, top, right, bottom);
+        }
+        return v;
     }
 
     protected boolean isValidFragment(String fragmentName) {

@@ -40,6 +40,10 @@
         <item name="android:background">?attr/accentColor</item>
     </style>
 
+    <style name="TranslucentActionBar" parent="KC.ActionBar">
+        <item name="android:background">@color/action_bar_color</item>
+    </style>
+
     <!-- The Action Bar DropDown Customization-->
     <style name="KC.ActionBar.Widget.Light" parent="KC">
         <item name="android:spinnerDropDownItemStyle">
