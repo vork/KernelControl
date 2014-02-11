@@ -1,1 +1,1 @@
-include ':KernelControl', ':paralloidviews', ':paralloid'
+include ':KernelControl'

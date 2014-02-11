@@ -90,6 +90,5 @@ dependencies {
     compile 'com.readystatesoftware.systembartint:systembartint:+'
     compile 'com.negusoft.holoaccent:library:0.9.1'
     compile "com.android.support:support-v4:18.0.+"
-    compile project(":paralloidviews")
     compile fileTree(dir: 'libs', include: '*.jar')
 }
