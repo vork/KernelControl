@@ -21,77 +21,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
+    <com.vork.KernelControl.Ui.ObservableScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/container"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/title_container"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/default_touch_size"
-                android:orientation="horizontal"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:layout_alignParentStart="true"
-                android:background="@color/card_background_darkTheme"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_chartViewTitle"
-                    android:layout_weight="1"
-                    android:textColor="?accentColor"
-                    android:textSize="@dimen/normal_text_big_size"
-                    android:fontFamily="sans-serif-thin" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_curValue"
-                    android:textColor="?accentColor"
-                    android:alpha="0.5"
-                    android:textSize="@dimen/normal_text_big_size"
-                    android:fontFamily="sans-serif-condensed" />
-            </LinearLayout>
-
-            <com.vork.KernelControl.Ui.Charts.LineChart xmlns:chart="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/chartView"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_marginBottom="-2dp"
-                android:background="@color/card_background_lightTheme"
-                chart:drawGrid="true"
-                chart:drawBorder="false"
-                chart:gridLineColor="@color/menu_child_lightTheme"
-                chart:lineWidth="2dp"
-                chart:gridStepX="15"
-                chart:gridStepY="30"
-                chart:gridLineWidth="0.5dp" />
-
-            <com.vork.KernelControl.Ui.CardGridView xmlns:grid="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/card_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?backgroundColor"
-                android:orientation="vertical"
-                grid:num_of_columns="auto_fit"
-                grid:horizontal_spacing="8dp"
-                grid:vertical_spacing="8dp"
-                grid:stretch_mode="spacingWidth"
-                grid:column_width="378dp" />
+                android:id="@+id/ll_chart"
+                android:orientation="vertical">
 
-        </LinearLayout>
-    </ScrollView>
+                <LinearLayout
+                    android:id="@+id/title_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_touch_size"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/card_background_darkTheme"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_chartViewTitle"
+                        android:layout_weight="1"
+                        android:textColor="?accentColor"
+                        android:textSize="@dimen/normal_text_big_size"
+                        android:fontFamily="sans-serif-thin" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txt_curValue"
+                        android:textColor="?accentColor"
+                        android:alpha="0.5"
+                        android:textSize="@dimen/normal_text_big_size"
+                        android:fontFamily="sans-serif-condensed" />
+                </LinearLayout>
+
+                <com.vork.KernelControl.Ui.Charts.LineChart xmlns:chart="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/chartView"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginBottom="-2dp"
+                    android:background="@color/card_background_lightTheme"
+                    chart:drawGrid="true"
+                    chart:drawBorder="false"
+                    chart:gridLineColor="@color/menu_child_lightTheme"
+                    chart:lineWidth="2dp"
+                    chart:gridStepX="15"
+                    chart:gridStepY="30"
+                    chart:gridLineWidth="0.5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="228dp" />
+
+                <com.vork.KernelControl.Ui.CardGridView xmlns:grid="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?backgroundColor"
+                    android:orientation="vertical"
+                    grid:num_of_columns="auto_fit"
+                    grid:horizontal_spacing="8dp"
+                    grid:vertical_spacing="8dp"
+                    grid:stretch_mode="spacingWidth"
+                    grid:column_width="378dp" />
+
+            </LinearLayout>
+        </FrameLayout>
+    </com.vork.KernelControl.Ui.ObservableScrollView>
 
 </FrameLayout>
