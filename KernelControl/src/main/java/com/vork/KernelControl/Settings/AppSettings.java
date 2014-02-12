@@ -22,12 +22,14 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -68,6 +70,16 @@ public class AppSettings extends PreferenceActivity implements Preferences {
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
+
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true);
+        int[] attribute = new int[] { android.R.attr.actionBarSize };
+        TypedArray array = obtainStyledAttributes(typedValue.resourceId, attribute);
+        int paddingTop = array.getDimensionPixelOffset(0, 46);
+        int paddingLeftRight = getResources().getDimensionPixelOffset(R.dimen.activity_horizontal_margin);
+
+        getListView().setClipToPadding(false);
+        getListView().setPadding(paddingLeftRight, paddingTop, paddingLeftRight, 0);
     }
 
     @Override
@@ -106,7 +118,6 @@ public class AppSettings extends PreferenceActivity implements Preferences {
                 }
             }
         }
-
     }
 
     @Override
