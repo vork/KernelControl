@@ -20,6 +20,7 @@ package com.vork.KernelControl.Activities.Base.Abstract;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -62,7 +63,13 @@ public abstract class AbstractBaseActivity extends FragmentActivity implements C
         tintManager.setNavigationBarTintEnabled(true);
 
         tintManager.setNavigationBarAlpha(0);
-        int accentColor = getResources().getColor(R.color.action_bar_color);
+        //Resolve action bar color attr
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.actionBarColor, typedValue, true);
+        int[] attribute = new int[] { R.attr.actionBarColor };
+        TypedArray array = obtainStyledAttributes(typedValue.resourceId, attribute);
+        //Use dark action bar as default if we can resolve it
+        int accentColor = array.getColor(0, getResources().getColor(R.color.action_bar_color_dark));
         tintManager.setStatusBarTintColor(accentColor);
 
         boolean firstRun = mPreferences.getBoolean(FIRST_RUN_PREF, true);

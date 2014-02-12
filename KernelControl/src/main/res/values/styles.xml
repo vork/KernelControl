@@ -41,7 +41,7 @@
     </style>
 
     <style name="TranslucentActionBar" parent="KC.ActionBar">
-        <item name="android:background">@color/action_bar_color</item>
+        <item name="android:background">?attr/actionBarColor</item>
     </style>
 
     <!-- The Action Bar DropDown Customization-->

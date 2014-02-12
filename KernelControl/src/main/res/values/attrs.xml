@@ -19,6 +19,7 @@
 <resources>
     <declare-styleable name="KernelControl">
         <attr name="buttonStyle" format="reference" />
+        <attr name="actionBarColor" format="color|reference" />
         <attr name="backgroundColor" format="color|reference" />
         <attr name="cardBackgroundColor" format="color|reference" />
         <attr name="navDrawerChildBackground" format="color|reference" />

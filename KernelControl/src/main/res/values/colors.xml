@@ -47,7 +47,8 @@
     <color name="menu_group_darkTheme">#1b1b1c</color>
     <color name="menu_child_darkTheme">#801b1b1c</color>
 
-    <color name="action_bar_color">#9000</color>
+    <color name="action_bar_color_light">#C000</color>
+    <color name="action_bar_color_dark">#9000</color>
 
     <color name="text_light_lightTheme">#ffb5b5b5</color>
     <color name="text_light_darkTheme">#ff8d8d8d</color>

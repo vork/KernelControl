@@ -35,6 +35,7 @@
         <item name="android:windowBackground">@color/background_lightTheme</item>
         <item name="backgroundColor">@color/background_lightTheme</item>
         <item name="cardBackgroundColor">@color/card_background_lightTheme</item>
+        <item name="actionBarColor">@color/action_bar_color_light</item>
 
         <!-- Save the theme specific button style -->
         <item name="buttonStyle">@android:style/Widget.Holo.Light.Button</item>
@@ -60,6 +61,7 @@
         <item name="android:windowBackground">@color/background_darkTheme</item>
         <item name="backgroundColor">@color/background_darkTheme</item>
         <item name="cardBackgroundColor">@color/card_background_darkTheme</item>
+        <item name="actionBarColor">@color/action_bar_color_dark</item>
 
         <!-- Save the theme specific button style -->
         <item name="buttonStyle">@android:style/Widget.Holo.Button</item>
